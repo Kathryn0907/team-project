@@ -85,3 +85,4 @@ Team Member Signatures:
 (type names here)
 Jonathan CHAN
 Samantha-Xuetong Li
+Yichen Wang
