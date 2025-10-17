@@ -82,11 +82,9 @@ Be kind and helpful to others, stay active in the team, try not to be silent and
 By signing below, we acknowledge that we have read, discussed, and agreed to these terms. We understand that this contract is binding for the duration of the course and may be revised with the agreement of all team members.
 
 Team Member Signatures:
-
-(type names here)
-Jonathan CHAN
-Mohamed Abdelfattah
-Olivia Ma Zhou
-Brooklyn Zhou
-Samantha-Xuetong Li
-Yichen Wang
+- Jonathan CHAN
+- Mohamed Abdelfattah
+- Olivia Ma Zhou
+- Brooklyn Zhou
+- Samantha-Xuetong Li
+- Yichen Wang
