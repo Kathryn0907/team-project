@@ -42,7 +42,7 @@ Listen and communicate with patience and understanding, encourage and acknowledg
 ### [Other Categories of norms and expectations go here]
 
 * Based on your previous teamwork experiences, what other behaviours do you agree upon as a team?
-    - some examples of possible additional team norms and expectations are included in the sample team contract in case your team needs some help getting ideas for what else you want to include.
+- some examples of possible additional team norms and expectations are included in the sample team contract in case your team needs some help getting ideas for what else you want to include.
 
 Be kind and helpful to others, stay active in the team, try not to be silent and constantly contribute.
 
@@ -53,16 +53,15 @@ Be kind and helpful to others, stay active in the team, try not to be silent and
 
 * How will decisions about your team project be made? (Examples: By majority vote, by unanimous vote, etc.)
 
-When everyone agrees together on what to do next
-
+- We will use majority vote for decision making.
 
 ---
 ## Conflict resolution
 
 * How will your team resolve conflicts? (Example: by listening to each other's side of the issue and attempting to reach a compromise. By consulting a TA or instructor as a team, if a resolution has not yet been reached.)
 
-Listen with patience and be understanding and sympathetic about issues that arise
-If any more serious issues arise then TA team should be notified
+- if the vote is split 3-3, then we will meet somewhere to discuss it in a respectful manner and try to either get compromise from either side and, at the end of that meeting, vote again on the matter. If the vote is still split 3-3, we will consult our TA for insight and their decision will be final. However, we commit to prioritizing teamwork spirit and what is in the team's best interest and to discuss matters with compassion and understanding for decision-making.
+
 
 ---
 
@@ -70,7 +69,9 @@ If any more serious issues arise then TA team should be notified
 
 * Reliability and accountability are also important aspects of teamwork. What are the responsibilities of each team member? (Example: completing their share of the work in a timely manner, seeking assistance from teammates/TAs/instructors when required, etc.)
 
-Completing their share of the work on time(or at least letting teammates know when there will be delays)
+- It is each member's responsibility to complete their share of the work on time (or at least let teammates know when there will be delays).
+- It is each member's responsibility to constructively share ideas and recieve criticism with grace and objectivity to ensure efficiency and open dialogue.
+- It is each member's responsibility to ensure sufficient understanding and knowledge to execute their assigned tasks. This can be ensured by seeking assistance from teammates, TAs, instructors or other means of online assistance (like LearnAid).
 
 
 
@@ -84,5 +85,8 @@ Team Member Signatures:
 
 (type names here)
 Jonathan CHAN
+Mohamed Abdelfattah
+Olivia Ma Zhou
+Brooklyn Zhou
 Samantha-Xuetong Li
 Yichen Wang
