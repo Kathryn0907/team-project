@@ -53,7 +53,7 @@ Be kind and helpful to others, stay active in the team, try not to be silent and
 
 * How will decisions about your team project be made? (Examples: By majority vote, by unanimous vote, etc.)
 
-- We will use majority vote for decision making.
+We will use majority vote for decision making.
 
 ---
 ## Conflict resolution
