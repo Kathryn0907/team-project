@@ -4,11 +4,21 @@ import java.util.ArrayList;
 
 public class User {
 
+    // User class include getter for each attribute. Adder and remover for every list of listing
+    // and changer for password.
+
     private final String username;
     private String password;
     private ArrayList<Listing> myListings =  new ArrayList<>();
     private ArrayList<Listing> favourite = new ArrayList<>();
     private ArrayList<Comments> myComments =   new ArrayList<>();
+
+    /**
+     * Creates a new user with the given non-empty name and non-empty password.
+     * @param userName the username
+     * @param password the password
+     * @throws IllegalArgumentException if the password or name are empty
+     */
 
     public User(String userName, String password) {
         if (userName == null || password == null) {
