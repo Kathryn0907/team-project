@@ -1,0 +1,25 @@
+package use_case.signup;
+
+
+import Entities.User;
+
+/**
+ * DAO interface for the Signup Use Case.
+ */
+public interface SignupDataAccessInterface {
+
+
+    /**
+     * Checks if the given username exists.
+     * @param username the username to look for
+     * @return true if a user with the given username exists; false otherwise
+     */
+    boolean existUsername(String username);
+
+
+    /**
+     * Saves the user.
+     * @param user the user to save
+     */
+    void save(User user);
+}
