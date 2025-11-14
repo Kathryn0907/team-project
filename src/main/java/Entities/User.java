@@ -11,7 +11,7 @@ public class User {
     private String password;
     private ArrayList<Listing> myListings =  new ArrayList<>();
     private ArrayList<Listing> favourite = new ArrayList<>();
-    private ArrayList<Comments> myComments =   new ArrayList<>();
+    private ArrayList<Comment> myComments =   new ArrayList<>();
 
     /**
      * Creates a new user with the given non-empty name and non-empty password.
@@ -70,18 +70,18 @@ public class User {
         return favourite;
     }
 
-    public void addComment(Comments comment){
+    public void addComment(Comment comment){
         myComments.add(comment);
     }
 
-    public void removeComment(Comments comment){
+    public void removeComment(Comment comment){
         if(!myComments.contains(comment)){
             throw new IllegalArgumentException("Comment not found");
         }
         myComments.remove(comment);
     }
 
-    public ArrayList<Comments> getMyComments() {
+    public ArrayList<Comment> getMyComments() {
         return myComments;
     }
 }
