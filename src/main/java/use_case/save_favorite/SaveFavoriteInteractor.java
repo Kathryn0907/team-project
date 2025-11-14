@@ -1,0 +1,5 @@
+package use_case.save_favorite
+
+SaveFavoriteInteractor implements SaveFavoriteInputBoundary
+
+//unfinished
