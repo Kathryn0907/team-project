@@ -1,6 +1,5 @@
 package Entities;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -28,6 +27,7 @@ public class Listing {
 
     private String name;
     private User owner;
+    private String photoPath;
 
     // Imagga-related
     private List<String> tags;
@@ -52,6 +52,7 @@ public class Listing {
 
     public Listing(String name,
                    User owner,
+                   String photoPath,
                    List<String> tags,
                    List<String> mainCategories,
                    String description,
@@ -76,6 +77,7 @@ public class Listing {
 
         this.name = name;
         this.owner = owner;
+        this.photoPath = photoPath;
 
         this.tags = tags != null ? new ArrayList<>(tags) : new ArrayList<>();
         this.mainCategories = mainCategories != null ? new ArrayList<>(mainCategories) : new ArrayList<>();
