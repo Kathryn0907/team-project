@@ -1,5 +1,7 @@
 package interface_adapter.comment;
 import use_case.comment.*;
+import Entities.Listing;
+import Entities.User;
 
 public class CommentController {
 

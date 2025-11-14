@@ -1,4 +1,4 @@
-package entity;
+package Entities;
 
 import java.time.Instant;
 
@@ -15,5 +15,25 @@ public class Comment {
         this.user = user;
         this.listing = listing;
         this.createdAt = createdAt;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public Listing getListing() {
+        return listing;
+    }
+
+    public Instant getCreatedAt() {
+        return createdAt;
     }
 }
