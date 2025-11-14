@@ -64,6 +64,16 @@ public class Listing {
                    BuildingType buildingType,  // NEW
                    boolean active) {
 
+        if ("".equals(name)) {
+            throw new IllegalArgumentException("Name of listing cannot be empty");
+        }
+        if (owner == null) {
+            throw new IllegalArgumentException("Owner cannot be empty");
+        }
+        if ("".equals(description)) {
+            throw new IllegalArgumentException("Description cannot be empty");
+        }
+
         this.name = name;
         this.owner = owner;
 
