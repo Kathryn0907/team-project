@@ -1,0 +1,3 @@
+package use_case.check_favorite
+
+CheckFavoriteInteractor implements CheckFavoriteInputBoundary
