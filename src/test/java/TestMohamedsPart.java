@@ -27,51 +27,51 @@ public class TestMohamedsPart {
         // Create test listings using the new constructor
         Listing listing1 = new Listing(
                 "Modern Downtown Apartment",           // name
-                mohamed,                                // owner
-                Arrays.asList("modern", "downtown", "near subway station"), // tags
-                Arrays.asList("apartment"),            // mainCategories
-                "Beautiful modern apartment in the heart of downtown", // description
-                150.0,                                 // price
-                "Toronto Downtown",                    // address
-                2.5,                                   // distance
-                850.0,                                 // area
-                2,                                     // bedrooms
-                1,                                     // bathrooms
-                Listing.BuildingType.APARTMENT,        // buildingType
-                true                                   // active
-        );
+                mohamed, ,                                // owner
+                // tags
+                Arrays.asList("modern", "downtown", "near subway station"),            // mainCategories
+                Arrays.asList("apartment"), // description
+                "Beautiful modern apartment in the heart of downtown",                                 // price
+                150.0,                    // address
+                "Toronto Downtown",                                   // distance
+                2.5,                                  // area
+                850.0,                                      // bedrooms
+                2,                                      // bathrooms
+                1,         // buildingType
+                Listing.BuildingType.APARTMENT,                                    // active
+                true);
 
         Listing listing2 = new Listing(
                 "Lakeside Villa with Pool",            // name
-                jane,                                  // owner
-                Arrays.asList("near the lake", "luxury", "pool", "good view"), // tags
-                Arrays.asList("villa"),                // mainCategories
-                "Stunning lakeside villa with private pool", // description
-                450.0,                                 // price
-                "Muskoka Lake",                        // address
-                75.0,                                  // distance
-                2500.0,                                // area
-                4,                                     // bedrooms
-                3,                                     // bathrooms
-                Listing.BuildingType.VILLA,            // buildingType
-                true                                   // active
-        );
+                jane, ,                                  // owner
+                // tags
+                Arrays.asList("near the lake", "luxury", "pool", "good view"),                // mainCategories
+                Arrays.asList("villa"), // description
+                "Stunning lakeside villa with private pool",                                 // price
+                450.0,                        // address
+                "Muskoka Lake",                                  // distance
+                75.0,                                 // area
+                2500.0,                                      // bedrooms
+                4,                                      // bathrooms
+                3,             // buildingType
+                Listing.BuildingType.VILLA,                                    // active
+                true);
 
         Listing listing3 = new Listing(
                 "Modern Condo",                        // name
-                mohamed,                               // owner
-                Arrays.asList("modern", "downtown"),   // tags
-                Arrays.asList("condo"),                // mainCategories
-                "Sleek modern condo on King Street",   // description
-                200.0,                                 // price
-                "King Street",                         // address
-                1.5,                                   // distance
-                1000.0,                                // area
-                2,                                     // bedrooms
-                2,                                     // bathrooms
-                Listing.BuildingType.CONDO,            // buildingType
-                true                                   // active
-        );
+                mohamed, ,                               // owner
+                // tags
+                Arrays.asList("modern", "downtown"),                // mainCategories
+                Arrays.asList("condo"),   // description
+                "Sleek modern condo on King Street",                                 // price
+                200.0,                         // address
+                "King Street",                                   // distance
+                1.5,                                 // area
+                1000.0,                                      // bedrooms
+                2,                                      // bathrooms
+                2,             // buildingType
+                Listing.BuildingType.CONDO,                                    // active
+                true);
 
         // Add listings to data access
         dataAccess.addListing(listing1);
