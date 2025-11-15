@@ -8,14 +8,11 @@ import Entities.Listing;
 public class CreateListingInteractor implements CreateListingInputBoundary {
     private final CreateListingDataAccessInterface listingDataAccessObject;
     private final CreateListingOutputBoundary listingPresenter;
-    private final Listing listing;
 
     public CreateListingInteractor(CreateListingDataAccessInterface listingDataAccessObject,
-                                   CreateListingOutputBoundary listingPresenter,
-                                   Listing listing) {
+                                   CreateListingOutputBoundary listingPresenter) {
         this.listingDataAccessObject = listingDataAccessObject;
         this.listingPresenter = listingPresenter;
-        this.listing = this.listing;
     }
     @Override
     public void execute(CreateListingInputData createListingInputData) {
@@ -27,11 +24,24 @@ public class CreateListingInteractor implements CreateListingInputBoundary {
         }
         else {
             final Listing listing = new Listing(createListingInputData.getName(),
+                    createListingInputData.getOwner(),
+                    createListingInputData.getPhotoPath(),
                     createListingInputData.getTags(),
-                    createListingInputData.getDescription());
+                    createListingInputData.getMainCategories(),
+                    createListingInputData.getDescription(),
+                    createListingInputData.getPrice(),
+                    createListingInputData.getAddress(),
+                    createListingInputData.getDistance(),
+                    createListingInputData.getArea(),
+                    createListingInputData.getBedrooms(),
+                    createListingInputData.getBathrooms(),
+                    createListingInputData.getBuildingType(),
+                    true
+                    );
             listingDataAccessObject.save(listing);
 
-            final CreateListingOutputData createListingOutputData = new CreateListingOutputData(listing.getName());
+            final CreateListingOutputData createListingOutputData = new CreateListingOutputData(listing.getOwner(),
+                    listing.getName(), listing.getPhotoPath());
             listingPresenter.prepareSuccessView(createListingOutputData);
         }
     }
