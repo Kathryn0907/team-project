@@ -1,6 +1,5 @@
 package Entities;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -28,6 +27,7 @@ public class Listing {
 
     private String name;
     private User owner;
+    private String photoPath;
 
     // Imagga-related
     private List<String> tags;
@@ -52,6 +52,7 @@ public class Listing {
 
     public Listing(String name,
                    User owner,
+                   String photoPath,
                    List<String> tags,
                    List<String> mainCategories,
                    String description,
@@ -64,8 +65,20 @@ public class Listing {
                    BuildingType buildingType,  // NEW
                    boolean active) {
 
+        if ("".equals(name)) {
+            throw new IllegalArgumentException("Name of listing cannot be empty");
+        }
+        // if (owner == null) {
+            // throw new IllegalArgumentException("Owner cannot be empty");
+        //}
+        // This code will be included in the final iteration, this is just for the demo
+        if ("".equals(description)) {
+            throw new IllegalArgumentException("Description cannot be empty");
+        }
+
         this.name = name;
         this.owner = owner;
+        this.photoPath = photoPath;
 
         this.tags = tags != null ? new ArrayList<>(tags) : new ArrayList<>();
         this.mainCategories = mainCategories != null ? new ArrayList<>(mainCategories) : new ArrayList<>();
@@ -110,6 +123,10 @@ public class Listing {
     public void setOwner(User owner) {
         this.owner = owner;
     }
+
+    public String getPhotoPath() { return photoPath; }
+
+    public void setPhotoPath(String photoPath) { this.photoPath = photoPath; }
 
     public List<String> getTags() {
         return Collections.unmodifiableList(tags);

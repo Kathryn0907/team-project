@@ -11,7 +11,7 @@ public class User {
     private String password;
     private ArrayList<Listing> myListings =  new ArrayList<>();
     private ArrayList<Listing> favourite = new ArrayList<>();
-    private ArrayList<Comments> myComments =   new ArrayList<>();
+    private ArrayList<Comment> myComments =   new ArrayList<>();
 
     /**
      * Creates a new user with the given non-empty name and non-empty password.
@@ -41,10 +41,12 @@ public class User {
     }
 
     public void addMyListing(Listing listing){
-        if(!myListings.contains(listing)){
-            throw new IllegalArgumentException("Listing not found");
+        if(listing == null){
+            throw new IllegalArgumentException("Listing cannot be null");
         }
-        myListings.add(listing);
+        if(!myListings.contains(listing)){
+            myListings.add(listing);
+        }
     }
 
     public void removeMyListing(Listing listing){
@@ -63,25 +65,25 @@ public class User {
         if(!favourite.contains(listing)){
             throw new IllegalArgumentException("Listing not found");
         }
-        myListings.remove(listing);
+        favourite.remove(listing);
     }
 
     public ArrayList<Listing> getFavourite() {
         return favourite;
     }
 
-    public void addComment(Comments comment){
+    public void addComment(Comment comment){
         myComments.add(comment);
     }
 
-    public void removeComment(Comments comment){
+    public void removeComment(Comment comment){
         if(!myComments.contains(comment)){
             throw new IllegalArgumentException("Comment not found");
         }
         myComments.remove(comment);
     }
 
-    public ArrayList<Comments> getMyComments() {
+    public ArrayList<Comment> getMyComments() {
         return myComments;
     }
 }
