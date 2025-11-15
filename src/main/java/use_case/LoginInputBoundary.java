@@ -1,4 +1,4 @@
-package use_case.login;
+package use_case;
 
 /**
  * Input Boundary for actions which are related to logging in.

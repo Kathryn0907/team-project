@@ -4,8 +4,8 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.signup.SignupViewModel;
-import use_case.login.LoginOutputBoundary;
-import use_case.login.LoginOutputData;
+import use_case.LoginOutputBoundary;
+import use_case.LoginOutputData;
 
 /**
  * The Presenter for the Login Use Case.

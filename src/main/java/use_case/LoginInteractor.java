@@ -1,4 +1,4 @@
-package use_case.login;
+package use_case;
 
 import Entities.User;
 
