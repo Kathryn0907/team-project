@@ -68,9 +68,10 @@ public class Listing {
         if ("".equals(name)) {
             throw new IllegalArgumentException("Name of listing cannot be empty");
         }
-        if (owner == null) {
-            throw new IllegalArgumentException("Owner cannot be empty");
-        }
+        // if (owner == null) {
+            // throw new IllegalArgumentException("Owner cannot be empty");
+        //}
+        // This code will be included in the final iteration, this is just for the demo
         if ("".equals(description)) {
             throw new IllegalArgumentException("Description cannot be empty");
         }
@@ -122,6 +123,10 @@ public class Listing {
     public void setOwner(User owner) {
         this.owner = owner;
     }
+
+    public String getPhotoPath() { return photoPath; }
+
+    public void setPhotoPath(String photoPath) { this.photoPath = photoPath; }
 
     public List<String> getTags() {
         return Collections.unmodifiableList(tags);
