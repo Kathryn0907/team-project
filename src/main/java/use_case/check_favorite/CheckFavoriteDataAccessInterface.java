@@ -1,7 +1,4 @@
-package use_case.check_favorite;
-
-import Entities.User;
-
+package use_case.check_favorite
 
 public interface CheckFavoriteDataAccessInterface {
     User getUser(String username);

@@ -1,8 +1,4 @@
-package use_case.save_favorite;
-
-import Entities.User;
-import Entities.Listing;
-
+package use_case.save_favorite
 
 public interface SaveFavoriteDataAccessInterface {
     User getUser(String username);
