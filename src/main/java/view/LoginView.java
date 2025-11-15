@@ -3,7 +3,6 @@ package view;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginState;
 import interface_adapter.login.LoginViewModel;
-import view.LabelTextPanel;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -29,7 +28,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     private final JLabel passwordErrorField = new JLabel();
 
     private final JButton logIn;
-    private final JButton cancel;
+    private final JButton toSignup;
     private LoginController loginController = null;
 
     public LoginView(LoginViewModel loginViewModel) {
@@ -48,8 +47,8 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         final JPanel buttons = new JPanel();
         logIn = new JButton("log in");
         buttons.add(logIn);
-        cancel = new JButton("cancel");
-        buttons.add(cancel);
+        toSignup = new JButton("signup");
+        buttons.add(toSignup);
 
         logIn.addActionListener(
                 new ActionListener() {
@@ -66,7 +65,13 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                 }
         );
 
-        cancel.addActionListener(this);
+        toSignup.addActionListener(new ActionListener() {
+                                     public void actionPerformed(ActionEvent e) {
+                                         loginController.switchToSignup();
+                                     }
+                                 }
+
+        );
 
         usernameInputField.getDocument().addDocumentListener(new DocumentListener() {
 
