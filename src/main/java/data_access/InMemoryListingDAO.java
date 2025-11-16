@@ -8,13 +8,13 @@ import use_case.extract_tags.ExtractTagsDataAccessInterface;
 
 import java.util.*;
 
-public class ListingDataAccessObject implements SearchListingDataAccessInterface,
+public class InMemoryListingDAO implements SearchListingDataAccessInterface,
         MyListingsDataAccessInterface,
         ExtractTagsDataAccessInterface {
     private final ArrayList<Listing> listings;
     private final HashMap<String, User> users;
 
-    public ListingDataAccessObject() {
+    public InMemoryListingDAO() {
         this.listings = new ArrayList<>();
         this.users = new HashMap<>();
     }
