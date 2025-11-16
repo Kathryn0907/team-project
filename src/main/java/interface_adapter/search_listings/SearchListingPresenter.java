@@ -2,6 +2,7 @@ package interface_adapter.search_listings;
 
 import use_case.search_listings.SearchListingOutputBoundary;
 import use_case.search_listings.SearchListingOutputData;
+import java.util.ArrayList;
 
 public class SearchListingPresenter implements SearchListingOutputBoundary {
     private SearchListingViewModel viewModel;
@@ -20,9 +21,10 @@ public class SearchListingPresenter implements SearchListingOutputBoundary {
     }
 
     @Override
-    public void prepareFailView(String errorMessage) {
+    public void prepareFailView(SearchListingOutputData outputData) {
         SearchListingState state = new SearchListingState();
-        state.setErrorMessage(errorMessage);
+        state.setErrorMessage(outputData.getErrorMessage());
+        state.setListings(outputData.getListings());  // Now we have the fallback listings!
         state.setSuccess(false);
         viewModel.setState(state);
         viewModel.firePropertyChanged();

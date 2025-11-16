@@ -1,6 +1,6 @@
 package app;
 
-import data_access.ListingDataAccessObject;
+import data_access.InMemoryListingDAO;
 import interface_adapter.search_listings.*;
 import use_case.search_listings.*;
 import interface_adapter.search_listings.SearchListingController;
@@ -10,7 +10,7 @@ public class SearchListingUseCaseFactory {
 
     public static SearchListingController createSearchListingUseCase(
             SearchListingViewModel viewModel,
-            ListingDataAccessObject dataAccess) {
+            InMemoryListingDAO dataAccess) {
 
         SearchListingOutputBoundary presenter = new SearchListingPresenter(viewModel);
         SearchListingInputBoundary interactor = new SearchListingInteractor(dataAccess, presenter);
