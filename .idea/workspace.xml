@@ -4,8 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0b2955ad-0397-4abd-8f79-c1958a423342" name="Changes" comment="filter classes">
-      <change beforePath="$PROJECT_DIR$/src/test/java/use_case/Mohameds/TestMohamedsPart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/TestMohamedsPart.java" afterDir="false" />
+    <list default="true" id="0b2955ad-0397-4abd-8f79-c1958a423342" name="Changes" comment="resolve">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,6 +78,7 @@
       <recent name="C:\Users\Brooklyn\IdeaProjects\team-project\src\main\java\view" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="" />
       <recent name="use_case.login" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -312,7 +313,23 @@
       <option name="project" value="LOCAL" />
       <updated>1763349340419</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="resolve">
+      <option name="closed" value="true" />
+      <created>1763419609778</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1763419609778</updated>
+    </task>
+    <task id="LOCAL-00020" summary="resolve">
+      <option name="closed" value="true" />
+      <created>1763419737322</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1763419737322</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -340,6 +357,7 @@
     <MESSAGE value="Cancel account" />
     <MESSAGE value="ListingDataAccessObject now implements CancelAccountDataAccessInterface for now. havent write the tests." />
     <MESSAGE value="Write the tests for Cancel account" />
-    <option name="LAST_COMMIT_MESSAGE" value="Write the tests for Cancel account" />
+    <MESSAGE value="resolve" />
+    <option name="LAST_COMMIT_MESSAGE" value="resolve" />
   </component>
 </project>
