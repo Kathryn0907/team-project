@@ -4,67 +4,76 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+    <list default="true" id="b241399e-bc1d-4260-83ed-bef40cd6b77c" name="Changes" comment="Merge branch 'main' of https://github.com/Kathryn0907/team-project&#10;&#10;# Conflicts:&#10;#&#9;.idea/misc.xml&#10;#&#9;.idea/workspace.xml">
+      <change afterPath="$PROJECT_DIR$/src/main/java/app/CheckFavoriteUseCaseFactory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/app/SaveFavoriteUseCaseFactory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/view/CheckFavoriteView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/test_favorite/test_favorite.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/data_access/InMemoryListingDataAccessObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/data_access/InMemoryListingDataAccessObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/use_case/check_favorite/CheckFavoriteInputBoundary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/use_case/check_favorite/CheckFavoriteInputBoundary.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/use_case/check_favorite/CheckFavoriteInputData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/use_case/check_favorite/CheckFavoriteInputData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/use_case/check_favorite/CheckFavoriteInteractor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/use_case/check_favorite/CheckFavoriteInteractor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/use_case/check_favorite/CheckFavoriteOutputBoundary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/use_case/check_favorite/CheckFavoriteOutputBoundary.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/use_case/check_favorite/CheckFavoriteOutputData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/use_case/check_favorite/CheckFavoriteOutputData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/use_case/save_favorite/SaveFavoriteInputBoundary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/use_case/save_favorite/SaveFavoriteInputBoundary.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/use_case/save_favorite/SaveFavoriteInputData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/use_case/save_favorite/SaveFavoriteInputData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/use_case/save_favorite/SaveFavoriteInteractor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/use_case/save_favorite/SaveFavoriteInteractor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/use_case/save_favorite/SaveFavoriteOutputBoundary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/use_case/save_favorite/SaveFavoriteOutputBoundary.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/use_case/save_favorite/SaveFavoriteOutputData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/use_case/save_favorite/SaveFavoriteOutputData.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-              <list>
-              </list>
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-      </map>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
     </option>
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectViewState">
-    <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showLibraryContents" value="true" />
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Application.SearchViewTest.executor": "Run",
+    "Application.TestFavoriteFeatures.executor": "Run",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "kotlin-language-version-configured": "true",
-    "project.structure.proportion": "0.15",
+    "git-widget-placeholder": "jonathancode"
   }
 }]]></component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.25557.131" />
-      </set>
-    </attachedChunks>
+  <component name="RunManager" selected="Application.TestFavoriteFeatures">
+    <configuration name="SearchViewTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="SearchViewTest" />
+      <module name="TeamProject" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestFavoriteFeatures" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="test_favorite.TestFavoriteFeatures" />
+      <module name="TeamProject" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="test_favorite.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.TestFavoriteFeatures" />
+        <item itemvalue="Application.SearchViewTest" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="TaskManager">
-    <task active="true" id="Default" summary="Default task">
-      <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
-    </task>
-      <option name="closed" value="true" />
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-    </task>
-      <option name="closed" value="true" />
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-    </task>
-      <option name="closed" value="true" />
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-    </task>
-      <option name="closed" value="true" />
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-    </task>
     <servers />
-  </component>
-  <component name="VcsManagerConfiguration">
   </component>
 </project>
