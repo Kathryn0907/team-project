@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="0b2955ad-0397-4abd-8f79-c1958a423342" name="Changes" comment="Write the tests for Cancel account" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="favourite_dataAccessInterfaces_fix" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;bBrozedd&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Kathryn0907/team-project.git&quot;,
+    &quot;accountId&quot;: &quot;a0ec3eee-60ae-4907-b48d-7b1ae1093556&quot;
+  }
+}</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="35J2N3EnyhtPiqW9RTHZ0gzR9SW" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "JUnit.CancelAccountInteractorTest.testSuccessCancelAccount.executor": "Run",
+    "JUnit.LoginInteractorTest.executor": "Run",
+    "JUnit.LoginInteractorTest.successTest.executor": "Run",
+    "JUnit.LogoutInteractorTest.executor": "Run",
+    "JUnit.SignupInteractorTest.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
+    "git-widget-placeholder": "#21 on cancel__account",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/Brooklyn/IdeaProjects/team-project",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "inlay.hints"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Brooklyn\IdeaProjects\team-project\src\main\java" />
+      <recent name="C:\Users\Brooklyn\IdeaProjects\team-project\src\main\java\view" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="use_case.login" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="use_case.logout" />
+      <recent name="use_case.signup" />
+      <recent name="" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.CancelAccountInteractorTest.testSuccessCancelAccount">
+    <configuration name="CancelAccountInteractorTest.testSuccessCancelAccount" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="TeamProject" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="use_case.cancel_account.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="use_case.cancel_account" />
+      <option name="MAIN_CLASS_NAME" value="use_case.cancel_account.CancelAccountInteractorTest" />
+      <option name="METHOD_NAME" value="testSuccessCancelAccount" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LoginInteractorTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="TeamProject" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="use_case.login.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="use_case.login" />
+      <option name="MAIN_CLASS_NAME" value="use_case.login.LoginInteractorTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LoginInteractorTest.successTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="TeamProject" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="use_case.login.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="use_case.login" />
+      <option name="MAIN_CLASS_NAME" value="use_case.login.LoginInteractorTest" />
+      <option name="METHOD_NAME" value="successTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="team-project" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="team-project" />
+      <option name="filePath" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.CancelAccountInteractorTest.testSuccessCancelAccount" />
+        <item itemvalue="JUnit.LoginInteractorTest.successTest" />
+        <item itemvalue="JUnit.LoginInteractorTest" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.25557.131" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0b2955ad-0397-4abd-8f79-c1958a423342" name="Changes" comment="" />
+      <created>1762813810537</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1762813810537</updated>
+    </task>
+    <task id="LOCAL-00001" summary="User class">
+      <option name="closed" value="true" />
+      <created>1762820178345</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1762820178345</updated>
+    </task>
+    <task id="LOCAL-00002" summary="User class">
+      <option name="closed" value="true" />
+      <created>1762831712622</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1762831712622</updated>
+    </task>
+    <task id="LOCAL-00003" summary="User class">
+      <option name="closed" value="true" />
+      <created>1762832510176</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1762832510176</updated>
+    </task>
+    <task id="LOCAL-00004" summary="User class">
+      <option name="closed" value="true" />
+      <created>1762832855565</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1762832855565</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Change JDK and git ignore so they fit with main">
+      <option name="closed" value="true" />
+      <created>1762833106277</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1762833106277</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Signup package #1 commit">
+      <option name="closed" value="true" />
+      <created>1763073968823</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1763073968823</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Signup package #1 commit">
+      <option name="closed" value="true" />
+      <created>1763089001457</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1763089001457</updated>
+    </task>
+    <task id="LOCAL-00008" summary="some account managing functions inherit from ca-lab,made some chage so it fits with our User class">
+      <option name="closed" value="true" />
+      <created>1763091146018</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1763091146018</updated>
+    </task>
+    <task id="LOCAL-00009" summary="#2 commit, just done the signin UI change">
+      <option name="closed" value="true" />
+      <created>1763092582585</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1763092582585</updated>
+    </task>
+    <task id="LOCAL-00010" summary="#2 commit, just done the signin UI change">
+      <option name="closed" value="true" />
+      <created>1763092733614</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1763092733614</updated>
+    </task>
+    <task id="LOCAL-00011" summary="some changes to view. Empty the LoggedInView class.">
+      <option name="closed" value="true" />
+      <created>1763182141643</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1763182141643</updated>
+    </task>
+    <task id="LOCAL-00012" summary="InMemoryUserDataAccessObject added, and tests for signup,login,logout">
+      <option name="closed" value="true" />
+      <created>1763183861015</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1763183861015</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Manage the java file so they looks cleaner">
+      <option name="closed" value="true" />
+      <created>1763184433956</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1763184433956</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Add import for favourite data access interfaces.">
+      <option name="closed" value="true" />
+      <created>1763184807289</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1763184807289</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Cancel account function constructed">
+      <option name="closed" value="true" />
+      <created>1763341315438</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1763341315438</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Cancel account">
+      <option name="closed" value="true" />
+      <created>1763342564144</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1763342564144</updated>
+    </task>
+    <task id="LOCAL-00017" summary="ListingDataAccessObject now implements CancelAccountDataAccessInterface for now. havent write the tests.">
+      <option name="closed" value="true" />
+      <created>1763347451306</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1763347451306</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Write the tests for Cancel account">
+      <option name="closed" value="true" />
+      <created>1763349340419</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1763349340419</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="User class" />
+    <MESSAGE value="Change JDK and git ignore so they fit with main" />
+    <MESSAGE value="Signup package #1 commit" />
+    <MESSAGE value="some account managing functions inherit from ca-lab,made some chage so it fits with our User class" />
+    <MESSAGE value="#2 commit, just done the signin UI change" />
+    <MESSAGE value="some changes to view. Empty the LoggedInView class." />
+    <MESSAGE value="InMemoryUserDataAccessObject added, and tests for signup,login,logout" />
+    <MESSAGE value="Manage the java file so they looks cleaner" />
+    <MESSAGE value="Add import for favourite data access interfaces." />
+    <MESSAGE value="Cancel account function constructed" />
+    <MESSAGE value="Cancel account" />
+    <MESSAGE value="ListingDataAccessObject now implements CancelAccountDataAccessInterface for now. havent write the tests." />
+    <MESSAGE value="Write the tests for Cancel account" />
+    <option name="LAST_COMMIT_MESSAGE" value="Write the tests for Cancel account" />
+  </component>
+</project>
