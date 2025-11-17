@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0b2955ad-0397-4abd-8f79-c1958a423342" name="Changes" comment="Write the tests for Cancel account" />
+    <list default="true" id="0b2955ad-0397-4abd-8f79-c1958a423342" name="Changes" comment="filter classes">
+      <change beforePath="$PROJECT_DIR$/src/test/java/use_case/Mohameds/TestMohamedsPart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/TestMohamedsPart.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -48,28 +50,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "JUnit.CancelAccountInteractorTest.testSuccessCancelAccount.executor": "Run",
-    "JUnit.LoginInteractorTest.executor": "Run",
-    "JUnit.LoginInteractorTest.successTest.executor": "Run",
-    "JUnit.LogoutInteractorTest.executor": "Run",
-    "JUnit.SignupInteractorTest.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
-    "git-widget-placeholder": "#21 on cancel__account",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Brooklyn/IdeaProjects/team-project",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "inlay.hints"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;JUnit.CancelAccountInteractorTest.testSuccessCancelAccount.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.LoginInteractorTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.LoginInteractorTest.successTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.LogoutInteractorTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.SignupInteractorTest.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;#21 on cancel__account&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Brooklyn/IdeaProjects/team-project&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;inlay.hints&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Brooklyn\IdeaProjects\team-project\src\main\java" />
