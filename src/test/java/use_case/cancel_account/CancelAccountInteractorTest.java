@@ -2,7 +2,7 @@ package use_case.cancel_account;
 
 import Entities.Listing;
 import Entities.User;
-import data_access.ListingDataAccessObject;
+import data_access.InMemoryListingDataAccessObject;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -13,7 +13,7 @@ public class CancelAccountInteractorTest {
     public void testSuccessCancelAccount() {
 
         CancelAccountInputData inputData = new CancelAccountInputData("Jason", "password");
-        ListingDataAccessObject userRepository = new ListingDataAccessObject();
+        InMemoryListingDataAccessObject userRepository = new InMemoryListingDataAccessObject();
 
         User user1 = new User("Jason", "password");
         userRepository.addUser(user1);

@@ -16,7 +16,7 @@ public class TestMohamedsPart {
         System.out.println("========================================\n");
 
         // Initialize data access
-        ListingDataAccessObject dataAccess = new ListingDataAccessObject();
+        InMemoryListingDataAccessObject dataAccess = new InMemoryListingDataAccessObject();
 
         // Create test users
         User mohamed = new User("mohamed", "pass123");
