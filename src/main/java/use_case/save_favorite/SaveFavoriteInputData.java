@@ -1,4 +1,4 @@
-package use_case.save_favorite
+package use_case.save_favorite;
 
 public class SaveFavoriteInputData {
     private final String username;

@@ -2,7 +2,7 @@ package use_case.login;
 
 import data_access.InMemoryUserDataAccessObject;
 import Entities.User;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
