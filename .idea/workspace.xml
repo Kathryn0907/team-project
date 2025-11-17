@@ -4,23 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b241399e-bc1d-4260-83ed-bef40cd6b77c" name="Changes" comment="Merge branch 'main' of https://github.com/Kathryn0907/team-project&#10;&#10;# Conflicts:&#10;#&#9;.idea/misc.xml&#10;#&#9;.idea/workspace.xml">
-      <change afterPath="$PROJECT_DIR$/src/main/java/app/CheckFavoriteUseCaseFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/app/SaveFavoriteUseCaseFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/view/CheckFavoriteView.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/test_favorite/test_favorite.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/data_access/InMemoryListingDataAccessObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/data_access/InMemoryListingDataAccessObject.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/use_case/check_favorite/CheckFavoriteInputBoundary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/use_case/check_favorite/CheckFavoriteInputBoundary.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/use_case/check_favorite/CheckFavoriteInputData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/use_case/check_favorite/CheckFavoriteInputData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/use_case/check_favorite/CheckFavoriteInteractor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/use_case/check_favorite/CheckFavoriteInteractor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/use_case/check_favorite/CheckFavoriteOutputBoundary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/use_case/check_favorite/CheckFavoriteOutputBoundary.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/use_case/check_favorite/CheckFavoriteOutputData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/use_case/check_favorite/CheckFavoriteOutputData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/use_case/save_favorite/SaveFavoriteInputBoundary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/use_case/save_favorite/SaveFavoriteInputBoundary.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/use_case/save_favorite/SaveFavoriteInputData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/use_case/save_favorite/SaveFavoriteInputData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/use_case/save_favorite/SaveFavoriteInteractor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/use_case/save_favorite/SaveFavoriteInteractor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/use_case/save_favorite/SaveFavoriteOutputBoundary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/use_case/save_favorite/SaveFavoriteOutputBoundary.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/use_case/save_favorite/SaveFavoriteOutputData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/use_case/save_favorite/SaveFavoriteOutputData.java" afterDir="false" />
+    <list default="true" id="b241399e-bc1d-4260-83ed-bef40cd6b77c" name="Changes" comment="I 'finished' my use cases (except for MongoDb implementation yet) and i edited Comments to Comment">
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,6 +19,22 @@
       </list>
     </option>
   </component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/Kathryn0907/team-project.git",
+    "accountId": "f2d0cbcd-7215-43b6-b10c-d19dcaba6063"
+  },
+  "recentNewPullRequestHead": {
+    "server": {
+      "useHttp": false,
+      "host": "github.com",
+      "port": null,
+      "suffix": null
+    },
+    "owner": "Kathryn0907",
+    "repository": "team-project"
+  }
+}]]></component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
@@ -42,7 +43,7 @@
     "Application.SearchViewTest.executor": "Run",
     "Application.TestFavoriteFeatures.executor": "Run",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "git-widget-placeholder": "jonathancode"
+    "git-widget-placeholder": "#27 on jonathancode"
   }
 }]]></component>
   <component name="RunManager" selected="Application.TestFavoriteFeatures">
@@ -74,6 +75,19 @@
     </recent_temporary>
   </component>
   <component name="TaskManager">
+    <task id="LOCAL-00001" summary="I 'finished' my use cases (except for MongoDb implementation yet) and i edited Comments to Comment">
+      <option name="closed" value="true" />
+      <created>1763422791341</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1763422791341</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="I 'finished' my use cases (except for MongoDb implementation yet) and i edited Comments to Comment" />
+    <option name="LAST_COMMIT_MESSAGE" value="I 'finished' my use cases (except for MongoDb implementation yet) and i edited Comments to Comment" />
   </component>
 </project>
