@@ -6,13 +6,18 @@ import use_case.create_listing.CreateListingDataAccessInterface;
 import use_case.search_listings.SearchListingDataAccessInterface;
 import use_case.my_listings.MyListingsDataAccessInterface;
 import use_case.extract_tags.ExtractTagsDataAccessInterface;
+import use_case.save_favorite.SaveFavoriteDataAccessInterface;
+import use_case.check_favorite.CheckFavoriteDataAccessInterface;
 
 import java.util.*;
 
 public class InMemoryListingDataAccessObject implements SearchListingDataAccessInterface,
         CreateListingDataAccessInterface,
         MyListingsDataAccessInterface,
-        ExtractTagsDataAccessInterface {
+        ExtractTagsDataAccessInterface,
+        SaveFavoriteDataAccessInterface,
+        CheckFavoriteDataAccessInterface {
+
     private final ArrayList<Listing> listings;
     private final HashMap<String, User> users;
 
@@ -53,6 +58,12 @@ public class InMemoryListingDataAccessObject implements SearchListingDataAccessI
         listings.add(listing);
     }
 
+    @Override
+    public void save(Listing listing) {
+        listings.removeIf(l -> l.getName().equals(listing.getName()));
+        listings.add(listing);
+    }
+
     public void addListing(Listing listing) {
         listings.add(listing);
     }
@@ -61,9 +72,14 @@ public class InMemoryListingDataAccessObject implements SearchListingDataAccessI
         users.put(user.getUsername(), user);
     }
 
+    // SaveFavoriteDataAccessInterface methods
     @Override
-    public void save(Listing listing) {
-        listings.removeIf(l -> l.getName().equals(listing.getName()));
-        listings.add(listing);
+    public User getUser(String username) {
+        return users.get(username);
+    }
+
+    @Override
+    public void saveUser(User user) {
+        users.put(user.getUsername(), user);
     }
 }
