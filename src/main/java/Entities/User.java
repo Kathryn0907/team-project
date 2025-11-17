@@ -41,10 +41,12 @@ public class User {
     }
 
     public void addMyListing(Listing listing){
-        if(!myListings.contains(listing)){
-            throw new IllegalArgumentException("Listing not found");
+        if(listing == null){
+            throw new IllegalArgumentException("Listing cannot be null");
         }
-        myListings.add(listing);
+        if(!myListings.contains(listing)){
+            myListings.add(listing);
+        }
     }
 
     public void removeMyListing(Listing listing){
@@ -63,7 +65,7 @@ public class User {
         if(!favourite.contains(listing)){
             throw new IllegalArgumentException("Listing not found");
         }
-        myListings.remove(listing);
+        favourite.remove(listing);
     }
 
     public ArrayList<Listing> getFavourite() {
