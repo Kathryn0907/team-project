@@ -9,7 +9,7 @@ import interface_adapter.ViewModel;
 public class CreateListingViewModel extends ViewModel<CreateListingState> {
 
     public static final String TITLE_LABEL = "Create Listing View";
-    public static final String NAME_LABEL = "Listing Title";
+    public static final String NAME_LABEL = "Listing Name";
     public static final String DESCRIPTION_LABEL = "Property Description";
     public static final String PHOTO_LABEL = "Upload Photo";
 
@@ -20,6 +20,4 @@ public class CreateListingViewModel extends ViewModel<CreateListingState> {
         super("create listing");
         setState(new CreateListingState());
     }
-
-
 }
