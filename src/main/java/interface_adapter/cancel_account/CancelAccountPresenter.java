@@ -1,8 +1,6 @@
 package interface_adapter.cancel_account;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.logged_in.LoggedInState;
-import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginState;
 import interface_adapter.login.LoginViewModel;
 import use_case.cancel_account.CancelAccountOutputBoundary;
@@ -37,16 +35,25 @@ public class CancelAccountPresenter implements CancelAccountOutputBoundary {
         state.setUsername("");
         cancelAccountViewModel.firePropertyChange();
 
+        final LoginState loginState = loginViewModel.getState();
+        loginState.setCancelAccountSuccessMsg("The account with username " +
+                cancelAccountOutputData.getUsername() + " has been successfully canceled.");
+        loginViewModel.firePropertyChange();
 
+        this.viewManagerModel.setState(loginViewModel.getViewName());
+        this.viewManagerModel.firePropertyChange();
     }
 
     @Override
     public void prepareFailure(String message) {
-
+        final CancelAccountState state = cancelAccountViewModel.getState();
+        state.setCancelAccountError(message);
+        cancelAccountViewModel.firePropertyChange();
     }
 
     @Override
     public void back() {
 
+        // Back to profile, wait for profile view.
     }
 }

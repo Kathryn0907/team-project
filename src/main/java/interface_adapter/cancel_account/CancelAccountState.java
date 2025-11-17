@@ -21,4 +21,5 @@ public class CancelAccountState {
     public void setPassword(String password) {
         this.password = password;
     }
+
 }

@@ -8,6 +8,9 @@ public class LoginState {
     private String loginError;
     private String password = "";
 
+    private String cancelAccountSuccessMsg;
+
+
     public String getUsername() {
         return username;
     }
@@ -20,6 +23,8 @@ public class LoginState {
         return password;
     }
 
+    public String getCancelAccountSuccessMsg() {return cancelAccountSuccessMsg;}
+
     public void setUsername(String username) {
         this.username = username;
     }
@@ -30,6 +35,10 @@ public class LoginState {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setCancelAccountSuccessMsg(String cancelAccountSuccessMsg) {
+        this.cancelAccountSuccessMsg = cancelAccountSuccessMsg;
     }
 
 }
