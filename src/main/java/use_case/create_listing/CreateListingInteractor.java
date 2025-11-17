@@ -17,10 +17,10 @@ public class CreateListingInteractor implements CreateListingInputBoundary {
     @Override
     public void execute(CreateListingInputData createListingInputData) {
         if ("".equals(createListingInputData.getName())) {
-            listingPresenter.prepareFailView("Name cannot be empty");
+            listingPresenter.prepareFailView("Listing Name cannot be empty");
         }
         else if ("".equals(createListingInputData.getDescription())) {
-            listingPresenter.prepareFailView("Description cannot be empty");
+            listingPresenter.prepareFailView("Property description cannot be empty");
         }
         else {
             final Listing listing = new Listing(createListingInputData.getName(),
@@ -40,8 +40,8 @@ public class CreateListingInteractor implements CreateListingInputBoundary {
                     );
             listingDataAccessObject.save(listing);
 
-            final CreateListingOutputData createListingOutputData = new CreateListingOutputData(listing.getOwner(),
-                    listing.getName(), listing.getPhotoPath());
+            final CreateListingOutputData createListingOutputData = new CreateListingOutputData(
+                    listing.getName(), listing.getDescription(), listing.getPhotoPath());
             listingPresenter.prepareSuccessView(createListingOutputData);
         }
     }
@@ -49,5 +49,4 @@ public class CreateListingInteractor implements CreateListingInputBoundary {
     public void swtichToProfileView() {
         listingPresenter.switchToProfileView();
     }
-
 }
