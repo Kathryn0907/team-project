@@ -3,3 +3,12 @@
 /workspace.xml
 # Editor-based HTTP Client requests
 /httpRequests/
+# API Keys and Secrets
+config.properties
+*.env
+.env
+
+# IDE files
+.idea/
+*.iml
+target/
