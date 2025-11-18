@@ -27,7 +27,7 @@ public class TestMohamedsPart {
         // Create test listings using the new constructor
         Listing listing1 = new Listing(
                 "Modern Downtown Apartment",           // name
-                mohamed, ,                                // owner
+                mohamed, null ,                                // owner
                 // tags
                 Arrays.asList("modern", "downtown", "near subway station"),            // mainCategories
                 Arrays.asList("apartment"), // description
@@ -43,7 +43,7 @@ public class TestMohamedsPart {
 
         Listing listing2 = new Listing(
                 "Lakeside Villa with Pool",            // name
-                jane, ,                                  // owner
+                jane, null ,                                  // owner
                 // tags
                 Arrays.asList("near the lake", "luxury", "pool", "good view"),                // mainCategories
                 Arrays.asList("villa"), // description
@@ -59,7 +59,7 @@ public class TestMohamedsPart {
 
         Listing listing3 = new Listing(
                 "Modern Condo",                        // name
-                mohamed, ,                               // owner
+                mohamed, null ,                               // owner
                 // tags
                 Arrays.asList("modern", "downtown"),                // mainCategories
                 Arrays.asList("condo"),   // description
