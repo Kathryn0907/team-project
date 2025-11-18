@@ -1,4 +1,3 @@
-
 import app.ExtractTagsUseCaseFactory;
 import data_access.InMemoryListingDAO;
 import interface_adapter.extract_tags.*;
@@ -9,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class ExtractTagsUITest {
 
@@ -51,10 +51,10 @@ public class ExtractTagsUITest {
         inputPanel.add(new JLabel());
         inputPanel.add(extractButton);
 
-        // Center panel: Results
+        // Center panel: Results - FIXED FONT
         JTextArea resultsArea = new JTextArea();
         resultsArea.setEditable(false);
-        resultsArea.setFont(new Font("Monospaced", Font.PLAIN, 12));
+        resultsArea.setFont(new Font("Dialog", Font.PLAIN, 12));  // Changed font
         JScrollPane scrollPane = new JScrollPane(resultsArea);
 
         frame.add(inputPanel, BorderLayout.NORTH);
@@ -87,13 +87,16 @@ public class ExtractTagsUITest {
                             Listing testListing = new Listing(
                                     listingName,
                                     testUser,
-                                    null, null,
+                                    null,
+                                    new ArrayList<>(),
+                                    new ArrayList<>(),
                                     "Test description",
                                     150.0,
                                     "Test address",
                                     5.0,
                                     1000.0,
-                                    2, 1,
+                                    2,
+                                    1,
                                     Listing.BuildingType.APARTMENT,
                                     true
                             );
@@ -106,33 +109,41 @@ public class ExtractTagsUITest {
 
                             ExtractTagsOutputData result = controller.execute(listingName, imageUrl);
 
-                            // Update UI on EDT
+                            // Update UI on EDT - FIXED FORMATTING
                             SwingUtilities.invokeLater(new Runnable() {
                                 @Override
                                 public void run() {
                                     if (result.isSuccess()) {
                                         StringBuilder sb = new StringBuilder();
-                                        sb.append("✅ SUCCESS!\n\n");
+                                        sb.append("===========================================\n");
+                                        sb.append("         SUCCESS - TAGS EXTRACTED          \n");
+                                        sb.append("===========================================\n\n");
 
                                         sb.append("EXTRACTED TAGS (" + result.getExtractedTags().size() + "):\n");
-                                        sb.append("═══════════════════════════════════\n");
+                                        sb.append("-------------------------------------------\n");
                                         for (int i = 0; i < result.getExtractedTags().size(); i++) {
                                             sb.append(String.format("%2d. %s\n", i+1, result.getExtractedTags().get(i)));
                                         }
 
-                                        sb.append("\n\nASSIGNED CATEGORIES:\n");
-                                        sb.append("═══════════════════════════════════\n");
+                                        sb.append("\n");
+                                        sb.append("ASSIGNED CATEGORIES:\n");
+                                        sb.append("-------------------------------------------\n");
                                         if (result.getCategories().isEmpty()) {
                                             sb.append("  (No categories assigned)\n");
                                         } else {
                                             for (String category : result.getCategories()) {
-                                                sb.append("  • " + category + "\n");
+                                                sb.append("  * " + category + "\n");
                                             }
                                         }
+                                        sb.append("\n===========================================\n");
 
                                         resultsArea.setText(sb.toString());
                                     } else {
-                                        resultsArea.setText("❌ FAILED\n\nTag extraction was not successful.\nCheck console for error details.");
+                                        resultsArea.setText("===========================================\n" +
+                                                "              FAILED                    \n" +
+                                                "===========================================\n\n" +
+                                                "Tag extraction was not successful.\n" +
+                                                "Check console for error details.");
                                     }
                                     extractButton.setEnabled(true);
                                 }
@@ -143,7 +154,11 @@ public class ExtractTagsUITest {
                             SwingUtilities.invokeLater(new Runnable() {
                                 @Override
                                 public void run() {
-                                    resultsArea.setText("❌ ERROR:\n\n" + ex.getMessage() + "\n\nCheck console for full stack trace.");
+                                    resultsArea.setText("===========================================\n" +
+                                            "              ERROR                     \n" +
+                                            "===========================================\n\n" +
+                                            ex.getMessage() + "\n\n" +
+                                            "Check console for full stack trace.");
                                     extractButton.setEnabled(true);
                                 }
                             });
@@ -160,9 +175,9 @@ public class ExtractTagsUITest {
         System.out.println("TAG EXTRACTION UI TEST");
         System.out.println("========================================");
         System.out.println("\nTry these image URLs:");
-        System.out.println("  • House: https://images.unsplash.com/photo-1564013799919-ab600027ffc6");
-        System.out.println("  • Apartment: https://images.unsplash.com/photo-1522708323590-d24dbb6b0267");
-        System.out.println("  • Villa: https://images.unsplash.com/photo-1613490493576-7fde63acd811");
+        System.out.println("  - House: https://images.unsplash.com/photo-1564013799919-ab600027ffc6");
+        System.out.println("  - Apartment: https://images.unsplash.com/photo-1522708323590-d24dbb6b0267");
+        System.out.println("  - Villa: https://images.unsplash.com/photo-1613490493576-7fde63acd811");
         System.out.println("\nNote: Make sure config.properties has your Imagga API credentials!");
     }
 }
