@@ -6,5 +6,6 @@ public class GoogleDistanceService implements DistanceService {
     @Override
     public double calculateDistanceKm(String origin, String destination) {
         // call Google API here
+        return 0;
     }
 }

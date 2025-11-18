@@ -1,4 +1,3 @@
-package test_favorite;
 import app.SaveFavoriteUseCaseFactory;
 import app.CheckFavoriteUseCaseFactory;
 import data_access.InMemoryListingDataAccessObject;
@@ -6,8 +5,6 @@ import Entities.*;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.save_favorite.*;
 import interface_adapter.check_favorite.*;
-import use_case.save_favorite.SaveFavoriteOutputData;
-import use_case.check_favorite.CheckFavoriteOutputData;
 import view.CheckFavoriteView;
 
 import javax.swing.*;
