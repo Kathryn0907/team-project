@@ -1,5 +1,6 @@
 package view;
 
+import interface_adapter.filter.FilterListingsController;
 import interface_adapter.search_listings.*;
 import Entities.Listing;
 
@@ -21,6 +22,7 @@ public class SearchView extends JPanel implements PropertyChangeListener {
 
     private final SearchListingViewModel searchViewModel;
     private final SearchListingController searchController;
+    private final FilterListingsController filterController;
 
     private final JTextField keywordField;
     private final JButton searchButton;
@@ -28,10 +30,12 @@ public class SearchView extends JPanel implements PropertyChangeListener {
     private final JScrollPane resultsScrollPane;
 
     public SearchView(SearchListingViewModel searchViewModel,
-                      SearchListingController searchController) {
+                      SearchListingController searchController,
+                      FilterListingsController filterController) {
 
         this.searchViewModel = searchViewModel;
         this.searchController = searchController;
+        this.filterController = filterController;
         this.searchViewModel.addPropertyChangeListener(this);
 
         this.setLayout(new BorderLayout(10, 10));
@@ -47,11 +51,15 @@ public class SearchView extends JPanel implements PropertyChangeListener {
         searchPanel.add(keywordField);
         searchPanel.add(searchButton);
 
-        // Bottom: Results display panel
+        // Center: Results display panel
         resultsPanel = new JPanel();
         resultsPanel.setLayout(new BoxLayout(resultsPanel, BoxLayout.Y_AXIS));
         resultsScrollPane = new JScrollPane(resultsPanel);
         resultsScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
+        // NEW: create the filter sidebar and add it to the WEST side
+        FilterSidebarPanel filterPanel = new FilterSidebarPanel(filterController); // NEW
+        this.add(filterPanel, BorderLayout.WEST);                                   // NEW
 
         this.add(searchPanel, BorderLayout.NORTH);
         this.add(resultsScrollPane, BorderLayout.CENTER);
