@@ -1,6 +1,7 @@
 import app.SearchListingUseCaseFactory;
 import data_access.InMemoryListingDAO;
 import Entities.*;
+import interface_adapter.filter.FilterListingsController;
 import interface_adapter.search_listings.*;
 import view.SearchView;
 
@@ -26,6 +27,7 @@ public class SearchViewTest {
         Listing listing1 = new Listing(
                 "Modern Downtown Apartment",
                 user1,
+                null,
                 null,  // tags (will add separately)
                 null,  // mainCategories
                 "Beautiful modern apartment in downtown Toronto with subway access",
@@ -45,6 +47,7 @@ public class SearchViewTest {
         Listing listing2 = new Listing(
                 "Lakeside Villa with Pool",
                 user2,
+                null,
                 null,
                 null,
                 "Stunning luxury villa on Muskoka Lake with private pool",
@@ -67,6 +70,7 @@ public class SearchViewTest {
                 user1,
                 null,
                 null,
+                null,
                 "Stylish condo in the heart of entertainment district",
                 200.0,
                 "789 Queen Street West, Toronto",
@@ -84,6 +88,7 @@ public class SearchViewTest {
         Listing listing4 = new Listing(
                 "Rustic Cottage in the Woods",
                 user2,
+                null,
                 null,
                 null,
                 "Peaceful cottage surrounded by nature",
@@ -119,8 +124,11 @@ public class SearchViewTest {
         SearchListingViewModel viewModel = new SearchListingViewModel();
         SearchListingController controller =
                 SearchListingUseCaseFactory.createSearchListingUseCase(viewModel, dataAccess);
+        FilterListingsController filtercontroller = null;
 
-        SearchView searchView = new SearchView(viewModel, controller);
+        SearchView searchView = new SearchView(viewModel);
+        searchView.setFilterController(filtercontroller);
+        searchView.setSearchController(controller);
 
         System.out.println("✓ Search view created\n");
 

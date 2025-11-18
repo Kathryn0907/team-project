@@ -2,29 +2,37 @@ package app;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
+import Entities.Listing;
+import data_access.GoogleDistanceService;
 import data_access.InMemoryListingDataAccessObject;
 import data_access.InMemoryUserDataAccessObject;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
+import interface_adapter.search_listings.SearchListingController;
 import interface_adapter.search_listings.SearchListingPresenter;
+import interface_adapter.search_listings.SearchListingViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
+import use_case.filter.DistanceService;
+import use_case.filter.FilterListingsInputBoundary;
+import use_case.filter.FilterListingsInteractor;
+import use_case.filter.FilterListingsOutputBoundary;
 import use_case.login.LoginInputBoundary;
 import use_case.login.LoginInteractor;
 import use_case.login.LoginOutputBoundary;
+import use_case.search_listings.SearchListingDataAccessInterface;
+import use_case.search_listings.SearchListingInputBoundary;
+import use_case.search_listings.SearchListingInteractor;
 import use_case.search_listings.SearchListingOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
-import view.LoggedInView;
-import view.LoginView;
-import view.SignupView;
-import view.ViewManager;
+import view.*;
 
 public class AppBuilder {
     private final JPanel cardPanel = new JPanel();
@@ -45,8 +53,8 @@ public class AppBuilder {
     private SignupView signupView;
     private SignupViewModel signupViewModel;
     private LoginViewModel loginViewModel;
-    private LoggedInViewModel loggedInViewModel;
-    private LoggedInView loggedInView;
+    private SearchListingViewModel searchListingViewModel;
+    private SearchView searchView;
     private LoginView loginView;
 
     public AppBuilder() {
@@ -68,9 +76,9 @@ public class AppBuilder {
     }
 
     public AppBuilder addLoggedInView() {
-        loggedInViewModel = new LoggedInViewModel();
-        loggedInView = new LoggedInView(loggedInViewModel);
-        cardPanel.add(loggedInView, loggedInView.getViewName());
+        searchListingViewModel = new SearchListingViewModel();
+        searchView = new SearchView(searchListingViewModel);
+        cardPanel.add(searchView, searchView.getViewName());
         return this;
     }
 
@@ -87,7 +95,7 @@ public class AppBuilder {
 
     public AppBuilder addLoginUseCase() {
         final LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel,
-                loggedInViewModel, loginViewModel);
+                searchListingViewModel, loginViewModel,signupViewModel);
         final LoginInputBoundary loginInteractor = new LoginInteractor(
                 userDataAccessObject, loginOutputBoundary);
 
@@ -97,7 +105,29 @@ public class AppBuilder {
     }
 
     public AppBuilder addSearchListingUseCase() {
+        SearchListingOutputBoundary searchPresenter =
+                new SearchListingPresenter(searchListingViewModel);
 
+        SearchListingDataAccessInterface listingDataAccessObject = new InMemoryListingDataAccessObject();
+        SearchListingInputBoundary searchInteractor =
+                new SearchListingInteractor(listingDataAccessObject, searchPresenter);
+        SearchListingController searchController = new SearchListingController(searchInteractor);
+
+        // Create filter use case
+        DistanceService distanceService = new GoogleDistanceService();
+        FilterListingsOutputBoundary filterPresenter =
+                new interface_adapter.filter.FilterListingsPresenter(searchListingViewModel);
+        FilterListingsInputBoundary filterInteractor =
+                new FilterListingsInteractor(listingDataAccessObject, distanceService, filterPresenter);
+        filterController = new FilterListingsController(filterInteractor);
+
+        // Now recreate LoggedInView with the controllers
+        cardPanel.remove(loggedInView);
+        loggedInView = new LoggedInView(loggedInViewModel, searchListingViewModel,
+                searchController, filterController);
+        cardPanel.add(loggedInView, loggedInView.getViewName());
+
+        return this;
     }
 
     public JFrame build() {

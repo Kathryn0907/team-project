@@ -21,21 +21,17 @@ public class SearchView extends JPanel implements PropertyChangeListener {
     public final String viewName = "search";
 
     private final SearchListingViewModel searchViewModel;
-    private final SearchListingController searchController;
-    private final FilterListingsController filterController;
+    private SearchListingController searchController;
+    private FilterListingsController filterController;
 
     private final JTextField keywordField;
     private final JButton searchButton;
     private final JPanel resultsPanel;
     private final JScrollPane resultsScrollPane;
 
-    public SearchView(SearchListingViewModel searchViewModel,
-                      SearchListingController searchController,
-                      FilterListingsController filterController) {
+    public SearchView(SearchListingViewModel searchViewModel) {
 
         this.searchViewModel = searchViewModel;
-        this.searchController = searchController;
-        this.filterController = filterController;
         this.searchViewModel.addPropertyChangeListener(this);
 
         this.setLayout(new BorderLayout(10, 10));
@@ -170,5 +166,13 @@ public class SearchView extends JPanel implements PropertyChangeListener {
 
     public String getViewName() {
         return viewName;
+    }
+
+    public void setSearchController(SearchListingController searchController) {
+        this.searchController = searchController;
+    }
+
+    public void setFilterController(FilterListingsController filterController) {
+        this.filterController = filterController;
     }
 }
