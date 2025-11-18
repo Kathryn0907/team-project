@@ -13,6 +13,14 @@ target/
 *.ipr
 .idea/workspace.xml
 
+# API Keys and Secrets
+config.properties
+*.env
+.env
+
+# IDE files
+.idea/
+
 ### Eclipse ###
 .apt_generated
 .classpath
