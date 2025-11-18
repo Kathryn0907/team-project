@@ -25,7 +25,7 @@ public class CommentInteractor implements CommentInputBoundary {
 
         //2: Check listing availability
         Listing listing = inputData.getListing();
-        if(listing == null){
+        if(listing == null || !listing.isActive()){
             presenter.prepareFailView("Listing unavailable for commenting");
             return;
         }
@@ -41,7 +41,7 @@ public class CommentInteractor implements CommentInputBoundary {
         );
 
         //4: Add comment to listing
-        listing.getComments().add(newComment);
+        listing.addComment(newComment);
 
         //5: prepare success output
         CommentOutputData outputData = new CommentOutputData(newComment);
