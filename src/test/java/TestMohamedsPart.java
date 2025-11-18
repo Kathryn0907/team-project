@@ -16,7 +16,7 @@ public class TestMohamedsPart {
         System.out.println("========================================\n");
 
         // Initialize data access
-        InMemoryListingDataAccessObject dataAccess = new InMemoryListingDataAccessObject();
+        InMemoryListingDAO dataAccess = new InMemoryListingDAO();
 
         // Create test users
         User mohamed = new User("mohamed", "pass123");

@@ -14,12 +14,13 @@ public class SearchListingInteractor implements use_case.search_listings.SearchL
     }
 
     @Override
-    public SearchListingOutputData execute(use_case.search_listings.SearchListingInputData inputData) {
+    public SearchListingOutputData execute(SearchListingInputData inputData) {
         String keyword = inputData.getKeyword();
 
         if (keyword == null || keyword.trim().isEmpty()) {
-            presenter.prepareFailView("Please enter a valid keyword");
-            return new SearchListingOutputData(new ArrayList<>(), "Please enter a valid keyword", false);
+            SearchListingOutputData outputData = new SearchListingOutputData(new ArrayList<>(), "Please enter a valid keyword", false);
+            presenter.prepareFailView(outputData);  // Pass outputData, not just message
+            return outputData;
         }
 
         String normalizedKeyword = keyword.trim().toLowerCase();
@@ -45,7 +46,7 @@ public class SearchListingInteractor implements use_case.search_listings.SearchL
         if (results.isEmpty()) {
             String message = "Sorry, not familiar with \"" + keyword + "\". Please use another keyword.";
             SearchListingOutputData outputData = new SearchListingOutputData(listingsToSearch, message, false);
-            presenter.prepareFailView(message);
+            presenter.prepareFailView(outputData);  // Pass outputData, not just message
             return outputData;
         }
 

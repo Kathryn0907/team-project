@@ -47,7 +47,7 @@ public class Listing {
     private BuildingType buildingType;
 
     private boolean active;
-    private List<Comments> comments;
+    private List<Comment> comments;
 
 
     public Listing(String name,
@@ -218,11 +218,11 @@ public class Listing {
         this.active = active;
     }
 
-    public List<Comments> getComments() {
+    public List<Comment> getComments() {
         return Collections.unmodifiableList(comments);
     }
 
-    public void setComments(List<Comments> comments) {
+    public void setComments(List<Comment> comments) {
         this.comments = comments != null ? new ArrayList<>(comments) : new ArrayList<>();
     }
 
@@ -237,7 +237,7 @@ public class Listing {
         this.mainCategories.add(category);
     }
 
-    public void addComment(Comments comment) {
+    public void addComment(Comment comment) {
         this.comments.add(comment);
     }
 
