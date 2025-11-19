@@ -17,21 +17,27 @@ public class FilterListingsPresenter implements FilterListingsOutputBoundary {
 
     @Override
     public void present(FilterListingsOutputData outputData) {
-        SearchListingState state = new SearchListingState();
+        // Get the EXISTING state instead of creating a new one
+        SearchListingState state = searchViewModel.getState();
+
         state.setSuccess(true);
         state.setErrorMessage(null);
         state.setListings(outputData.getListings());
 
         searchViewModel.setState(state);
+        searchViewModel.firePropertyChanged();  // Notify the view
     }
 
     @Override
     public void presentError(String errorMessage) {
-        SearchListingState state = new SearchListingState();
+        // Get the EXISTING state instead of creating a new one
+        SearchListingState state = searchViewModel.getState();
+
         state.setSuccess(false);
         state.setErrorMessage(errorMessage);
         state.setListings(new ArrayList<>());
 
         searchViewModel.setState(state);
+        searchViewModel.firePropertyChanged();  // Notify the view
     }
 }

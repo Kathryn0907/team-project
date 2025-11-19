@@ -28,6 +28,17 @@ public class ViewManager implements PropertyChangeListener {
         if (evt.getPropertyName().equals("state")) {
             final String viewModelName = (String) evt.getNewValue();
             cardLayout.show(views, viewModelName);
+
+            // If switching to logged in view, load all listings
+            if ("logged in".equals(viewModelName)) {
+                // Find the LoggedInView component and load listings
+                for (Component comp : views.getComponents()) {
+                    if (comp instanceof LoggedInView) {
+                        ((LoggedInView) comp).loadAllListings();
+                        break;
+                    }
+                }
+            }
         }
     }
 }

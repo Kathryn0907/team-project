@@ -4,7 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b241399e-bc1d-4260-83ed-bef40cd6b77c" name="Changes" comment="filter classes" />
+    <list default="true" id="b241399e-bc1d-4260-83ed-bef40cd6b77c" name="Changes" comment="solved merge conflict">
+      <change afterPath="$PROJECT_DIR$/src/test/java/TestAppBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/AppBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/AppBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/data_access/GoogleDistanceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/data_access/GoogleDistanceService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/data_access/InMemoryListingDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/data_access/InMemoryListingDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/data_access/InMemoryListingDataAccessObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/data_access/InMemoryListingDataAccessObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/interface_adapter/filter/FilterListingsPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/filter/FilterListingsPresenter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/interface_adapter/login/LoginPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/login/LoginPresenter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/use_case/search_listings/SearchListingInteractor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/use_case/search_listings/SearchListingInteractor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/FilterSidebarPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/FilterSidebarPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/LoggedInView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/LoggedInView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/SignupView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/SignupView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/ViewManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/ViewManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/ExtractTagsUITest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ExtractTagsUITest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/SearchViewTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/SearchViewTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/TestMohamedsPart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/TestMohamedsPart.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/test_favorite/test_favorite.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/TestFavoriteFeatures.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -41,13 +59,37 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.ExtractTagsUITest.executor": "Run",
+    "Application.MessagingSystemTest.executor": "Run",
     "Application.SearchViewTest.executor": "Run",
+    "Application.TestAppBuilder.executor": "Run",
     "Application.TestFavoriteFeatures.executor": "Run",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "git-widget-placeholder": "cancel__account__new"
+    "git-widget-placeholder": "#29 on Extract__tags__Imagga__Testing",
+    "last_directory_selection": "/Users/mohamedabdelfattah/IdeaProjects/team-project/src/test/java",
+    "node.js.selected.package.tslint": "(autodetect)"
   }
 }]]></component>
-  <component name="RunManager" selected="Application.TestFavoriteFeatures">
+  <component name="RecentsManager">
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.TestAppBuilder">
+    <configuration name="ExtractTagsUITest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ExtractTagsUITest" />
+      <module name="TeamProject" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MessagingSystemTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="MessagingSystemTest" />
+      <module name="TeamProject" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="SearchViewTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="SearchViewTest" />
       <module name="TeamProject" />
@@ -55,12 +97,19 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="TestAppBuilder" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="TestAppBuilder" />
+      <module name="TeamProject" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="TestFavoriteFeatures" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="test_favorite.TestFavoriteFeatures" />
+      <option name="MAIN_CLASS_NAME" value="TestFavoriteFeatures" />
       <module name="TeamProject" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="test_favorite.*" />
+          <option name="PATTERN" value=".*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -70,8 +119,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.TestFavoriteFeatures" />
+        <item itemvalue="Application.TestAppBuilder" />
+        <item itemvalue="Application.MessagingSystemTest" />
+        <item itemvalue="Application.ExtractTagsUITest" />
         <item itemvalue="Application.SearchViewTest" />
+        <item itemvalue="Application.TestFavoriteFeatures" />
       </list>
     </recent_temporary>
   </component>
@@ -84,11 +136,35 @@
       <option name="project" value="LOCAL" />
       <updated>1763422791341</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="solved merge conflict">
+      <option name="closed" value="true" />
+      <created>1763425321010</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1763425321010</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="I 'finished' my use cases (except for MongoDb implementation yet) and i edited Comments to Comment" />
-    <option name="LAST_COMMIT_MESSAGE" value="I 'finished' my use cases (except for MongoDb implementation yet) and i edited Comments to Comment" />
+    <MESSAGE value="solved merge conflict" />
+    <option name="LAST_COMMIT_MESSAGE" value="solved merge conflict" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>
