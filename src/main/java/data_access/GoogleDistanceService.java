@@ -15,9 +15,8 @@ import java.util.List;
 
 public class GoogleDistanceService implements DistanceService {
 
-    private final String BROOKLYN_API_KEY = "AIzaSyBXp5N97WR6RPh5H4yJIq4n0tPdRf6RBQQ";
 
-    private String apiKey = BROOKLYN_API_KEY;
+    private String apiKey;
 
 
     public void setApiKey(String apiKey) {
@@ -120,6 +119,8 @@ public class GoogleDistanceService implements DistanceService {
         // because I think it is efficient for your filter@samantha
 
         long dis;
+
+        setApiKey(System.getenv("GOOGLE_API_KEY"));
 
         // Object for submitting Api key. Like request.
         GeoApiContext context = new GeoApiContext.Builder()
