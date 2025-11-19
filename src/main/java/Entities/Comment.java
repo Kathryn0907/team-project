@@ -1,5 +1,7 @@
 package Entities;
 
+import org.bson.types.ObjectId;
+
 import java.time.Instant;
 
 public class Comment {
@@ -8,6 +10,8 @@ public class Comment {
     private User user;
     private Listing listing;
     private Instant createdAt;
+
+    private ObjectId IdForDB = ObjectId.get();
 
     public Comment(String id, String content, User user, Listing listing, Instant createdAt){
         this.id = id;
@@ -20,6 +24,11 @@ public class Comment {
     public String getId() {
         return id;
     }
+
+    public ObjectId getIdForDB(){return IdForDB;}
+
+    public void setIdForDB(ObjectId id){IdForDB = id;}
+
 
     public String getContent() {
         return content;

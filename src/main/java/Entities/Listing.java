@@ -28,10 +28,9 @@ public class Listing {
 
     // ------------ Fields ------------
 
-    private ObjectId id;
+    private ObjectId id = ObjectId.get();
     private String name;
     private User owner;
-    private ObjectId ownerId;
     private String photoPath;
 
     // Imagga-related
@@ -101,10 +100,10 @@ public class Listing {
 
         this.active = active;
         this.comments = new ArrayList<>();
-        this.ownerId = owner.getId();
     }
 
     public Listing() {
+        this.id = new ObjectId();
         this.tags = new ArrayList<>();
         this.mainCategories = new ArrayList<>();
         this.comments = new ArrayList<>();
@@ -117,8 +116,6 @@ public class Listing {
     public ObjectId getId() {return id;}
     public void setId(ObjectId id) {this.id = id;}
 
-    public ObjectId getOwnerId() {return ownerId;}
-    public void setOwnerId(ObjectId ownerId) {this.ownerId = ownerId;}
 
     public String getName() {
         return name;

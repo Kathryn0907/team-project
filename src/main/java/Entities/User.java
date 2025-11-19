@@ -9,7 +9,7 @@ public class User {
     // User class include getter for each attribute. Adder and remover for every list of listing
     // and changer for password.
 
-    private ObjectId id;
+    private ObjectId id = ObjectId.get();
     private final String username;
     private String password;
     private ArrayList<Listing> myListings =  new ArrayList<>();
