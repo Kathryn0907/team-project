@@ -35,7 +35,7 @@ public class FilterSidebarPanel extends JPanel {
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
         int row = 0;
-        addRow("Address:", userAddressField, row++, gbc);
+        addRow("User Address:", userAddressField, row++, gbc);
         addRow("Max dist (km):", maxDistanceField, row++, gbc);
         addRow("Min price:", minPriceField, row++, gbc);
         addRow("Max price:", maxPriceField, row++, gbc);

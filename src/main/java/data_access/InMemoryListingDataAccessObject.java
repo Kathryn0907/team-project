@@ -3,6 +3,7 @@ package data_access;
 import Entities.Listing;
 import Entities.User;
 import use_case.create_listing.CreateListingDataAccessInterface;
+import use_case.filter.FilterListingsDataAccessInterface;
 import use_case.search_listings.SearchListingDataAccessInterface;
 import use_case.my_listings.MyListingsDataAccessInterface;
 import use_case.extract_tags.ExtractTagsDataAccessInterface;
@@ -16,7 +17,8 @@ public class InMemoryListingDataAccessObject implements SearchListingDataAccessI
         MyListingsDataAccessInterface,
         ExtractTagsDataAccessInterface,
         SaveFavoriteDataAccessInterface,
-        CheckFavoriteDataAccessInterface {
+        CheckFavoriteDataAccessInterface,
+        FilterListingsDataAccessInterface {
 
     private final ArrayList<Listing> listings;
     private final HashMap<String, User> users;

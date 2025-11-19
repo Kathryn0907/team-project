@@ -18,8 +18,11 @@ public class SearchListingInteractor implements use_case.search_listings.SearchL
         String keyword = inputData.getKeyword();
 
         if (keyword == null || keyword.trim().isEmpty()) {
-            SearchListingOutputData outputData = new SearchListingOutputData(new ArrayList<>(), "Please enter a valid keyword", false);
-            presenter.prepareFailView(outputData);  // Pass outputData, not just message
+            ArrayList<Listing> allListings = inputData.getPreFilteredListings() != null ?
+                    inputData.getPreFilteredListings() : dataAccess.getAllActiveListings();
+
+            SearchListingOutputData outputData = new SearchListingOutputData(allListings, null, true);
+            presenter.prepareSuccessView(outputData);
             return outputData;
         }
 
