@@ -1,6 +1,6 @@
 package use_case.create_listing;
 
-import Entities.Comments;
+import Entities.Comment;
 import Entities.Listing;
 import Entities.User;
 
@@ -32,7 +32,7 @@ public class CreateListingInputData {
     private Listing.BuildingType buildingType;
 
     private boolean active;
-    private List<Comments> comments;
+    private List<Comment> comments;
 
     public CreateListingInputData(String name,
                                   User owner,

@@ -2,6 +2,8 @@ package data_access;
 
 import Entities.Listing;
 import Entities.User;
+import interface_adapter.filter.FilterListingsPresenter;
+import use_case.filter.FilterListingsDataAccessInterface;
 import use_case.search_listings.SearchListingDataAccessInterface;
 import use_case.my_listings.MyListingsDataAccessInterface;
 import use_case.extract_tags.ExtractTagsDataAccessInterface;
@@ -10,7 +12,7 @@ import java.util.*;
 
 public class InMemoryListingDAO implements SearchListingDataAccessInterface,
         MyListingsDataAccessInterface,
-        ExtractTagsDataAccessInterface {
+        ExtractTagsDataAccessInterface, FilterListingsDataAccessInterface {
     private final ArrayList<Listing> listings;
     private final HashMap<String, User> users;
 

@@ -8,30 +8,40 @@ import Entities.Listing;
 public class CreateListingInteractor implements CreateListingInputBoundary {
     private final CreateListingDataAccessInterface listingDataAccessObject;
     private final CreateListingOutputBoundary listingPresenter;
-    private final Listing listing;
 
     public CreateListingInteractor(CreateListingDataAccessInterface listingDataAccessObject,
-                                   CreateListingOutputBoundary listingPresenter,
-                                   Listing listing) {
+                                   CreateListingOutputBoundary listingPresenter) {
         this.listingDataAccessObject = listingDataAccessObject;
         this.listingPresenter = listingPresenter;
-        this.listing = this.listing;
     }
     @Override
     public void execute(CreateListingInputData createListingInputData) {
         if ("".equals(createListingInputData.getName())) {
-            listingPresenter.prepareFailView("Name cannot be empty");
+            listingPresenter.prepareFailView("Listing Name cannot be empty");
         }
         else if ("".equals(createListingInputData.getDescription())) {
-            listingPresenter.prepareFailView("Description cannot be empty");
+            listingPresenter.prepareFailView("Property description cannot be empty");
         }
         else {
             final Listing listing = new Listing(createListingInputData.getName(),
+                    createListingInputData.getOwner(),
+                    createListingInputData.getPhotoPath(),
                     createListingInputData.getTags(),
-                    createListingInputData.getDescription());
+                    createListingInputData.getMainCategories(),
+                    createListingInputData.getDescription(),
+                    createListingInputData.getPrice(),
+                    createListingInputData.getAddress(),
+                    createListingInputData.getDistance(),
+                    createListingInputData.getArea(),
+                    createListingInputData.getBedrooms(),
+                    createListingInputData.getBathrooms(),
+                    createListingInputData.getBuildingType(),
+                    true
+                    );
             listingDataAccessObject.save(listing);
 
-            final CreateListingOutputData createListingOutputData = new CreateListingOutputData(listing.getName());
+            final CreateListingOutputData createListingOutputData = new CreateListingOutputData(
+                    listing.getName(), listing.getDescription(), listing.getPhotoPath());
             listingPresenter.prepareSuccessView(createListingOutputData);
         }
     }
@@ -39,5 +49,4 @@ public class CreateListingInteractor implements CreateListingInputBoundary {
     public void swtichToProfileView() {
         listingPresenter.switchToProfileView();
     }
-
 }
