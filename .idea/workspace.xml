@@ -4,24 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b241399e-bc1d-4260-83ed-bef40cd6b77c" name="Changes" comment="solved merge conflict">
-      <change afterPath="$PROJECT_DIR$/src/test/java/TestAppBuilder.java" afterDir="false" />
+    <list default="true" id="b241399e-bc1d-4260-83ed-bef40cd6b77c" name="Changes" comment="Cancel account function">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/AppBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/AppBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/data_access/GoogleDistanceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/data_access/GoogleDistanceService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/data_access/InMemoryListingDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/data_access/InMemoryListingDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/data_access/InMemoryListingDataAccessObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/data_access/InMemoryListingDataAccessObject.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/interface_adapter/filter/FilterListingsPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/filter/FilterListingsPresenter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/interface_adapter/login/LoginPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/login/LoginPresenter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/use_case/search_listings/SearchListingInteractor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/use_case/search_listings/SearchListingInteractor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/FilterSidebarPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/FilterSidebarPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/LoggedInView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/LoggedInView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/SignupView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/SignupView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/ViewManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/ViewManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/ExtractTagsUITest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ExtractTagsUITest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/SearchViewTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/SearchViewTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/TestMohamedsPart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/TestMohamedsPart.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/test_favorite/test_favorite.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/TestFavoriteFeatures.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,6 +21,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="cancel_account_new" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GithubPullRequestsUISettings">{
@@ -64,8 +54,10 @@
     "Application.SearchViewTest.executor": "Run",
     "Application.TestAppBuilder.executor": "Run",
     "Application.TestFavoriteFeatures.executor": "Run",
+    "JUnit.CancelAccountInteractorTest.executor": "Run",
+    "JUnit.CancelAccountInteractorTest.testSuccessCancelAccount.executor": "Debug",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "git-widget-placeholder": "#29 on Extract__tags__Imagga__Testing",
+    "git-widget-placeholder": "signup__login__view__update",
     "last_directory_selection": "/Users/mohamedabdelfattah/IdeaProjects/team-project/src/test/java",
     "node.js.selected.package.tslint": "(autodetect)"
   }
@@ -120,10 +112,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.TestAppBuilder" />
+        <item itemvalue="Application.TestFavoriteFeatures" />
+        <item itemvalue="Application.SearchViewTest" />
         <item itemvalue="Application.MessagingSystemTest" />
         <item itemvalue="Application.ExtractTagsUITest" />
-        <item itemvalue="Application.SearchViewTest" />
-        <item itemvalue="Application.TestFavoriteFeatures" />
       </list>
     </recent_temporary>
   </component>
@@ -144,7 +136,23 @@
       <option name="project" value="LOCAL" />
       <updated>1763425321010</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Cancel account function">
+      <option name="closed" value="true" />
+      <created>1763526875996</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1763526875996</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Cancel account function">
+      <option name="closed" value="true" />
+      <created>1763527626843</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1763527626843</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -161,7 +169,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="I 'finished' my use cases (except for MongoDb implementation yet) and i edited Comments to Comment" />
     <MESSAGE value="solved merge conflict" />
-    <option name="LAST_COMMIT_MESSAGE" value="solved merge conflict" />
+    <MESSAGE value="Cancel account function" />
+    <option name="LAST_COMMIT_MESSAGE" value="Cancel account function" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
