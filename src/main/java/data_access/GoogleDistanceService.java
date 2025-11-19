@@ -62,7 +62,6 @@ public class GoogleDistanceService implements DistanceService {
             }
         }
 
-        context.shutdown();
 
         return distancesInMeters;
     }
@@ -103,8 +102,6 @@ public class GoogleDistanceService implements DistanceService {
             distance = -1; // Indicate failure
         }
 
-        // Clean up the context
-        context.shutdown();
 
         return distance;
     }
@@ -124,7 +121,7 @@ public class GoogleDistanceService implements DistanceService {
 
         long dis;
 
-        // Object for submitting Api key. Like request. Necessary
+        // Object for submitting Api key. Like request.
         GeoApiContext context = new GeoApiContext.Builder()
                 .apiKey(apiKey)
                 .build();
@@ -136,6 +133,7 @@ public class GoogleDistanceService implements DistanceService {
             dis = -1;
         }
 
+        // NECESSARY! Shutdown the context. Please have it at the end of your method.
         context.shutdown();
 
         return dis;

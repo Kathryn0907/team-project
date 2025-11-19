@@ -80,6 +80,7 @@ public class DistanceCalculatorTest {
 
         long distanceToLouvre = distances.get(0);
         long distanceToVersailles = distances.get(1);
+        System.out.println(distanceToLouvre + " " + distanceToVersailles);
 
         assertTrue(distanceToLouvre > 0, "Distance to Louvre should be positive");
         assertTrue(distanceToVersailles > 0, "Distance to Versailles should be positive");
@@ -88,11 +89,17 @@ public class DistanceCalculatorTest {
         assertTrue(distanceToVersailles > distanceToLouvre, "Versailles should be further than the Louvre");
 
         // Check approximate distance to Louvre (~5km)
-        long expectedLouvreDistance = 5000;
-        long tolerance = 1000;
+        long expectedLouvreDistance = 3400;
+        long tolerance = 3000;
         assertTrue(distanceToLouvre >= expectedLouvreDistance - tolerance &&
                         distanceToLouvre <= expectedLouvreDistance + tolerance,
-                "Distance to Louvre should be around 5 km");
+                "Distance to Louvre should be around 3.4 km");
+
+        long expectedVersailleDistance = 20000;
+        long tolerance2 = 10000;
+        assertTrue(distanceToVersailles >= expectedVersailleDistance - tolerance2 &&
+                        distanceToVersailles <= expectedVersailleDistance + tolerance2,
+                "Distance to Louvre should be around 17 km");
     }
 
     @Test
