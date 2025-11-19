@@ -144,6 +144,10 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         setFields(state);
         usernameErrorField.setText(state.getLoginError());
 
+        if (state.getCancelAccountSuccessMsg() != null) {
+            JOptionPane.showMessageDialog(this, state.getCancelAccountSuccessMsg());
+        }
+
     }
 
     private void setFields(LoginState state) {

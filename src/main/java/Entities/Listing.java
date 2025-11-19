@@ -103,6 +103,7 @@ public class Listing {
         this.mainCategories = new ArrayList<>();
         this.comments = new ArrayList<>();
         this.buildingType = BuildingType.OTHER; // default value
+        this.active = true; // default, for test
     }
 
 
