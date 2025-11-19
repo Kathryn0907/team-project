@@ -7,7 +7,6 @@ import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
-import static com.mongodb.client.model.Filters.eq;
 
 public class MongoDBListingDao {
 
@@ -25,14 +24,14 @@ public class MongoDBListingDao {
      */
     public void saveListing(Listing listing) {
 
-        String listingId = new ObjectId().toString();
+        ObjectId listingId = new ObjectId();
         listing.setId(listingId);
 
         Document listingDocument = new Document()
                 .append("id", listingId)
                 .append("name", listing.getName())
                 .append("description", listing.getDescription())
-                ;
+                .append("owner", listing.getOwnerId());
     }
 
 

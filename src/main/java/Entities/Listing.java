@@ -1,8 +1,11 @@
 package Entities;
 
+import org.bson.types.ObjectId;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Represents a single Airbnb-style listing.
@@ -25,9 +28,10 @@ public class Listing {
 
     // ------------ Fields ------------
 
-    private String id;
+    private ObjectId id;
     private String name;
     private User owner;
+    private ObjectId ownerId;
     private String photoPath;
 
     // Imagga-related
@@ -97,6 +101,7 @@ public class Listing {
 
         this.active = active;
         this.comments = new ArrayList<>();
+        this.ownerId = owner.getId();
     }
 
     public Listing() {
@@ -109,8 +114,11 @@ public class Listing {
 
     // ------------ Getters & Setters ------------
 
-    public String getId() {return id;}
-    public void setId(String id) {this.id = id;}
+    public ObjectId getId() {return id;}
+    public void setId(ObjectId id) {this.id = id;}
+
+    public ObjectId getOwnerId() {return ownerId;}
+    public void setOwnerId(ObjectId ownerId) {this.ownerId = ownerId;}
 
     public String getName() {
         return name;
