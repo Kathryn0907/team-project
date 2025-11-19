@@ -4,8 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b241399e-bc1d-4260-83ed-bef40cd6b77c" name="Changes" comment="I 'finished' my use cases (except for MongoDb implementation yet) and i edited Comments to Comment">
+    <list default="true" id="b241399e-bc1d-4260-83ed-bef40cd6b77c" name="Changes" comment="transfer LoggedIn">
+      <change afterPath="$PROJECT_DIR$/src/test/java/data_access/DistanceCalculatorTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/data_access/GoogleDistanceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/data_access/GoogleDistanceService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,10 +23,24 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="loggedInView" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "bBrozedd"
+  }
+}]]></component>
   <component name="GithubPullRequestsUISettings"><![CDATA[{
   "selectedUrlAndAccountId": {
     "url": "https://github.com/Kathryn0907/team-project.git",
-    "accountId": "f2d0cbcd-7215-43b6-b10c-d19dcaba6063"
+    "accountId": "a0ec3eee-60ae-4907-b48d-7b1ae1093556"
   },
   "recentNewPullRequestHead": {
     "server": {
@@ -38,15 +56,31 @@
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 8
+}]]></component>
+  <component name="ProjectId" id="35fyy8UTZUYoior4XkcvGvxW1NM" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.SearchViewTest.executor": "Run",
     "Application.TestFavoriteFeatures.executor": "Run",
+    "JUnit.DistanceCalculatorTest.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "git-widget-placeholder": "#27 on jonathancode"
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "DistanceAPI",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0"
   }
 }]]></component>
-  <component name="RunManager" selected="Application.TestFavoriteFeatures">
+  <component name="RunManager" selected="JUnit.DistanceCalculatorTest">
     <configuration name="SearchViewTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="SearchViewTest" />
       <module name="TeamProject" />
@@ -67,12 +101,37 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="DistanceCalculatorTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="TeamProject" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="data_access.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="data_access" />
+      <option name="MAIN_CLASS_NAME" value="data_access.DistanceCalculatorTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.DistanceCalculatorTest" />
+        <item itemvalue="Application.TestFavoriteFeatures" />
+        <item itemvalue="Application.SearchViewTest" />
         <item itemvalue="Application.TestFavoriteFeatures" />
         <item itemvalue="Application.SearchViewTest" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.25557.131" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="TaskManager">
     <task id="LOCAL-00001" summary="I 'finished' my use cases (except for MongoDb implementation yet) and i edited Comments to Comment">
@@ -83,11 +142,27 @@
       <option name="project" value="LOCAL" />
       <updated>1763422791341</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="transfer LoggedIn">
+      <option name="closed" value="true" />
+      <created>1763432463171</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1763432463171</updated>
+    </task>
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b241399e-bc1d-4260-83ed-bef40cd6b77c" name="Changes" comment="transfer LoggedIn" />
+      <created>1763515674923</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1763515674923</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="I 'finished' my use cases (except for MongoDb implementation yet) and i edited Comments to Comment" />
-    <option name="LAST_COMMIT_MESSAGE" value="I 'finished' my use cases (except for MongoDb implementation yet) and i edited Comments to Comment" />
+    <MESSAGE value="transfer LoggedIn" />
+    <option name="LAST_COMMIT_MESSAGE" value="transfer LoggedIn" />
   </component>
 </project>
