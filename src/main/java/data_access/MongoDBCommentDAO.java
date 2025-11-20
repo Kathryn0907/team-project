@@ -8,22 +8,29 @@ import com.mongodb.client.model.Filters;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
+import java.util.ArrayList;
+
 public class MongoDBCommentDAO {
 
-    private final MongoCollection<Document> collection;
+    private final MongoCollection<Document> commentsCollection;
     private MongoDBExtractToCache data;
 
     public MongoDBCommentDAO() {
         MongoClient client = MongoConfig.getClient();
         MongoDatabase db = client.getDatabase("CSC207_group_project_2025");
-        this.collection = db.getCollection("Comments");
+        this.commentsCollection = db.getCollection("Comments");
         this.data = new MongoDBExtractToCache();
     }
 
+
+    /**
+     * Save or renew the comment to Database.
+     * @param comment the comment.
+     */
     public void saveComment(Comment comment) {
 
-        if (collection.find(Filters.eq("idForDB", comment.getIdForDB())).first() != null) {
-            collection.deleteOne(Filters.eq("idForDB", comment.getIdForDB()));
+        if (commentsCollection.find(Filters.eq("idForDB", comment.getIdForDB())).first() != null) {
+            commentsCollection.deleteOne(Filters.eq("idForDB", comment.getIdForDB()));
         }
 
         Document doc = new Document()
@@ -34,8 +41,22 @@ public class MongoDBCommentDAO {
                 .append("createdAt", comment.getCreatedAt().getEpochSecond())
                 .append("idForDB", comment.getIdForDB());
 
-        collection.insertOne(doc);
+        commentsCollection.insertOne(doc);
     }
+
+
+
+    public void deleteComment(Comment comment) {
+        ObjectId commentId = comment.getIdForDB();
+        if (commentsCollection.find(Filters.eq("idForDB", commentId)).first() != null) {
+            commentsCollection.deleteOne(Filters.eq("idForDB", commentId.toString()));
+        } else {
+            System.out.println("Comment with Database id: " + commentId +  " and String id: "
+                    + comment.getId() +" not found in database");
+        }
+    }
+
+
 
 
     /**
@@ -48,8 +69,20 @@ public class MongoDBCommentDAO {
         return data.findCommentById(idForDB);
     }
 
-
+    /**
+     * Refresh the local cache.
+     */
     public void refreshData() {
         this.data = new MongoDBExtractToCache();
+    }
+
+
+    /**
+     * Get all comments in local cache. You can use refresh method if you just
+     * save something but didn't find it.
+     * @return A list of comments.
+     */
+    public ArrayList<Comment> getAllComments() {
+        return data.getCommentsCache();
     }
 }

@@ -18,45 +18,85 @@ import java.util.Map;
 
 public class MongoDBExtractToCache {
 
-    private MongoDatabase database;
+    private final MongoDatabase database;
 
 
-    private ArrayList<User> usersCache = new ArrayList<>();
-    private ArrayList<Listing> listingCache = new ArrayList<>();
-    private ArrayList<Comment> commentsCache = new ArrayList<>();
+    private final ArrayList<User> usersCache = new ArrayList<>();
+    private final ArrayList<Listing> listingCache = new ArrayList<>();
+    private final ArrayList<Comment> commentsCache = new ArrayList<>();
 
-    private Map<User,List<ObjectId>> userListingsMap = new HashMap<>();
-    private Map<User,List<ObjectId>> userFavouriteListingsMap = new HashMap<>();
-    private Map<User,List<ObjectId>> userCommentsMap = new HashMap<>();
+    private final Map<User,List<ObjectId>> userListingsMap = new HashMap<>();
+    private final Map<User,List<ObjectId>> userFavouriteListingsMap = new HashMap<>();
+    private final Map<User,List<ObjectId>> userCommentsMap = new HashMap<>();
 
-    private Map<Listing,ObjectId> listingOwnerMap = new HashMap<>();
-    private Map<Listing,List<ObjectId>> listingCommentsMap = new HashMap<>();
+    private final Map<Listing,ObjectId> listingOwnerMap = new HashMap<>();
+    private final Map<Listing,List<ObjectId>> listingCommentsMap = new HashMap<>();
 
-    private Map<Comment,ObjectId> commentUserMap = new HashMap<>();
-    private Map<Comment,ObjectId> commentListingMap = new HashMap<>();
+    private final Map<Comment,ObjectId> commentUserMap = new HashMap<>();
+    private final Map<Comment,ObjectId> commentListingMap = new HashMap<>();
 
 
     public MongoDBExtractToCache() {
         MongoClient mongoClient = MongoConfig.getClient();
         database = mongoClient.getDatabase("CSC207_group_project_2025");
+        load();
+    }
+
+    // ---------------public methods-----------------
+
+    public User findUserById(ObjectId id) {
+        for (User user : usersCache) {
+            if (user.getId().equals(id)) {
+                return user;
+            }
+        }
+        return null;
+    }
+
+    public Listing findListingById(ObjectId id) {
+        for (Listing listing : listingCache) {
+            if (listing.getId().equals(id)) {
+                return listing;
+            }
+        }
+        return null;
+    }
+
+    public Comment findCommentById(ObjectId id) {
+        for (Comment comment : commentsCache) {
+            if (comment.getIdForDB().equals(id)) {
+                return comment;
+            }
+        }
+        return null;
     }
 
 
-    /**
-     * This method will load all data to Cache. PLEASE use this method for get the data
-     * (don't use the private helpers)
-     * After loaded, use getter for usersCache, listingCache and commentCache
-     * to get ArrayList of them.
-     */
-    public void load() {
+    public  ArrayList<User> getUsersCache() {
+        return usersCache;
+    }
+
+    public  ArrayList<Listing> getListingsCache() {
+        return listingCache;
+    }
+
+    public  ArrayList<Comment> getCommentsCache() {
+        return commentsCache;
+    }
+
+
+
+    //----------------private methods-------------------
+
+    private void load() {
 
         MongoCollection<Document> usersCollection = database.getCollection("users");
         MongoCollection<Document> listingsCollection = database.getCollection("listings");
         MongoCollection<Document> commentsCollection = database.getCollection("comments");
 
         loadAllUsers(usersCollection);
-        loadAllUsers(listingsCollection);
-        loadAllUsers(commentsCollection);
+        loadAllListings(listingsCollection);
+        loadAllComments(commentsCollection);
 
         addEmbeddingToAll();
     }
@@ -134,10 +174,7 @@ public class MongoDBExtractToCache {
 
         }
 
-
-
     }
-
 
 
     private void loadAllUsers(MongoCollection<Document> usersCollection) {
@@ -226,43 +263,6 @@ public class MongoDBExtractToCache {
         }
     }
 
-    public User findUserById(ObjectId id) {
-        for (User user : usersCache) {
-            if (user.getId().equals(id)) {
-                return user;
-            }
-        }
-        return null;
-    }
-
-    public Listing findListingById(ObjectId id) {
-        for (Listing listing : listingCache) {
-            if (listing.getId().equals(id)) {
-                return listing;
-            }
-        }
-        return null;
-    }
-
-    public Comment findCommentById(ObjectId id) {
-        for (Comment comment : commentsCache) {
-            if (comment.getIdForDB().equals(id)) {
-                return comment;
-            }
-        }
-        return null;
-    }
 
 
-    public  ArrayList<User> getUsersCache() {
-        return usersCache;
-    }
-
-    public  ArrayList<Listing> getListingsCache() {
-        return listingCache;
-    }
-
-    public  ArrayList<Comment> getCommentsCache() {
-        return commentsCache;
-    }
 }

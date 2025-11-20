@@ -11,27 +11,30 @@ import org.bson.Document;
 import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MongoDBUserDAO {
 
-    private final MongoCollection<Document> collection;
+    private final MongoCollection<Document> usersCollection;
     private MongoDBExtractToCache data;
 
     public MongoDBUserDAO() {
         MongoClient client = MongoConfig.getClient();
         MongoDatabase db = client.getDatabase("CSC207_group_project_2025");
-        this.collection = db.getCollection("Users");
+        this.usersCollection = db.getCollection("Users");
         this.data = new MongoDBExtractToCache();
     }
 
 
+    /**
+     * Save or renew the user in database.
+     * @param user the user.
+     */
     public void saveUser(User user) {
 
         // Check if the User is already in database. If yes, delete that User
         // so this will renew the data.
-        if (collection.find(Filters.eq("id", user.getId())).first() == null) {
-            collection.deleteOne(Filters.eq("id", user.getId()));
+        if (usersCollection.find(Filters.eq("id", user.getId())).first() == null) {
+            usersCollection.deleteOne(Filters.eq("id", user.getId()));
         }
 
 
@@ -59,9 +62,22 @@ public class MongoDBUserDAO {
                 .append("favouriteListings", favouriteListingsIds)
                 .append("myComments", myCommentsIds);
 
-        collection.insertOne(userDocument);
+        usersCollection.insertOne(userDocument);
 
     }
+
+
+
+    public void deleteUser(User user) {
+        ObjectId userId = user.getId();
+        if (usersCollection.find(Filters.eq("id", userId)).first() != null) {
+            usersCollection.deleteOne(Filters.eq("id", userId));
+        } else {
+            System.out.println("Listing with id: " + userId + " and name: "
+                    + user.getUsername() + " not found in Database");
+        }
+    }
+
 
 
     /**
@@ -72,5 +88,22 @@ public class MongoDBUserDAO {
      */
     public User findUserById(ObjectId userId) {
         return data.findUserById(userId);
+    }
+
+
+    /**
+     * Refresh the local cache.
+     */
+    public void refreshData() {
+        this.data = new MongoDBExtractToCache();
+    }
+
+    /**
+     * Get all users in local cache. You can use refresh method if you just
+     * save something but didn't find it.
+     * @return A list of users.
+     */
+    public ArrayList<User> getAllUsers() {
+        return data.getUsersCache();
     }
 }
