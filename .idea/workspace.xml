@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b241399e-bc1d-4260-83ed-bef40cd6b77c" name="Changes" comment="I 'finished' my use cases (except for MongoDb implementation yet) and i edited Comments to Comment">
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+    <list default="true" id="b241399e-bc1d-4260-83ed-bef40cd6b77c" name="Changes" comment="updated pom">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/test_favorite/test_favorite.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/TestFavoriteFeatures.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,36 +20,64 @@
       </list>
     </option>
   </component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/Kathryn0907/team-project.git",
-    "accountId": "f2d0cbcd-7215-43b6-b10c-d19dcaba6063"
-  },
-  "recentNewPullRequestHead": {
-    "server": {
-      "useHttp": false,
-      "host": "github.com",
-      "port": null,
-      "suffix": null
-    },
-    "owner": "Kathryn0907",
-    "repository": "team-project"
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "Jonathanchan06"
   }
 }]]></component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Kathryn0907/team-project.git&quot;,
+    &quot;accountId&quot;: &quot;f2d0cbcd-7215-43b6-b10c-d19dcaba6063&quot;
+  },
+  &quot;recentNewPullRequestHead&quot;: {
+    &quot;server&quot;: {
+      &quot;useHttp&quot;: false,
+      &quot;host&quot;: &quot;github.com&quot;,
+      &quot;port&quot;: null,
+      &quot;suffix&quot;: null
+    },
+    &quot;owner&quot;: &quot;Kathryn0907&quot;,
+    &quot;repository&quot;: &quot;team-project&quot;
+  }
+}</component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 3
+}]]></component>
+  <component name="ProjectId" id="35iNnp70ra77j56ZGtmDm2FQFc9" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.SearchViewTest.executor": "Run",
     "Application.TestFavoriteFeatures.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "git-widget-placeholder": "#27 on jonathancode"
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "jonathancode",
+    "kotlin-language-version-configured": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="Application.TestFavoriteFeatures">
+  <component name="RunManager" selected="Application.TestFavoriteFeatures (1)">
     <configuration name="SearchViewTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="SearchViewTest" />
+      <module name="TeamProject" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestFavoriteFeatures (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="TestFavoriteFeatures" />
       <module name="TeamProject" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -69,10 +98,18 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.TestFavoriteFeatures (1)" />
         <item itemvalue="Application.TestFavoriteFeatures" />
         <item itemvalue="Application.SearchViewTest" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.25557.131" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="TaskManager">
     <task id="LOCAL-00001" summary="I 'finished' my use cases (except for MongoDb implementation yet) and i edited Comments to Comment">
@@ -83,11 +120,27 @@
       <option name="project" value="LOCAL" />
       <updated>1763422791341</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="updated pom">
+      <option name="closed" value="true" />
+      <created>1763423233841</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1763423233841</updated>
+    </task>
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b241399e-bc1d-4260-83ed-bef40cd6b77c" name="Changes" comment="updated pom" />
+      <created>1763589104726</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1763589104726</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="I 'finished' my use cases (except for MongoDb implementation yet) and i edited Comments to Comment" />
-    <option name="LAST_COMMIT_MESSAGE" value="I 'finished' my use cases (except for MongoDb implementation yet) and i edited Comments to Comment" />
+    <MESSAGE value="updated pom" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated pom" />
   </component>
 </project>
