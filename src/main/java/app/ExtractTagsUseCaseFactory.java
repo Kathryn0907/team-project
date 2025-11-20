@@ -9,8 +9,13 @@ public class ExtractTagsUseCaseFactory {
 
     public static ExtractTagsController createExtractTagsUseCase(
             ExtractTagsViewModel viewModel,
-            InMemoryListingDAO dataAccess,
-            ImaggaAPIService imaggaService) {
+            InMemoryListingDAO dataAccess) {  // Removed imaggaService parameter
+
+        // Create ImaggaAPIService HERE with credentials from Config
+        ImaggaAPIService imaggaService = new ImaggaAPIService(
+                Config.getImaggaApiKey(),
+                Config.getImaggaApiSecret()
+        );
 
         ExtractTagsOutputBoundary presenter = new ExtractTagsPresenter(viewModel);
         ExtractTagsInputBoundary interactor = new ExtractTagsInteractor(

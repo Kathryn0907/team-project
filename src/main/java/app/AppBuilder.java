@@ -5,18 +5,28 @@ import java.awt.*;
 
 import data_access.InMemoryListingDataAccessObject;
 import data_access.InMemoryUserDataAccessObject;
+import data_access.GoogleDistanceService;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.filter.FilterListingsController;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
+import interface_adapter.search_listings.SearchListingController;
 import interface_adapter.search_listings.SearchListingPresenter;
+import interface_adapter.search_listings.SearchListingViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
+import use_case.filter.DistanceService;
+import use_case.filter.FilterListingsInputBoundary;
+import use_case.filter.FilterListingsInteractor;
+import use_case.filter.FilterListingsOutputBoundary;
 import use_case.login.LoginInputBoundary;
 import use_case.login.LoginInteractor;
 import use_case.login.LoginOutputBoundary;
+import use_case.search_listings.SearchListingInputBoundary;
+import use_case.search_listings.SearchListingInteractor;
 import use_case.search_listings.SearchListingOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
@@ -33,21 +43,21 @@ public class AppBuilder {
     final ViewManagerModel viewManagerModel = new ViewManagerModel();
     ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
 
-    // set which data access implementation to use, can be any
-    // of the classes from the data_access package
-
-    // DAO version using local file storage
-    final InMemoryUserDataAccessObject userDataAccessObject = new InMemoryUserDataAccessObject();
-
-    // DAO version using a shared external database
-    // final DBUserDataAccessObject userDataAccessObject = new DBUserDataAccessObject(userFactory);
+    // Data access objects
+    public final InMemoryUserDataAccessObject userDataAccessObject = new InMemoryUserDataAccessObject();
+    public final InMemoryListingDataAccessObject listingDataAccessObject = new InMemoryListingDataAccessObject();
 
     private SignupView signupView;
     private SignupViewModel signupViewModel;
     private LoginViewModel loginViewModel;
     private LoggedInViewModel loggedInViewModel;
+    private SearchListingViewModel searchListingViewModel;
     private LoggedInView loggedInView;
     private LoginView loginView;
+
+    // Controllers that will be created in use case methods
+    private SearchListingController searchController;
+    private FilterListingsController filterController;
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -69,7 +79,12 @@ public class AppBuilder {
 
     public AppBuilder addLoggedInView() {
         loggedInViewModel = new LoggedInViewModel();
-        loggedInView = new LoggedInView(loggedInViewModel);
+        searchListingViewModel = new SearchListingViewModel();
+
+        // Note: Controllers will be injected by addSearchListingUseCase()
+        // Create the logged in view (controllers will be set later)
+        loggedInView = new LoggedInView(loggedInViewModel, searchListingViewModel,
+                null, null);  // Controllers added later
         cardPanel.add(loggedInView, loggedInView.getViewName());
         return this;
     }
@@ -87,7 +102,7 @@ public class AppBuilder {
 
     public AppBuilder addLoginUseCase() {
         final LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel,
-                loggedInViewModel, loginViewModel);
+                loggedInViewModel, loginViewModel, signupViewModel);
         final LoginInputBoundary loginInteractor = new LoginInteractor(
                 userDataAccessObject, loginOutputBoundary);
 
@@ -97,11 +112,32 @@ public class AppBuilder {
     }
 
     public AppBuilder addSearchListingUseCase() {
+        // Create search use case
+        SearchListingOutputBoundary searchPresenter =
+                new SearchListingPresenter(searchListingViewModel);
+        SearchListingInputBoundary searchInteractor =
+                new SearchListingInteractor(listingDataAccessObject, searchPresenter);
+        searchController = new SearchListingController(searchInteractor);
 
+        // Create filter use case
+        DistanceService distanceService = new GoogleDistanceService();
+        FilterListingsOutputBoundary filterPresenter =
+                new interface_adapter.filter.FilterListingsPresenter(searchListingViewModel);
+        FilterListingsInputBoundary filterInteractor =
+                new FilterListingsInteractor(listingDataAccessObject, distanceService, filterPresenter);
+        filterController = new FilterListingsController(filterInteractor);
+
+        // Now recreate LoggedInView with the controllers
+        cardPanel.remove(loggedInView);
+        loggedInView = new LoggedInView(loggedInViewModel, searchListingViewModel,
+                searchController, filterController);
+        cardPanel.add(loggedInView, loggedInView.getViewName());
+
+        return this;
     }
 
     public JFrame build() {
-        final JFrame application = new JFrame("User Login Example");
+        final JFrame application = new JFrame("Airbnb Listing Browser");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         application.add(cardPanel);
@@ -111,6 +147,4 @@ public class AppBuilder {
 
         return application;
     }
-
 }
-

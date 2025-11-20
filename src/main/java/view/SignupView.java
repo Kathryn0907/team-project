@@ -1,5 +1,6 @@
 package view;
 
+import interface_adapter.login.LoginState;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupState;
 import interface_adapter.signup.SignupViewModel;
@@ -46,7 +47,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         final JPanel buttons = new JPanel();
         signUp = new JButton(SignupViewModel.SIGNUP_BUTTON_LABEL);
         buttons.add(signUp);
-        cancel = new JButton(SignupViewModel.CANCEL_BUTTON_LABEL);
+        cancel = new JButton(SignupViewModel.TO_LOGIN_BUTTON_LABEL);
         buttons.add(cancel);
 
         signUp.addActionListener(
@@ -174,10 +175,18 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         final SignupState state = (SignupState) evt.getNewValue();
+        setFields(state);
         if (state.getUsernameError() != null) {
             JOptionPane.showMessageDialog(this, state.getUsernameError());
         }
     }
+
+    public void setFields(SignupState state) {
+        usernameInputField.setText(state.getUsername());
+        passwordInputField.setText(state.getPassword());
+        repeatPasswordInputField.setText(state.getRepeatPassword());
+    }
+
 
     public String getViewName() {
         return viewName;
