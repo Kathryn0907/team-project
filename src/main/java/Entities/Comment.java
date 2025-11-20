@@ -10,8 +10,10 @@ public class Comment {
     private User user;
     private Listing listing;
     private Instant createdAt;
+    private ObjectId idForDB = ObjectId.get();
 
-    private ObjectId IdForDB = ObjectId.get();
+    // Add an empty comment constructor.
+    public Comment() {}
 
     public Comment(String id, String content, User user, Listing listing, Instant createdAt){
         this.id = id;
@@ -25,24 +27,45 @@ public class Comment {
         return id;
     }
 
-    public ObjectId getIdForDB(){return IdForDB;}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-    public void setIdForDB(ObjectId id){IdForDB = id;}
+    public ObjectId getIdForDB(){return idForDB;}
+
+    public void setIdForDB(ObjectId id){
+        idForDB = id;}
 
 
     public String getContent() {
         return content;
     }
 
+    public void setContent(String content) {
+        this.content = content;
+    }
+
     public User getUser() {
         return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Listing getListing() {
         return listing;
     }
 
+    public void setListing(Listing listing) {
+        this.listing = listing;
+    }
+
     public Instant getCreatedAt() {
         return createdAt;
+    }
+
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
     }
 }
