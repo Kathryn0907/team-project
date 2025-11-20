@@ -12,6 +12,9 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 
+import interface_adapter.ViewManagerModel;
+import interface_adapter.listing_detail.ListingDetailViewModel;
+
 /**
  * Search View - Keyword search interface with results display
  * Mohamed's implementation of Use Case 5: Searching by keyword
@@ -29,14 +32,21 @@ public class SearchView extends JPanel implements PropertyChangeListener {
     private final JPanel resultsPanel;
     private final JScrollPane resultsScrollPane;
 
+    private final ViewManagerModel viewManagerModel;
+    private final ListingDetailViewModel listingDetailViewModel;
+
     public SearchView(SearchListingViewModel searchViewModel,
                       SearchListingController searchController,
-                      FilterListingsController filterController) {
+                      FilterListingsController filterController,
+                      ViewManagerModel viewManagerModel,
+                      ListingDetailViewModel listingDetailViewModel) {
 
         this.searchViewModel = searchViewModel;
         this.searchController = searchController;
         this.filterController = filterController;
         this.searchViewModel.addPropertyChangeListener(this);
+        this.viewManagerModel = viewManagerModel;
+        this.listingDetailViewModel = listingDetailViewModel;
 
         this.setLayout(new BorderLayout(10, 10));
         this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));

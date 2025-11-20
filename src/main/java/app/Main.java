@@ -12,6 +12,7 @@ public class Main {
                 .addSignupUseCase()
                 .addLoginUseCase()
                 .addSearchListingUseCase()
+                .addListingDetailViewAndCommentUseCase()
                 .build();
 
         application.pack();

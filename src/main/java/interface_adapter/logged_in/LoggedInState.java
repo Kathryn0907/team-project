@@ -1,5 +1,7 @@
 package interface_adapter.logged_in;
 
+import Entities.User;
+
 /**
  * The State information representing the logged-in user.
  */
@@ -8,6 +10,15 @@ public class LoggedInState {
 
     private String password = "";
     private String passwordError;
+
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public LoggedInState(LoggedInState copy) {
         username = copy.username;
