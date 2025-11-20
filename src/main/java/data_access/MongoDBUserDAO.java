@@ -33,7 +33,7 @@ public class MongoDBUserDAO {
 
         // Check if the User is already in database. If yes, delete that User
         // so this will renew the data.
-        if (usersCollection.find(Filters.eq("id", user.getId())).first() == null) {
+        if (usersCollection.find(Filters.eq("id", user.getId())).first() != null) {
             usersCollection.deleteOne(Filters.eq("id", user.getId()));
         }
 
@@ -77,6 +77,7 @@ public class MongoDBUserDAO {
                     + user.getUsername() + " not found in Database");
         }
     }
+
 
 
 

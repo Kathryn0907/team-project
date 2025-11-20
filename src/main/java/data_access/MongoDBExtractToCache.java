@@ -36,6 +36,7 @@ public class MongoDBExtractToCache {
     private final Map<Comment,ObjectId> commentListingMap = new HashMap<>();
 
 
+
     public MongoDBExtractToCache() {
         MongoClient mongoClient = MongoConfig.getClient();
         database = mongoClient.getDatabase("CSC207_group_project_2025");
@@ -90,9 +91,18 @@ public class MongoDBExtractToCache {
 
     private void load() {
 
-        MongoCollection<Document> usersCollection = database.getCollection("users");
-        MongoCollection<Document> listingsCollection = database.getCollection("listings");
-        MongoCollection<Document> commentsCollection = database.getCollection("comments");
+        MongoCollection<Document> usersCollection = database.getCollection("Users");
+        MongoCollection<Document> listingsCollection = database.getCollection("Listings");
+        MongoCollection<Document> commentsCollection = database.getCollection("Comments");
+        if (usersCollection.countDocuments() == 0) {
+            System.out.println("No users found");
+        }
+        if (listingsCollection.countDocuments() == 0) {
+            System.out.println("No listings found");
+        }
+        if (commentsCollection.countDocuments() == 0) {
+            System.out.println("No comments found");
+        }
 
         loadAllUsers(usersCollection);
         loadAllListings(listingsCollection);
@@ -223,7 +233,7 @@ public class MongoDBExtractToCache {
             listing.setArea(doc.getDouble("area"));
             listing.setBedrooms(doc.getInteger("bedrooms"));
             listing.setBathrooms(doc.getInteger("bathrooms"));
-            listing.setBuildingType(Listing.BuildingType.valueOf(doc.getString("buildingtype")));
+            listing.setBuildingType(Listing.BuildingType.valueOf(doc.getString("buildingType")));
             listing.setActive(doc.getBoolean("active"));
 
             // Add listings with no embedding

@@ -65,6 +65,9 @@ public class User {
     }
 
     public void addFavourite(Listing listing){
+        if(listing == null){
+            throw new IllegalArgumentException("Listing cannot be null");
+        }
         favourite.add(listing);
     }
 

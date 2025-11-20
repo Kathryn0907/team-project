@@ -49,7 +49,7 @@ public class MongoDBCommentDAO {
     public void deleteComment(Comment comment) {
         ObjectId commentId = comment.getIdForDB();
         if (commentsCollection.find(Filters.eq("idForDB", commentId)).first() != null) {
-            commentsCollection.deleteOne(Filters.eq("idForDB", commentId.toString()));
+            commentsCollection.deleteOne(Filters.eq("idForDB", commentId));
         } else {
             System.out.println("Comment with Database id: " + commentId +  " and String id: "
                     + comment.getId() +" not found in database");
