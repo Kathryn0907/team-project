@@ -96,6 +96,7 @@ public class MongoDBExtractToCache {
         MongoCollection<Document> usersCollection = database.getCollection(USERS_COLLECTION);
         MongoCollection<Document> listingsCollection = database.getCollection(LISTINGS_COLLECTION);
         MongoCollection<Document> commentsCollection = database.getCollection(COMMENTS_COLLECTION);
+
         if (usersCollection.countDocuments() == 0) {
             System.out.println("No users found");
         }
@@ -117,7 +118,7 @@ public class MongoDBExtractToCache {
     private void addEmbeddingToAll() {
 
         if (usersCache.isEmpty() && listingCache.isEmpty() && commentsCache.isEmpty()) {
-            System.out.println("Cache is empty,if there is data in database, load them.");
+            System.out.println("Cache is empty");
         } else {
 
             for (Map.Entry<User, List<ObjectId>> entry : userListingsMap.entrySet()) {
@@ -200,7 +201,7 @@ public class MongoDBExtractToCache {
 
             User user = new User(username, password);
 
-            user.setId(doc.getObjectId("_id"));
+            user.setId(doc.getObjectId("id"));
 
             // Add user with no embedding.
             usersCache.add(user);
@@ -222,7 +223,7 @@ public class MongoDBExtractToCache {
 
             Listing listing = new Listing();
 
-            listing.setId(doc.getObjectId("_id"));
+            listing.setId(doc.getObjectId("id"));
             listing.setName(doc.getString("name"));
             listing.setOwnerId(doc.getObjectId("owner_id"));
             listing.setPhotoPath(doc.getString("photoPath"));

@@ -24,7 +24,7 @@ public class MongoDBCommentDAO {
 
 
     /**
-     * Save or renew the comment to Database.
+     * Save or update the comment to Database.
      * @param comment the comment.
      */
     public void saveComment(Comment comment) {

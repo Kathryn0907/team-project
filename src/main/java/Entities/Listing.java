@@ -104,7 +104,6 @@ public class Listing {
     }
 
     public Listing() {
-        this.id = new ObjectId();
         this.tags = new ArrayList<>();
         this.mainCategories = new ArrayList<>();
         this.comments = new ArrayList<>();

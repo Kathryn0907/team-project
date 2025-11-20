@@ -26,7 +26,7 @@ public class MongoDBUserDAO {
 
 
     /**
-     * Save or renew the user in database.
+     * Save or update the user in database.
      * @param user the user.
      */
     public void saveUser(User user) {

@@ -58,6 +58,8 @@ public class User {
 
     public void removeMyListing(Listing listing){
         myListings.remove(listing);
+
+        myListings.removeIf(myListing -> myListing.getId().equals(listing.getId()) );
     }
 
     public ArrayList<Listing> getMyListings() {
@@ -72,10 +74,9 @@ public class User {
     }
 
     public void removeFavourite(Listing listing){
-        if(!favourite.contains(listing)){
-            throw new IllegalArgumentException("Listing not found");
-        }
         favourite.remove(listing);
+
+        favourite.removeIf(favouriteListing -> favouriteListing.getId().equals(listing.getId()));
     }
 
     public ArrayList<Listing> getFavourite() {
@@ -87,10 +88,10 @@ public class User {
     }
 
     public void removeComment(Comment comment){
-        if(!myComments.contains(comment)){
-            throw new IllegalArgumentException("Comment not found");
-        }
+
         myComments.remove(comment);
+
+        myComments.removeIf(myComments -> myComments.getIdForDB().equals(comment.getIdForDB()));
     }
 
     public ArrayList<Comment> getMyComments() {

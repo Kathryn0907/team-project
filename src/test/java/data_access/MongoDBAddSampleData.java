@@ -3,9 +3,11 @@ package data_access;
 import Entities.Comment;
 import Entities.Listing;
 import Entities.User;
+import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class MongoDBAddSampleData {
 
@@ -48,7 +50,7 @@ public class MongoDBAddSampleData {
         MongoDBCommentDAO mongoDBCommentDAO = new MongoDBCommentDAO();
 
 
-        // Create test users
+//        // Create test users
 //        User sampleUser1 = new User("sampleUser1", "password123");
 //        User sampleUser2 = new User("sampleUser2", "pass456");
 //
@@ -104,7 +106,7 @@ public class MongoDBAddSampleData {
 //                Listing.BuildingType.VILLA,
 //                true
 //        );
-
+//
 //        MongoDBAddSampleData mongoDBAddSampleData = new MongoDBAddSampleData();
 //        mongoDBAddSampleData.addUser(sampleUser1,mongoDBUserDAO);
 //        mongoDBAddSampleData.addUser(sampleUser2,mongoDBUserDAO);
@@ -114,22 +116,30 @@ public class MongoDBAddSampleData {
 
         ArrayList<User> users = mongoDBUserDAO.getAllUsers();
         ArrayList<Listing> listings = mongoDBListingDAO.getAllListings();
-        Listing favoriteListing = null;
+        List<Listing> favourite = new ArrayList<>();
 
         for (Listing listing : listings) {
-            System.out.println(listing.getId().toHexString() + " " + listing.getName());
-//            if (listing.getName().equals("Cozy Beach House")) {
-//                favoriteListing = listing;
-//            }
+            if (listing.getName().equals("Cozy Beach House")) {
+                System.out.println(listing.getId().toHexString() + " " + listing.getName());
+                favourite.add(listing);
+            }
         }
 
 
         for (User user : users) {
-            System.out.println(user.getId().toHexString() + " " + user.getUsername());
-//            if (user.getUsername().equals("sampleUser1")) {
-//                user.addFavourite(favoriteListing);
+            if (user.getUsername().equals("sampleUser1")) {
+                System.out.println(user.getId().toHexString() + " " + user.getUsername());
+                for(Listing listing : user.getFavourite()) {
+                    System.out.println(listing.getId().toHexString());
+                }
+
+//                for(Listing listing : favourite) {
+//                    System.out.println(listing.getId().toHexString() + " " + listing.getName());
+//                    user.removeFavourite(listing);
+//                }
+//
 //                mongoDBUserDAO.saveUser(user);
-//            }
+            }
         }
     }
 
