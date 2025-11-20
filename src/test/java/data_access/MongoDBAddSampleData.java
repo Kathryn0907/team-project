@@ -43,9 +43,9 @@ public class MongoDBAddSampleData {
 
     public static void main(String[] args) {
 
-//        MongoDBUserDAO mongoDBUserDAO = new MongoDBUserDAO();
-//        MongoDBListingDao mongoDBListingDAO = new MongoDBListingDao();
-//        MongoDBCommentDAO mongoDBCommentDAO = new MongoDBCommentDAO();
+        MongoDBUserDAO mongoDBUserDAO = new MongoDBUserDAO();
+        MongoDBListingDao mongoDBListingDAO = new MongoDBListingDao();
+        MongoDBCommentDAO mongoDBCommentDAO = new MongoDBCommentDAO();
 
 
         // Create test users
@@ -112,25 +112,25 @@ public class MongoDBAddSampleData {
 //        mongoDBAddSampleData.addListing(listing2,mongoDBListingDAO);
 //        mongoDBAddSampleData.addListing(listing3,mongoDBListingDAO);
 
-//        ArrayList<User> users = mongoDBUserDAO.getAllUsers();
-//        ArrayList<Listing> listings = mongoDBListingDAO.getAllListings();
-//        Listing favoriteListing = null;
-//
-//        for (Listing listing : listings) {
-//            System.out.println(listing.getId().toHexString() + " " + listing.getName());
+        ArrayList<User> users = mongoDBUserDAO.getAllUsers();
+        ArrayList<Listing> listings = mongoDBListingDAO.getAllListings();
+        Listing favoriteListing = null;
+
+        for (Listing listing : listings) {
+            System.out.println(listing.getId().toHexString() + " " + listing.getName());
 //            if (listing.getName().equals("Cozy Beach House")) {
 //                favoriteListing = listing;
 //            }
-//        }
-//
-//
-//        for (User user : users) {
-//            System.out.println(user.getId().toHexString() + " " + user.getUsername());
+        }
+
+
+        for (User user : users) {
+            System.out.println(user.getId().toHexString() + " " + user.getUsername());
 //            if (user.getUsername().equals("sampleUser1")) {
 //                user.addFavourite(favoriteListing);
 //                mongoDBUserDAO.saveUser(user);
 //            }
-//        }
+        }
     }
 
 }

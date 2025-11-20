@@ -20,7 +20,6 @@ public class MongoDBExtractToCache {
 
     private final MongoDatabase database;
 
-
     private final ArrayList<User> usersCache = new ArrayList<>();
     private final ArrayList<Listing> listingCache = new ArrayList<>();
     private final ArrayList<Comment> commentsCache = new ArrayList<>();
@@ -35,6 +34,9 @@ public class MongoDBExtractToCache {
     private final Map<Comment,ObjectId> commentUserMap = new HashMap<>();
     private final Map<Comment,ObjectId> commentListingMap = new HashMap<>();
 
+    public final String USERS_COLLECTION = "Users";
+    public final String LISTINGS_COLLECTION = "Listings";
+    public final String COMMENTS_COLLECTION = "Comments";
 
 
     public MongoDBExtractToCache() {
@@ -91,9 +93,9 @@ public class MongoDBExtractToCache {
 
     private void load() {
 
-        MongoCollection<Document> usersCollection = database.getCollection("Users");
-        MongoCollection<Document> listingsCollection = database.getCollection("Listings");
-        MongoCollection<Document> commentsCollection = database.getCollection("Comments");
+        MongoCollection<Document> usersCollection = database.getCollection(USERS_COLLECTION);
+        MongoCollection<Document> listingsCollection = database.getCollection(LISTINGS_COLLECTION);
+        MongoCollection<Document> commentsCollection = database.getCollection(COMMENTS_COLLECTION);
         if (usersCollection.countDocuments() == 0) {
             System.out.println("No users found");
         }
