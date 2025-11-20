@@ -25,6 +25,7 @@ public class MongoDBCommentDAO {
 
     /**
      * Save or update the comment to Database.
+     * To update, make sure the Id is correct.
      * @param comment the comment.
      */
     public void saveComment(Comment comment) {

@@ -27,6 +27,7 @@ public class MongoDBUserDAO {
 
     /**
      * Save or update the user in database.
+     * To update, make sure the Id is correct.
      * @param user the user.
      */
     public void saveUser(User user) {

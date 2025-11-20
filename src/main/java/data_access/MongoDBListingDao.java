@@ -26,6 +26,7 @@ public class MongoDBListingDao {
 
     /**
      * Save or update the listing in Database.
+     * To update, make sure the Id is correct.
      * @param listing The listing.
      */
     public void saveListing(Listing listing) {
