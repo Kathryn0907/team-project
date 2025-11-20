@@ -1,5 +1,7 @@
 package Entities;
 
+import org.bson.types.ObjectId;
+
 import java.util.ArrayList;
 
 public class User {
@@ -7,6 +9,7 @@ public class User {
     // User class include getter for each attribute. Adder and remover for every list of listing
     // and changer for password.
 
+    private ObjectId id = ObjectId.get();
     private final String username;
     private String password;
     private ArrayList<Listing> myListings =  new ArrayList<>();
@@ -27,6 +30,10 @@ public class User {
         this.username = userName;
         this.password = password;
     }
+
+    public ObjectId getId() {return id;}
+
+    public void setId(ObjectId id) {this.id = id;}
 
     public String getUsername() {
         return username;
@@ -51,6 +58,8 @@ public class User {
 
     public void removeMyListing(Listing listing){
         myListings.remove(listing);
+
+        myListings.removeIf(myListing -> myListing.getId().equals(listing.getId()) );
     }
 
     public ArrayList<Listing> getMyListings() {
@@ -58,14 +67,16 @@ public class User {
     }
 
     public void addFavourite(Listing listing){
+        if(listing == null){
+            throw new IllegalArgumentException("Listing cannot be null");
+        }
         favourite.add(listing);
     }
 
     public void removeFavourite(Listing listing){
-        if(!favourite.contains(listing)){
-            throw new IllegalArgumentException("Listing not found");
-        }
         favourite.remove(listing);
+
+        favourite.removeIf(favouriteListing -> favouriteListing.getId().equals(listing.getId()));
     }
 
     public ArrayList<Listing> getFavourite() {
@@ -77,10 +88,10 @@ public class User {
     }
 
     public void removeComment(Comment comment){
-        if(!myComments.contains(comment)){
-            throw new IllegalArgumentException("Comment not found");
-        }
+
         myComments.remove(comment);
+
+        myComments.removeIf(myComments -> myComments.getIdForDB().equals(comment.getIdForDB()));
     }
 
     public ArrayList<Comment> getMyComments() {
