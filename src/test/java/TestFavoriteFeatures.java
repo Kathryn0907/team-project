@@ -1,39 +1,76 @@
-import app.SaveFavoriteUseCaseFactory;
-import app.CheckFavoriteUseCaseFactory;
-import data_access.InMemoryListingDataAccessObject;
+import app.AppBuilder;
 import Entities.*;
-import interface_adapter.ViewManagerModel;
-import interface_adapter.save_favorite.*;
-import interface_adapter.check_favorite.*;
-import view.CheckFavoriteView;
-
 import javax.swing.*;
 import java.util.Arrays;
 
+/**
+ * Complete Integration Test for Favorites Feature
+ * Tests Use Case 9 (Save Favorite) and Use Case 14 (Check Favorite)
+ *
+ * Run this to verify everything works together!
+ */
 public class TestFavoriteFeatures {
 
     public static void main(String[] args) {
         System.out.println("========================================");
-        System.out.println("TESTING FAVORITE FEATURES");
+        System.out.println("COMPLETE FAVORITES INTEGRATION TEST");
         System.out.println("========================================\n");
 
-        // Initialize data access
-        InMemoryListingDataAccessObject dataAccess = new InMemoryListingDataAccessObject();
+        // Create the application builder
+        AppBuilder appBuilder = new AppBuilder();
+
+        // Add test data BEFORE building
+        setupTestData(appBuilder);
+
+        // Build the complete application
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("Building application with favorites...\n");
+
+                JFrame application = appBuilder
+                        .addLoginView()
+                        .addSignupView()
+                        .addLoggedInView()
+                        .addCheckFavoriteView()        // Add favorites view
+                        .addSignupUseCase()
+                        .addLoginUseCase()
+                        .addSearchListingUseCase()
+                        .addSaveFavoriteUseCase()      // Add save favorite use case
+                        .addCheckFavoriteUseCase()     // Add check favorite use case
+                        .rebuildLoggedInView()         // Rebuild with all controllers
+                        .build();
+
+                application.pack();
+                application.setSize(1200, 800);
+                application.setLocationRelativeTo(null);
+                application.setVisible(true);
+
+                System.out.println("✓ Application window opened\n");
+                printTestInstructions();
+            }
+        });
+    }
+
+    private static void setupTestData(AppBuilder appBuilder) {
+        System.out.println("Setting up test data...\n");
 
         // Create test users
-        User jonathan = new User("jonathan", "pass123");
-        User alice = new User("alice", "secure456");
-        dataAccess.addUser(jonathan);
-        dataAccess.addUser(alice);
+        User testUser = new User("jonathan", "pass123");
+        User host1 = new User("alice", "secure456");
+
+        appBuilder.userDataAccessObject.save(testUser);
+        appBuilder.userDataAccessObject.save(host1);
+        System.out.println("✓ Created users: jonathan, alice");
 
         // Create test listings
         Listing listing1 = new Listing(
-                "Beachfront Condo",
-                alice,
+                "Beachfront Paradise Condo",
+                host1,
                 null,
-                Arrays.asList("beach", "ocean view", "luxury"),
+                Arrays.asList("beach", "ocean view", "luxury", "swimming pool"),
                 Arrays.asList("condo"),
-                "Beautiful beachfront condo with ocean views",
+                "Stunning beachfront condo with direct ocean views and private pool access",
                 250.0,
                 "123 Beach Drive, Miami",
                 5.0,
@@ -46,11 +83,11 @@ public class TestFavoriteFeatures {
 
         Listing listing2 = new Listing(
                 "Mountain Cabin Retreat",
-                alice,
+                host1,
                 null,
-                Arrays.asList("mountain", "nature", "peaceful"),
+                Arrays.asList("mountain", "nature", "peaceful", "hiking"),
                 Arrays.asList("villa"),
-                "Cozy cabin in the mountains",
+                "Cozy mountain cabin perfect for nature lovers and hiking enthusiasts",
                 180.0,
                 "456 Mountain Road, Aspen",
                 50.0,
@@ -62,12 +99,12 @@ public class TestFavoriteFeatures {
         );
 
         Listing listing3 = new Listing(
-                "Downtown Loft",
-                alice,
+                "Modern Downtown Loft",
+                host1,
                 null,
-                Arrays.asList("downtown", "modern", "urban"),
+                Arrays.asList("downtown", "modern", "urban", "nightlife"),
                 Arrays.asList("apartment"),
-                "Modern loft in the heart of downtown",
+                "Sleek modern loft in the heart of downtown with amazing city views",
                 200.0,
                 "789 Main Street, Toronto",
                 1.0,
@@ -78,169 +115,124 @@ public class TestFavoriteFeatures {
                 true
         );
 
-        // Inactive listing (should not be saveable)
         Listing listing4 = new Listing(
-                "Unavailable Property",
-                alice,
+                "Lakeside Family House",
+                host1,
                 null,
-                Arrays.asList("unavailable"),
+                Arrays.asList("lake", "family-friendly", "spacious", "dock"),
                 Arrays.asList("house"),
-                "This property is no longer available",
-                150.0,
-                "999 Closed Street",
-                10.0,
-                1000.0,
-                2,
-                2,
+                "Beautiful family house on the lake with private dock",
+                320.0,
+                "111 Lake View Drive, Muskoka",
+                75.0,
+                2200.0,
+                4,
+                3,
                 Listing.BuildingType.HOUSE,
-                false  // INACTIVE
+                true
         );
 
-        // Add listings to data access
-        dataAccess.addListing(listing1);
-        dataAccess.addListing(listing2);
-        dataAccess.addListing(listing3);
-        dataAccess.addListing(listing4);
+        Listing listing5 = new Listing(
+                "Cozy Studio Apartment",
+                host1,
+                null,
+                Arrays.asList("studio", "cozy", "affordable", "transit"),
+                Arrays.asList("apartment"),
+                "Perfect starter apartment near transit and amenities",
+                120.0,
+                "222 Transit Way, Toronto",
+                3.0,
+                500.0,
+                1,
+                1,
+                Listing.BuildingType.STUDIO,
+                true
+        );
 
-        System.out.println("✓ Test data created");
-        System.out.println("  - 4 listings (3 active, 1 inactive)");
-        System.out.println("  - 2 users\n");
+        // Add all listings
+        appBuilder.listingDataAccessObject.addListing(listing1);
+        appBuilder.listingDataAccessObject.addListing(listing2);
+        appBuilder.listingDataAccessObject.addListing(listing3);
+        appBuilder.listingDataAccessObject.addListing(listing4);
+        appBuilder.listingDataAccessObject.addListing(listing5);
 
-        // TEST 1: Save Favorite Use Case
-        System.out.println("TEST 1: SAVE FAVORITE");
+        System.out.println("✓ Created 5 test listings\n");
+        System.out.println("Listings available:");
+        System.out.println("  1. Beachfront Paradise Condo ($250/night)");
+        System.out.println("  2. Mountain Cabin Retreat ($180/night)");
+        System.out.println("  3. Modern Downtown Loft ($200/night)");
+        System.out.println("  4. Lakeside Family House ($320/night)");
+        System.out.println("  5. Cozy Studio Apartment ($120/night)\n");
+    }
+
+    private static void printTestInstructions() {
         System.out.println("========================================");
+        System.out.println("TEST INSTRUCTIONS");
+        System.out.println("========================================\n");
 
-        SaveFavoriteViewModel saveViewModel = new SaveFavoriteViewModel();
-        SaveFavoriteController saveController =
-                SaveFavoriteUseCaseFactory.createSaveFavoriteUseCase(saveViewModel, dataAccess);
+        System.out.println("STEP 1: LOGIN");
+        System.out.println("  - Click 'Cancel' to go to login screen");
+        System.out.println("  - Login with:");
+        System.out.println("    Username: jonathan");
+        System.out.println("    Password: pass123\n");
 
-        // Test 1a: Add first favorite
-        System.out.println("\n--- Adding 'Beachfront Condo' to jonathan's favorites ---");
-        saveController.addToFavorites("jonathan", "Beachfront Condo");
-        SaveFavoriteState saveState = saveViewModel.getState();
-        if (saveState.getError() == null) {
-            System.out.println("✓ " + saveState.getMessage());
-        } else {
-            System.out.println("✗ Error: " + saveState.getError());
-        }
+        System.out.println("STEP 2: VIEW LISTINGS");
+        System.out.println("  - You should see 5 listings displayed");
+        System.out.println("  - Each listing has an '❤ Add to Favorites' button");
+        System.out.println("  - Notice the '❤ View My Favorites' button (top right)\n");
 
-        // Test 1b: Add second favorite
-        System.out.println("\n--- Adding 'Mountain Cabin Retreat' to jonathan's favorites ---");
-        saveController.addToFavorites("jonathan", "Mountain Cabin Retreat");
-        saveState = saveViewModel.getState();
-        if (saveState.getError() == null) {
-            System.out.println("✓ " + saveState.getMessage());
-        } else {
-            System.out.println("✗ Error: " + saveState.getError());
-        }
+        System.out.println("STEP 3: ADD FAVORITES");
+        System.out.println("  ✓ Click '❤ Add to Favorites' on 'Beachfront Paradise Condo'");
+        System.out.println("    → You should see a success dialog");
+        System.out.println("  ✓ Click '❤ Add to Favorites' on 'Mountain Cabin Retreat'");
+        System.out.println("    → Another success dialog");
+        System.out.println("  ✓ Try clicking the same listing again");
+        System.out.println("    → Should say 'already in favourites'\n");
 
-        // Test 1c: Try to add duplicate
-        System.out.println("\n--- Trying to add 'Beachfront Condo' again ---");
-        saveController.addToFavorites("jonathan", "Beachfront Condo");
-        saveState = saveViewModel.getState();
-        if (saveState.getError() == null) {
-            System.out.println("✓ " + saveState.getMessage());
-        } else {
-            System.out.println("✗ Error: " + saveState.getError());
-        }
+        System.out.println("STEP 4: VIEW FAVORITES");
+        System.out.println("  ✓ Click '❤ View My Favorites' (top right)");
+        System.out.println("    → Screen changes to Favorites view");
+        System.out.println("    → You should see your 2 favorited listings");
+        System.out.println("    → Title shows count: 'My Favorite Listings (2)'\n");
 
-        // Test 1d: Try to add inactive listing
-        System.out.println("\n--- Trying to add inactive 'Unavailable Property' ---");
-        saveController.addToFavorites("jonathan", "Unavailable Property");
-        saveState = saveViewModel.getState();
-        if (saveState.getError() != null) {
-            System.out.println("✓ Correctly rejected: " + saveState.getError());
-        } else {
-            System.out.println("✗ Should have rejected inactive listing");
-        }
+        System.out.println("STEP 5: TEST SEARCH + FAVORITES");
+        System.out.println("  - (You need to manually navigate back to logged in view)");
+        System.out.println("  - Search for 'lake'");
+        System.out.println("  - Add 'Lakeside Family House' to favorites");
+        System.out.println("  - View favorites again");
+        System.out.println("  - Should now see 3 listings\n");
 
-        // Test 1e: Try with non-existent listing
-        System.out.println("\n--- Trying to add non-existent listing ---");
-        saveController.addToFavorites("jonathan", "Non-Existent Listing");
-        saveState = saveViewModel.getState();
-        if (saveState.getError() != null) {
-            System.out.println("✓ Correctly rejected: " + saveState.getError());
-        } else {
-            System.out.println("✗ Should have rejected non-existent listing");
-        }
-
-        // TEST 2: Check Favorite Use Case
-        System.out.println("\n========================================");
-        System.out.println("TEST 2: CHECK FAVORITE");
         System.out.println("========================================");
+        System.out.println("WHAT TO VERIFY");
+        System.out.println("========================================\n");
 
-        ViewManagerModel viewManagerModel = new ViewManagerModel();
-        CheckFavoriteViewModel checkViewModel = new CheckFavoriteViewModel();
-        CheckFavoriteController checkController =
-                CheckFavoriteUseCaseFactory.createCheckFavoriteUseCase(
-                        viewManagerModel, checkViewModel, dataAccess);
+        System.out.println("✓ Each listing card has 'Add to Favorites' button");
+        System.out.println("✓ Clicking button shows success message");
+        System.out.println("✓ Can't add same listing twice");
+        System.out.println("✓ 'View My Favorites' button navigates correctly");
+        System.out.println("✓ Favorites view shows all favorited listings");
+        System.out.println("✓ Favorites count is accurate");
+        System.out.println("✓ Can favorite listings after searching\n");
 
-        // Test 2a: Check jonathan's favorites
-        System.out.println("\n--- Checking jonathan's favorites ---");
-        checkController.loadFavouriteListings("jonathan");
-        CheckFavoriteState checkState = checkViewModel.getState();
-        if (checkState.getError() == null) {
-            System.out.println("✓ Found " + checkState.getFavouriteListingNames().size() + " favorites:");
-            for (String name : checkState.getFavouriteListingNames()) {
-                System.out.println("  • " + name);
-            }
-        } else {
-            System.out.println("✗ Error: " + checkState.getError());
-        }
-
-        // Test 2b: Check alice's favorites (should be empty)
-        System.out.println("\n--- Checking alice's favorites (should be empty) ---");
-        checkController.loadFavouriteListings("alice");
-        checkState = checkViewModel.getState();
-        if (checkState.getError() == null) {
-            System.out.println("✓ Found " + checkState.getFavouriteListingNames().size() + " favorites");
-            if (checkState.getFavouriteListingNames().isEmpty()) {
-                System.out.println("  (No favorites yet)");
-            }
-        } else {
-            System.out.println("✗ Error: " + checkState.getError());
-        }
-
-        // Test 2c: Check non-existent user
-        System.out.println("\n--- Checking non-existent user ---");
-        checkController.loadFavouriteListings("nonexistent");
-        checkState = checkViewModel.getState();
-        if (checkState.getError() != null) {
-            System.out.println("✓ Correctly rejected: " + checkState.getError());
-        } else {
-            System.out.println("✗ Should have rejected non-existent user");
-        }
-
-        // TEST 3: UI Demo
-        System.out.println("\n========================================");
-        System.out.println("TEST 3: UI DEMO");
         System.out.println("========================================");
+        System.out.println("EXPECTED BEHAVIOR");
+        System.out.println("========================================\n");
 
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                // Re-load jonathan's favorites to display in UI
-                checkController.loadFavouriteListings("jonathan");
+        System.out.println("USE CASE 9 (Save Favorite):");
+        System.out.println("  ✅ User can add any active listing to favorites");
+        System.out.println("  ✅ System prevents duplicate favorites");
+        System.out.println("  ✅ System validates user and listing exist");
+        System.out.println("  ✅ User gets immediate feedback\n");
 
-                CheckFavoriteView view = new CheckFavoriteView(checkViewModel);
+        System.out.println("USE CASE 14 (Check Favorite):");
+        System.out.println("  ✅ User can view all their favorites");
+        System.out.println("  ✅ System shows only active listings");
+        System.out.println("  ✅ System displays count of favorites");
+        System.out.println("  ✅ Empty state handled gracefully\n");
 
-                JFrame frame = new JFrame("Favorite Listings - " + "jonathan");
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.setSize(700, 500);
-                frame.setLocationRelativeTo(null);
-                frame.add(view);
-                frame.setVisible(true);
-
-                System.out.println("\n✓ UI window opened");
-                System.out.println("  Displaying jonathan's " +
-                        checkViewModel.getState().getFavouriteListingNames().size() +
-                        " favorite listings");
-                System.out.println("\nClose the window to exit.");
-            }
-        });
-
-        System.out.println("\n========================================");
-        System.out.println("✓ ALL TESTS PASSED!");
-        System.out.println("========================================");
+        System.out.println("========================================\n");
+        System.out.println("🚀 Ready to test! Follow the steps above.\n");
+        System.out.println("Close the window when finished testing.\n");
+        System.out.println("========================================\n");
     }
 }

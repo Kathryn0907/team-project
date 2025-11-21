@@ -2,7 +2,23 @@ import app.FilterListingsUseCaseFactory;
 import app.SearchListingUseCaseFactory;
 import data_access.InMemoryListingDAO;
 import Entities.*;
+import interface_adapter.ViewManagerModel;
 import interface_adapter.filter.FilterListingsController;
+import interface_adapter.listing_detail.ListingDetailViewModel;
+import interface_adapter.search_listings.*;
+import view.SearchView;
+import use_case.filter.*;
+
+import javax.swing.*;
+
+import app.FilterListingsUseCaseFactory;
+import app.SearchListingUseCaseFactory;
+import data_access.InMemoryListingDAO;
+import data_access.GoogleDistanceService;
+import Entities.*;
+import interface_adapter.ViewManagerModel;
+import interface_adapter.filter.FilterListingsController;
+import interface_adapter.listing_detail.ListingDetailViewModel;
 import interface_adapter.search_listings.*;
 import view.SearchView;
 import use_case.filter.*;
@@ -127,8 +143,11 @@ public class SearchViewTest {
         SearchListingController searchcontroller =
                 SearchListingUseCaseFactory.createSearchListingUseCase(viewModel, dataAccess);
         FilterListingsController filtercontroller =  null;
+        ViewManagerModel viewManagerModel = null;
+        ListingDetailViewModel listingDetailViewModel = null;
 
-        SearchView searchView = new SearchView(viewModel, searchcontroller, filtercontroller);
+        SearchView searchView = new SearchView(viewModel, searchcontroller, filtercontroller, viewManagerModel
+                                                ,  listingDetailViewModel);
 
         System.out.println("✓ Search view created\n");
 
@@ -151,6 +170,10 @@ public class SearchViewTest {
                 System.out.println("  - 'lake' (should find 1 listing)");
                 System.out.println("  - 'downtown' (should find 2 listings)");
                 System.out.println("  - 'beachfront' (should show error + all listings)");
+                System.out.println("\nTry using the filter panel:");
+                System.out.println("  - Set max price to 200 (should filter to 3 listings)");
+                System.out.println("  - Set building type to VILLA (should show 2 listings)");
+                System.out.println("  - Set min bedrooms to 3 (should show 2 listings)");
                 System.out.println("\nClose the window to exit.");
             }
         });

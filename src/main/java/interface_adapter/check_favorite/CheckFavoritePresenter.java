@@ -22,6 +22,7 @@ public class CheckFavoritePresenter implements CheckFavoriteOutputBoundary {
         state.setFavouriteListingNames(outputData.getFavouriteListingNames());
         state.setError(null);
 
+        checkFavoriteViewModel.setState(state);      // 👈 add this
         checkFavoriteViewModel.firePropertyChange();
 
         // Switch to the "Favourite Listings" view
@@ -36,6 +37,12 @@ public class CheckFavoritePresenter implements CheckFavoriteOutputBoundary {
         state.setError(error);
         state.setFavouriteListingNames(java.util.Collections.emptyList());
 
+        checkFavoriteViewModel.setState(state);      // 👈 add this
         checkFavoriteViewModel.firePropertyChange();
+
+        // (Optional but nice UX) still switch to the favourites view
+        viewManagerModel.setState(checkFavoriteViewModel.getViewName());
+        viewManagerModel.firePropertyChange();
     }
+
 }

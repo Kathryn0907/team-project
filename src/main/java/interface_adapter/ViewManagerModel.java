@@ -5,6 +5,11 @@ package interface_adapter;
  * is currently active. An initial state of "" is used.
  */
 public class ViewManagerModel extends ViewModel<String> {
+    private static final ViewManagerModel instance = new ViewManagerModel();
+
+    public static ViewManagerModel getInstance() {
+        return instance;
+    }
 
     public ViewManagerModel() {
         super("view manager");

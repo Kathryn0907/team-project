@@ -1,19 +1,33 @@
 package view;
 
 import Entities.Listing;
+import interface_adapter.save_favorite.SaveFavoriteController;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
- * Individual listing card display component
+ * Individual listing card display component with Save to Favorites functionality
+ * Updated by Jonathan (Use Case 9 & 14)
  */
 public class ListingCardPanel extends JPanel {
 
     private final Listing listing;
+    private SaveFavoriteController saveController;
+    private String currentUsername;
 
+    // Constructor for backward compatibility (no favorites)
     public ListingCardPanel(Listing listing) {
+        this(listing, null, null);
+    }
+
+    // Constructor with favorites functionality
+    public ListingCardPanel(Listing listing, SaveFavoriteController saveController, String currentUsername) {
         this.listing = listing;
+        this.saveController = saveController;
+        this.currentUsername = currentUsername;
 
         this.setLayout(new BorderLayout(10, 10));
         this.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
@@ -22,9 +36,13 @@ public class ListingCardPanel extends JPanel {
 
         JPanel picturePanel = createPicturePanel();
         JPanel detailsPanel = createDetailsPanel();
+        JPanel actionPanel = createActionPanel();
 
         this.add(picturePanel, BorderLayout.WEST);
         this.add(detailsPanel, BorderLayout.CENTER);
+        if (saveController != null && currentUsername != null) {
+            this.add(actionPanel, BorderLayout.EAST);
+        }
     }
 
     private JPanel createPicturePanel() {
@@ -83,5 +101,37 @@ public class ListingCardPanel extends JPanel {
         detailsPanel.add(tagsLabel);
 
         return detailsPanel;
+    }
+
+    private JPanel createActionPanel() {
+        JPanel actionPanel = new JPanel();
+        actionPanel.setLayout(new BoxLayout(actionPanel, BoxLayout.Y_AXIS));
+        actionPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        JButton favoriteButton = new JButton("❤ Add to Favorites");
+        favoriteButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        favoriteButton.setPreferredSize(new Dimension(150, 30));
+
+        favoriteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (saveController != null && currentUsername != null) {
+                    saveController.addToFavorites(currentUsername, listing.getName());
+
+                    // Show confirmation dialog
+                    JOptionPane.showMessageDialog(
+                            ListingCardPanel.this,
+                            "\"" + listing.getName() + "\" added to your favorites!",
+                            "Success",
+                            JOptionPane.INFORMATION_MESSAGE
+                    );
+                }
+            }
+        });
+
+        actionPanel.add(favoriteButton);
+        actionPanel.add(Box.createVerticalGlue());
+
+        return actionPanel;
     }
 }
