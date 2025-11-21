@@ -7,6 +7,7 @@ import data_access.InMemoryListingDataAccessObject;
 import data_access.InMemoryUserDataAccessObject;
 import data_access.GoogleDistanceService;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.comment.CommentPresenter;
 import interface_adapter.filter.FilterListingsController;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginController;
@@ -36,11 +37,16 @@ import view.LoginView;
 import view.SignupView;
 import view.ViewManager;
 
+import interface_adapter.listing_detail.ListingDetailViewModel;
+import interface_adapter.comment.CommentViewModel;
+import interface_adapter.comment.CommentController;
+import view.ListingDetailView;
+
 public class AppBuilder {
     private final JPanel cardPanel = new JPanel();
     private final CardLayout cardLayout = new CardLayout();
 
-    final ViewManagerModel viewManagerModel = new ViewManagerModel();
+    final ViewManagerModel viewManagerModel = ViewManagerModel.getInstance();
     ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
 
     // Data access objects
@@ -58,6 +64,10 @@ public class AppBuilder {
     // Controllers that will be created in use case methods
     private SearchListingController searchController;
     private FilterListingsController filterController;
+
+    private ListingDetailViewModel listingDetailViewModel;
+    private CommentViewModel commentViewModel;
+    private ListingDetailView listingDetailView;
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -132,6 +142,23 @@ public class AppBuilder {
         loggedInView = new LoggedInView(loggedInViewModel, searchListingViewModel,
                 searchController, filterController);
         cardPanel.add(loggedInView, loggedInView.getViewName());
+
+        return this;
+    }
+
+    public AppBuilder addListingDetailViewAndCommentUseCase() {
+        listingDetailViewModel = ListingDetailViewModel.getInstance();
+        commentViewModel = new CommentViewModel();
+
+        CommentController commentController = CommentUseCaseFactory.create(viewManagerModel, commentViewModel);
+
+        listingDetailView = new ListingDetailView(
+                listingDetailViewModel,
+                commentController,
+                commentViewModel
+        );
+
+        cardPanel.add(listingDetailView, ListingDetailViewModel.VIEW_NAME);
 
         return this;
     }
