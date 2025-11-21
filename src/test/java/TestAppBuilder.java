@@ -112,7 +112,13 @@ public class TestAppBuilder {
                         .addSignupUseCase()
                         .addLoginUseCase()
                         .addSearchListingUseCase()
+                        .addSaveFavoriteUseCase()
+                        .addCheckFavoriteView()      // 👈 add the view
+                        .addCheckFavoriteUseCase()   // 👈 add the use case (controller/presenter)
+                        .rebuildLoggedInView()       // 👈 AFTER all controllers exist
                         .build();
+
+
 
                 application.pack();
                 application.setSize(1200, 800);
