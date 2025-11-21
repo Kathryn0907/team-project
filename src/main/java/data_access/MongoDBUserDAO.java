@@ -138,8 +138,13 @@ public class MongoDBUserDAO implements SignupUserDataAccessInterface,
     @Override
     public void cancelAccount(String username) {
         MongoDBListingDAO mongoDBListingDAO = new MongoDBListingDAO();
+        MongoDBCommentDAO mongoDBCommentDAO = new MongoDBCommentDAO();
         User user = findUserByUsername(username);
         for (Listing listing : user.getMyListings()) {
+            for (Comment comment : listing.getComments()) {
+                comment.setListing(null);
+                mongoDBCommentDAO.saveComment(comment);
+            }
             mongoDBListingDAO.deleteListing(listing);
         }
         usersCollection.deleteOne(Filters.eq("username", username));
