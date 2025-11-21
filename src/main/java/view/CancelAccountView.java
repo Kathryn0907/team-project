@@ -1,8 +1,9 @@
 package view;
 
-import interface_adapter.login.LoginController;
+import interface_adapter.cancel_account.CancelAccountController;
+import interface_adapter.cancel_account.CancelAccountState;
+import interface_adapter.cancel_account.CancelAccountViewModel;
 import interface_adapter.login.LoginState;
-import interface_adapter.login.LoginViewModel;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -13,13 +14,10 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-/**
- * The View for when the user is logging into the program.
- */
-public class LoginView extends JPanel implements ActionListener, PropertyChangeListener {
+public class CancelAccountView extends JPanel implements ActionListener, PropertyChangeListener {
 
-    private final String viewName = "log in";
-    private final LoginViewModel loginViewModel;
+    private final String viewName = "cancel account";
+    private final CancelAccountViewModel cancelAccountViewModel;
 
     private final JTextField usernameInputField = new JTextField(15);
     private final JLabel usernameErrorField = new JLabel();
@@ -27,16 +25,18 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     private final JPasswordField passwordInputField = new JPasswordField(15);
     private final JLabel passwordErrorField = new JLabel();
 
-    private final JButton logIn;
-    private final JButton toSignup;
-    private LoginController loginController = null;
+    private final JButton confirmButton;
+    private final JButton backButton;
 
-    public LoginView(LoginViewModel loginViewModel) {
+    private CancelAccountController cancelAccountController = null;
 
-        this.loginViewModel = loginViewModel;
-        this.loginViewModel.addPropertyChangeListener(this);
 
-        final JLabel title = new JLabel("Login Screen");
+    public CancelAccountView(CancelAccountViewModel cancelAccountViewModel) {
+
+        this.cancelAccountViewModel = cancelAccountViewModel;
+        this.cancelAccountViewModel.addPropertyChangeListener(this);
+
+        final JLabel title = new JLabel("Cancel Account");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         final LabelTextPanel usernameInfo = new LabelTextPanel(
@@ -45,40 +45,26 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                 new JLabel("Password"), passwordInputField);
 
         final JPanel buttons = new JPanel();
-        logIn = new JButton("log in");
-        buttons.add(logIn);
-        toSignup = new JButton("signup");
-        buttons.add(toSignup);
+        confirmButton = new JButton("Confirm cancel");
+        buttons.add(confirmButton);
+        backButton = new JButton("Back to Profile");
+        buttons.add(backButton);
 
-        logIn.addActionListener(
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(logIn)) {
-                            final LoginState currentState = loginViewModel.getState();
+        confirmButton.addActionListener(this);
 
-                            loginController.execute(
-                                    currentState.getUsername(),
-                                    currentState.getPassword()
-                            );
-                        }
-                    }
-                }
-        );
-
-        toSignup.addActionListener(new ActionListener() {
-                                     public void actionPerformed(ActionEvent e) {
-                                         loginController.switchToSignup();
-                                     }
-                                 }
-
+        backButton.addActionListener(new ActionListener() {
+                                        public void actionPerformed(ActionEvent e) {
+                                            cancelAccountController.back();
+                                        }
+                                    }
         );
 
         usernameInputField.getDocument().addDocumentListener(new DocumentListener() {
 
             private void documentListenerHelper() {
-                final LoginState currentState = loginViewModel.getState();
+                final CancelAccountState currentState = cancelAccountViewModel.getState();
                 currentState.setUsername(usernameInputField.getText());
-                loginViewModel.setState(currentState);
+                cancelAccountViewModel.setState(currentState);
             }
 
             @Override
@@ -102,9 +88,9 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         passwordInputField.getDocument().addDocumentListener(new DocumentListener() {
 
             private void documentListenerHelper() {
-                final LoginState currentState = loginViewModel.getState();
+                final CancelAccountState currentState = cancelAccountViewModel.getState();
                 currentState.setPassword(new String(passwordInputField.getPassword()));
-                loginViewModel.setState(currentState);
+                cancelAccountViewModel.setState(currentState);
             }
 
             @Override
@@ -127,39 +113,46 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         this.add(usernameInfo);
         this.add(usernameErrorField);
         this.add(passwordInfo);
+        this.add(passwordErrorField);
         this.add(buttons);
     }
 
-    /**
-     * React to a button click that results in evt.
-     * @param evt the ActionEvent to react to
-     */
+
+
+
+    @Override
     public void actionPerformed(ActionEvent evt) {
-        System.out.println("Click " + evt.getActionCommand());
+        if (evt.getSource().equals(confirmButton)) {
+            final CancelAccountState currentState = cancelAccountViewModel.getState();
+
+            cancelAccountController.execute(
+                    currentState.getUsername(),
+                    currentState.getPassword()
+            );
+        }
     }
+
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        final LoginState state = (LoginState) evt.getNewValue();
+        final CancelAccountState state = (CancelAccountState) evt.getNewValue();
         setFields(state);
-        usernameErrorField.setText(state.getLoginError());
-
-        if (state.getCancelAccountSuccessMsg() != null) {
-            JOptionPane.showMessageDialog(this, state.getCancelAccountSuccessMsg());
-        }
-
+        usernameErrorField.setText(state.getCancelAccountError());
     }
 
-    private void setFields(LoginState state) {
+
+    private void setFields(CancelAccountState state) {
         usernameInputField.setText(state.getUsername());
-        passwordInputField.setText(state.getPassword());
     }
+
 
     public String getViewName() {
         return viewName;
     }
 
-    public void setLoginController(LoginController loginController) {
-        this.loginController = loginController;
+    public void setCancelAccountController(CancelAccountController cancelAccountController) {
+        this.cancelAccountController = cancelAccountController;
     }
+
+
 }
