@@ -123,5 +123,6 @@ public class FilterListingsInteractor implements FilterListingsInputBoundary {
 
         FilterListingsOutputData outputData = new FilterListingsOutputData(results);
         presenter.present(outputData);
+        
     }
 }
