@@ -1,5 +1,6 @@
 package view;
 
+import Entities.Comment;
 import interface_adapter.comment.CommentController;
 import interface_adapter.comment.CommentViewModel;
 
@@ -23,6 +24,14 @@ public class CommentView extends JPanel implements PropertyChangeListener {
     private Listing currentListing;
     private User currentUser;
 
+    // === New: comment list UI ===
+    private final JPanel commentsPanel = new JPanel();
+    private final JScrollPane commentsScrollPane =
+            new JScrollPane(commentsPanel,
+                    JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+                    JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
+
     public CommentView(CommentController controller, CommentViewModel viewModel) {
         this.controller = controller;
         this.viewModel = viewModel;
@@ -31,6 +40,12 @@ public class CommentView extends JPanel implements PropertyChangeListener {
 
         setLayout(new BorderLayout());
 
+        // --- New: comments panel setup ---
+        commentsPanel.setLayout(new BoxLayout(commentsPanel, BoxLayout.Y_AXIS));
+        commentsScrollPane.setPreferredSize(new Dimension(100, 250));
+        add(commentsScrollPane, BorderLayout.CENTER);
+
+        // input panel
         JPanel inputPanel = new JPanel(new BorderLayout());
         inputPanel.add(new JScrollPane(commentBox), BorderLayout.CENTER);
         inputPanel.add(submitButton, BorderLayout.EAST);
@@ -75,5 +90,26 @@ public class CommentView extends JPanel implements PropertyChangeListener {
             messageLabel.setText(viewModel.getState().getSuccessMessage());
             commentBox.setText("");
         }
+
+        // === New: refresh comments list ===
+        java.util.List<Comment> comments = viewModel.getState().getComments();
+
+        commentsPanel.removeAll();
+
+        if (comments == null || comments.isEmpty()) {
+            commentsPanel.add(new JLabel("No comments yet."));
+        } else {
+            for (Comment c : comments) {
+                String author = (c.getUser() != null) ? c.getUser().getUsername() : "Anonymous";
+                String text = "• " + author + ": " + c.getContent();
+
+                JLabel label = new JLabel(text);
+                label.setAlignmentX(Component.LEFT_ALIGNMENT);
+                commentsPanel.add(label);
+                commentsPanel.add(Box.createVerticalStrut(5));
+            }
+        }
+        commentsPanel.revalidate();
+        commentsPanel.repaint();
     }
 }
