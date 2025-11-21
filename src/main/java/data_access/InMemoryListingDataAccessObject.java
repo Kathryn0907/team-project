@@ -2,6 +2,7 @@ package data_access;
 
 import Entities.Listing;
 import Entities.User;
+import use_case.cancel_account.CancelAccountDataAccessInterface;
 import use_case.create_listing.CreateListingDataAccessInterface;
 import use_case.filter.FilterListingsDataAccessInterface;
 import use_case.search_listings.SearchListingDataAccessInterface;
@@ -18,7 +19,8 @@ public class InMemoryListingDataAccessObject implements SearchListingDataAccessI
         ExtractTagsDataAccessInterface,
         SaveFavoriteDataAccessInterface,
         CheckFavoriteDataAccessInterface,
-        FilterListingsDataAccessInterface {
+        FilterListingsDataAccessInterface,
+        CancelAccountDataAccessInterface {
 
     private final ArrayList<Listing> listings;
     private final HashMap<String, User> users;
@@ -72,6 +74,18 @@ public class InMemoryListingDataAccessObject implements SearchListingDataAccessI
 
     public void addUser(User user) {
         users.put(user.getUsername(), user);
+    }
+
+
+    @Override
+    public boolean existByUsername(String username) {
+        return users.containsKey(username);
+    }
+
+    @Override
+    public void cancelAccount(String username) {
+        listings.removeIf(l -> l.getOwner().getUsername().equals(username));
+        users.remove(username);
     }
 
     // SaveFavoriteDataAccessInterface methods
