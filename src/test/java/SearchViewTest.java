@@ -2,7 +2,9 @@ import app.FilterListingsUseCaseFactory;
 import app.SearchListingUseCaseFactory;
 import data_access.InMemoryListingDAO;
 import Entities.*;
+import interface_adapter.ViewManagerModel;
 import interface_adapter.filter.FilterListingsController;
+import interface_adapter.listing_detail.ListingDetailViewModel;
 import interface_adapter.search_listings.*;
 import view.SearchView;
 import use_case.filter.*;
@@ -136,28 +138,16 @@ public class SearchViewTest {
         System.out.println("  - 4 listings loaded");
         System.out.println("  - 2 users created\n");
 
-        // Create view components - FIX: Add all required dependencies
-        SearchListingViewModel searchViewModel = new SearchListingViewModel();
-        SearchListingController searchController =
-                SearchListingUseCaseFactory.createSearchListingUseCase(searchViewModel, dataAccess);
+        // Create view components
+        SearchListingViewModel viewModel = new SearchListingViewModel();
+        SearchListingController searchcontroller =
+                SearchListingUseCaseFactory.createSearchListingUseCase(viewModel, dataAccess);
+        FilterListingsController filtercontroller =  null;
+        ViewManagerModel viewManagerModel = null;
+        ListingDetailViewModel listingDetailViewModel = null;
 
-        // FIX: Create the filter controller instead of leaving it null
-        DistanceService distanceService = new GoogleDistanceService();
-        FilterListingsController filterController =
-                FilterListingsUseCaseFactory.create(searchViewModel, dataAccess, distanceService);
-
-        // FIX: Create the required ViewManagerModel and ListingDetailViewModel
-        ViewManagerModel viewManagerModel = ViewManagerModel.getInstance();
-        ListingDetailViewModel listingDetailViewModel = ListingDetailViewModel.getInstance();
-
-        // FIX: Pass all required parameters to SearchView constructor
-        SearchView searchView = new SearchView(
-                searchViewModel,
-                searchController,
-                filterController,
-                viewManagerModel,
-                listingDetailViewModel
-        );
+        SearchView searchView = new SearchView(viewModel, searchcontroller, filtercontroller, viewManagerModel
+                                                ,  listingDetailViewModel);
 
         System.out.println("✓ Search view created\n");
 

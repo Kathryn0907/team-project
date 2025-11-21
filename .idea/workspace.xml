@@ -34,6 +34,7 @@
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
     &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Jonathanchan06&quot;
     &quot;assignee&quot;: &quot;bBrozedd&quot;
   }
 }</component>
@@ -60,6 +61,7 @@
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
 }</component>
+  <component name="ProjectId" id="35lTM3xzPB3jDlJfVTfrPKfxi7x" />
   <component name="ProjectId" id="35fyy8UTZUYoior4XkcvGvxW1NM" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -67,9 +69,25 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.Main.executor": "Run",
     "Application.SearchViewTest.executor": "Run",
+    "Application.TestAppBuilder (1).executor": "Run",
+    "Application.TestAppBuilder (2).executor": "Run",
+    "Application.TestAppBuilder (3).executor": "Run",
+    "Application.TestAppBuilder (4).executor": "Run",
+    "Application.TestAppBuilder (5).executor": "Run",
     "Application.TestAppBuilder.executor": "Run",
+    "Application.TestFavoriteFeatures (1).executor": "Run",
     "Application.TestFavoriteFeatures.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "#39 on jonathancode",
+    "kotlin-language-version-configured": "true"
+  }
+}]]></component>
+  <component name="RunManager" selected="Application.TestAppBuilder">
+    <configuration name="TestAppBuilder (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
     "JUnit.DistanceCalculatorTest.executor": "Run",
     "JUnit.DistanceCalculatorTest.testMultiDestinationDistanceCalculation.executor": "Run",
     "JUnit.DistanceCalculatorTest.testSingleDistanceCalculation.executor": "Run",
@@ -92,6 +110,8 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="TestAppBuilder (3)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="TestAppBuilder" />
     <configuration name="TestFavoriteFeatures" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="test_favorite.TestFavoriteFeatures" />
       <module name="TeamProject" />
@@ -105,6 +125,8 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="TestAppBuilder (4)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="TestAppBuilder" />
     <configuration name="DistanceCalculatorTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="TeamProject" />
       <extension name="coverage">
@@ -120,6 +142,8 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="TestAppBuilder (5)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="TestAppBuilder" />
     <configuration name="DistanceCalculatorTest.testMultiDestinationDistanceCalculation" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="TeamProject" />
       <extension name="coverage">
@@ -136,6 +160,9 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="TestAppBuilder" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="TestAppBuilder" />
+      <module name="TeamProject" />
     <configuration name="DistanceCalculatorTest.testSingleDistanceCalculation" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="TeamProject" />
       <extension name="coverage">
@@ -155,6 +182,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.TestAppBuilder" />
+        <item itemvalue="Application.TestAppBuilder (5)" />
+        <item itemvalue="Application.TestAppBuilder (1)" />
+        <item itemvalue="Application.TestAppBuilder (4)" />
+        <item itemvalue="Application.TestAppBuilder (3)" />
         <item itemvalue="JUnit.DistanceCalculatorTest" />
         <item itemvalue="JUnit.DistanceCalculatorTest.testMultiDestinationDistanceCalculation" />
         <item itemvalue="JUnit.DistanceCalculatorTest.testSingleDistanceCalculation" />
@@ -178,6 +209,22 @@
       <option name="project" value="LOCAL" />
       <updated>1763422791341</updated>
     </task>
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b241399e-bc1d-4260-83ed-bef40cd6b77c" name="Changes" comment="Updated test" />
+      <created>1763683606293</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1763683606293</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Implemented 'saving favorite', 'checking favorite', favorite view list, 'back to listings' button. modified InMemoryUserDataAccessObject.java">
+      <option name="closed" value="true" />
+      <created>1763697105297</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1763697105297</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <task id="LOCAL-00002" summary="transfer LoggedIn">
       <option name="closed" value="true" />
       <created>1763432463171</created>
@@ -206,6 +253,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="I 'finished' my use cases (except for MongoDb implementation yet) and i edited Comments to Comment" />
+    <MESSAGE value="Implemented 'saving favorite', 'checking favorite', favorite view list, 'back to listings' button. modified InMemoryUserDataAccessObject.java" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implemented 'saving favorite', 'checking favorite', favorite view list, 'back to listings' button. modified InMemoryUserDataAccessObject.java" />
     <MESSAGE value="transfer LoggedIn" />
     <MESSAGE value="Google DistanceMatrixApi" />
     <option name="LAST_COMMIT_MESSAGE" value="Google DistanceMatrixApi" />

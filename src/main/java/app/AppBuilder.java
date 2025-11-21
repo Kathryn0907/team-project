@@ -7,7 +7,6 @@ import data_access.InMemoryListingDataAccessObject;
 import data_access.InMemoryUserDataAccessObject;
 import data_access.GoogleDistanceService;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.comment.CommentPresenter;
 import interface_adapter.filter.FilterListingsController;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginController;
@@ -19,6 +18,12 @@ import interface_adapter.search_listings.SearchListingViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
+import interface_adapter.save_favorite.SaveFavoriteController;
+import interface_adapter.save_favorite.SaveFavoritePresenter;
+import interface_adapter.save_favorite.SaveFavoriteViewModel;
+import interface_adapter.check_favorite.CheckFavoriteController;
+import interface_adapter.check_favorite.CheckFavoritePresenter;
+import interface_adapter.check_favorite.CheckFavoriteViewModel;
 import use_case.filter.DistanceService;
 import use_case.filter.FilterListingsInputBoundary;
 import use_case.filter.FilterListingsInteractor;
@@ -32,16 +37,22 @@ import use_case.search_listings.SearchListingOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
+import use_case.save_favorite.SaveFavoriteInputBoundary;
+import use_case.save_favorite.SaveFavoriteInteractor;
+import use_case.save_favorite.SaveFavoriteOutputBoundary;
+import use_case.check_favorite.CheckFavoriteInputBoundary;
+import use_case.check_favorite.CheckFavoriteInteractor;
+import use_case.check_favorite.CheckFavoriteOutputBoundary;
 import view.LoggedInView;
 import view.LoginView;
 import view.SignupView;
+import view.CheckFavoriteView;
 import view.ViewManager;
 
-import interface_adapter.listing_detail.ListingDetailViewModel;
-import interface_adapter.comment.CommentViewModel;
-import interface_adapter.comment.CommentController;
-import view.ListingDetailView;
-
+/**
+ * AppBuilder with Favorites functionality integrated
+ * Updated by Jonathan (Use Case 9 & 14)
+ */
 public class AppBuilder {
     private final JPanel cardPanel = new JPanel();
     private final CardLayout cardLayout = new CardLayout();
@@ -58,19 +69,21 @@ public class AppBuilder {
     private LoginViewModel loginViewModel;
     private LoggedInViewModel loggedInViewModel;
     private SearchListingViewModel searchListingViewModel;
+    private SaveFavoriteViewModel saveFavoriteViewModel;
+    private CheckFavoriteViewModel checkFavoriteViewModel;
     private LoggedInView loggedInView;
     private LoginView loginView;
+    private CheckFavoriteView checkFavoriteView;
 
     // Controllers that will be created in use case methods
     private SearchListingController searchController;
     private FilterListingsController filterController;
-
-    private ListingDetailViewModel listingDetailViewModel;
-    private CommentViewModel commentViewModel;
-    private ListingDetailView listingDetailView;
+    private SaveFavoriteController saveController;
+    private CheckFavoriteController checkController;
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
+        userDataAccessObject.setListingDataAccessObject(listingDataAccessObject);
     }
 
     public AppBuilder addSignupView() {
@@ -90,14 +103,34 @@ public class AppBuilder {
     public AppBuilder addLoggedInView() {
         loggedInViewModel = new LoggedInViewModel();
         searchListingViewModel = new SearchListingViewModel();
+        saveFavoriteViewModel = new SaveFavoriteViewModel();
+        checkFavoriteViewModel = new CheckFavoriteViewModel();
 
-        // Note: Controllers will be injected by addSearchListingUseCase()
+        // Note: Controllers will be injected by use case methods
         // Create the logged in view (controllers will be set later)
-        loggedInView = new LoggedInView(loggedInViewModel, searchListingViewModel,
-                null, null);  // Controllers added later
+        loggedInView = new LoggedInView(
+                loggedInViewModel,
+                searchListingViewModel,
+                null,  // searchController - added later
+                null,  // filterController - added later
+                null,  // saveController - added later
+                null,  // checkController - added later
+                viewManagerModel
+        );
         cardPanel.add(loggedInView, loggedInView.getViewName());
         return this;
     }
+
+    public AppBuilder addCheckFavoriteView() {
+        if (checkFavoriteViewModel == null) {
+            checkFavoriteViewModel = new CheckFavoriteViewModel();
+        }
+
+        checkFavoriteView = new CheckFavoriteView(checkFavoriteViewModel, viewManagerModel);
+        cardPanel.add(checkFavoriteView, checkFavoriteView.getViewName());
+        return this;
+    }
+
 
     public AppBuilder addSignupUseCase() {
         final SignupOutputBoundary signupOutputBoundary = new SignupPresenter(viewManagerModel,
@@ -137,28 +170,46 @@ public class AppBuilder {
                 new FilterListingsInteractor(listingDataAccessObject, distanceService, filterPresenter);
         filterController = new FilterListingsController(filterInteractor);
 
-        // Now recreate LoggedInView with the controllers
-        cardPanel.remove(loggedInView);
-        loggedInView = new LoggedInView(loggedInViewModel, searchListingViewModel,
-                searchController, filterController);
-        cardPanel.add(loggedInView, loggedInView.getViewName());
+        return this;
+    }
+
+    public AppBuilder addSaveFavoriteUseCase() {
+        // Create save favorite use case
+        SaveFavoriteOutputBoundary savePresenter =
+                new SaveFavoritePresenter(saveFavoriteViewModel);
+        SaveFavoriteInputBoundary saveInteractor =
+                new SaveFavoriteInteractor(userDataAccessObject, savePresenter);
+        saveController = new SaveFavoriteController(saveInteractor);
 
         return this;
     }
 
-    public AppBuilder addListingDetailViewAndCommentUseCase() {
-        listingDetailViewModel = ListingDetailViewModel.getInstance();
-        commentViewModel = new CommentViewModel();
+    public AppBuilder addCheckFavoriteUseCase() {
+        CheckFavoriteOutputBoundary checkPresenter =
+                new CheckFavoritePresenter(viewManagerModel, checkFavoriteViewModel);
 
-        CommentController commentController = CommentUseCaseFactory.create(viewManagerModel, commentViewModel);
+        // ✅ Use userDataAccessObject, which now implements CheckFavoriteDataAccessInterface
+        CheckFavoriteInputBoundary checkInteractor =
+                new CheckFavoriteInteractor(userDataAccessObject, checkPresenter);
 
-        listingDetailView = new ListingDetailView(
-                listingDetailViewModel,
-                commentController,
-                commentViewModel
+        checkController = new CheckFavoriteController(checkInteractor);
+        return this;
+    }
+
+
+    public AppBuilder rebuildLoggedInView() {
+        // Now recreate LoggedInView with all the controllers
+        cardPanel.remove(loggedInView);
+        loggedInView = new LoggedInView(
+                loggedInViewModel,
+                searchListingViewModel,
+                searchController,
+                filterController,
+                saveController,
+                checkController,
+                viewManagerModel
         );
-
-        cardPanel.add(listingDetailView, ListingDetailViewModel.VIEW_NAME);
+        cardPanel.add(loggedInView, loggedInView.getViewName());
 
         return this;
     }
