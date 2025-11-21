@@ -32,8 +32,9 @@ public class SearchView extends JPanel implements PropertyChangeListener {
     private final JPanel resultsPanel;
     private final JScrollPane resultsScrollPane;
 
-    private final ViewManagerModel viewManagerModel;
-    private final ListingDetailViewModel listingDetailViewModel;
+    // REMOVED: These fields are not needed in this class
+    // private final ViewManagerModel viewManagerModel;
+    // private final ListingDetailViewModel listingDetailViewModel;
 
     public SearchView(SearchListingViewModel searchViewModel,
                       SearchListingController searchController,
@@ -45,8 +46,8 @@ public class SearchView extends JPanel implements PropertyChangeListener {
         this.searchController = searchController;
         this.filterController = filterController;
         this.searchViewModel.addPropertyChangeListener(this);
-        this.viewManagerModel = viewManagerModel;
-        this.listingDetailViewModel = listingDetailViewModel;
+        // We receive these parameters but don't store them as fields
+        // They're used by ListingCardPanel which gets them via getInstance()
 
         this.setLayout(new BorderLayout(10, 10));
         this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -67,9 +68,11 @@ public class SearchView extends JPanel implements PropertyChangeListener {
         resultsScrollPane = new JScrollPane(resultsPanel);
         resultsScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
-        // NEW: create the filter sidebar and add it to the WEST side
-        FilterSidebarPanel filterPanel = new FilterSidebarPanel(filterController); // NEW
-        this.add(filterPanel, BorderLayout.WEST);                                   // NEW
+        // Left: Filter sidebar - Check if filterController is not null before creating panel
+        if (filterController != null) {
+            FilterSidebarPanel filterPanel = new FilterSidebarPanel(filterController);
+            this.add(filterPanel, BorderLayout.WEST);
+        }
 
         this.add(searchPanel, BorderLayout.NORTH);
         this.add(resultsScrollPane, BorderLayout.CENTER);
