@@ -87,6 +87,7 @@ public class MongoDBExtractToCache {
         return commentsCache;
     }
 
+    public MongoDatabase getDatabase() {return database;}
 
 
     //----------------private methods-------------------

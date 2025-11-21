@@ -1,6 +1,7 @@
 package view;
 
 import interface_adapter.check_favorite.*;
+import interface_adapter.ViewManagerModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,21 +16,35 @@ public class CheckFavoriteView extends JPanel implements PropertyChangeListener 
 
     private final String viewName = "favourite listings";
     private final CheckFavoriteViewModel viewModel;
+    private final ViewManagerModel viewManagerModel;   // 👈 add this
+
     private final JPanel listingsPanel;
     private final JLabel titleLabel;
 
-    public CheckFavoriteView(CheckFavoriteViewModel viewModel) {
+    public CheckFavoriteView(CheckFavoriteViewModel viewModel,
+                             ViewManagerModel viewManagerModel) {  // 👈 take it in
         this.viewModel = viewModel;
+        this.viewManagerModel = viewManagerModel;                  // 👈 store it
+
         this.viewModel.addPropertyChangeListener(this);
 
         this.setLayout(new BorderLayout(10, 10));
         this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         // Title panel
-        JPanel titlePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JPanel titlePanel = new JPanel(new BorderLayout());
         titleLabel = new JLabel("My Favorite Listings");
         titleLabel.setFont(new Font("Arial", Font.BOLD, 18));
-        titlePanel.add(titleLabel);
+        titlePanel.add(titleLabel, BorderLayout.WEST);
+
+        // Back button
+        JButton backButton = new JButton("← Back to Listings");
+        backButton.addActionListener(e -> {
+            // Must match LoggedInView.getViewName()
+            viewManagerModel.setState("logged in");
+            viewManagerModel.firePropertyChange();
+        });
+        titlePanel.add(backButton, BorderLayout.EAST);
 
         // Listings display panel
         listingsPanel = new JPanel();
@@ -88,6 +103,10 @@ public class CheckFavoriteView extends JPanel implements PropertyChangeListener 
         JButton viewButton = new JButton("View Details");
         JButton removeButton = new JButton("Remove");
         removeButton.setForeground(Color.RED);
+
+        // TODO: add action listeners later if you want real behavior
+        // viewButton.addActionListener(...);
+        // removeButton.addActionListener(...);
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         buttonPanel.add(viewButton);
