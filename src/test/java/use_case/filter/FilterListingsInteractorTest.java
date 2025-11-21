@@ -49,10 +49,7 @@ public class FilterListingsInteractorTest {
             return 0.0;
         }
     }
-
-    /**
-     * Fake presenter that records the last output or error message.
-     */
+    
     private static class RecordingPresenter implements FilterListingsOutputBoundary {
 
         FilterListingsOutputData lastOutput;

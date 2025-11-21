@@ -68,11 +68,6 @@ public class InMemoryUserDataAccessObject implements
 
     // ===== For CheckFavoriteDataAccessInterface =====
 
-    @Override
-    public User getUser(String username) {
-        return users.get(username);
-    }
-
     // ===== For SaveFavoriteDataAccessInterface =====
 
     @Override
