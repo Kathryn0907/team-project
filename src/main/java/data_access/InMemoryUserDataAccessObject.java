@@ -42,7 +42,7 @@ public class InMemoryUserDataAccessObject implements
     }
 
     @Override
-    public User get(String username) {
+    public User getUser(String username) {
         return users.get(username);
     }
 

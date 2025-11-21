@@ -19,7 +19,7 @@ public class CancelAccountInteractor implements CancelAccountInputBoundary {
         final String username = cancelAccountInputData.getUsername();
         final String password = cancelAccountInputData.getPassword();
 
-        if (!dataAccess.existByUsername(username)) {
+        if (!dataAccess.existsByName(username)) {
             cancelAccountPresenter.prepareFailure("User not found");
         }
 

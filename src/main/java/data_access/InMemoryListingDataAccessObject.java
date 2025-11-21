@@ -78,7 +78,7 @@ public class InMemoryListingDataAccessObject implements SearchListingDataAccessI
 
 
     @Override
-    public boolean existByUsername(String username) {
+    public boolean existsByName(String username) {
         return users.containsKey(username);
     }
 

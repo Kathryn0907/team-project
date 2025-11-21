@@ -3,10 +3,8 @@ package data_access;
 import Entities.Comment;
 import Entities.Listing;
 import Entities.User;
-import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class MongoDBAddSampleData {
@@ -16,7 +14,7 @@ public class MongoDBAddSampleData {
         System.out.println("Saved User Id: " + user.getId().toHexString());
     }
 
-    public void addListing(Listing listing, MongoDBListingDao mongoDBListingDao) {
+    public void addListing(Listing listing, MongoDBListingDAO mongoDBListingDao) {
         mongoDBListingDao.saveListing(listing);
         System.out.println("Saved Listing Id: " + listing.getId().toHexString());
     }
@@ -31,7 +29,7 @@ public class MongoDBAddSampleData {
         System.out.println("Deleted User Id: " + user.getId().toHexString());
     }
 
-    public void deleteListing(Listing listing, MongoDBListingDao mongoDBListingDao) {
+    public void deleteListing(Listing listing, MongoDBListingDAO mongoDBListingDao) {
         mongoDBListingDao.deleteListing(listing);
         System.out.println("Deleted Listing Id: " + listing.getId().toHexString());
     }
@@ -46,7 +44,7 @@ public class MongoDBAddSampleData {
     public static void main(String[] args) {
 
         MongoDBUserDAO mongoDBUserDAO = new MongoDBUserDAO();
-        MongoDBListingDao mongoDBListingDAO = new MongoDBListingDao();
+        MongoDBListingDAO mongoDBListingDAO = new MongoDBListingDAO();
         MongoDBCommentDAO mongoDBCommentDAO = new MongoDBCommentDAO();
 
 
