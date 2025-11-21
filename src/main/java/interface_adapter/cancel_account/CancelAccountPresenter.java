@@ -1,5 +1,6 @@
 package interface_adapter.cancel_account;
 
+import interface_adapter.ProfileViewModel;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.login.LoginState;
 import interface_adapter.login.LoginViewModel;
@@ -9,22 +10,20 @@ import use_case.cancel_account.CancelAccountOutputData;
 
 public class CancelAccountPresenter implements CancelAccountOutputBoundary {
 
-    private CancelAccountViewModel cancelAccountViewModel;
-    private LoginViewModel loginViewModel;
-    private ViewManagerModel viewManagerModel;
-
-    // profile part not done yet. I expect the cancel account function will be placed in profile.
-    // private ProfileViewModel profileViewModel;
+    private final CancelAccountViewModel cancelAccountViewModel;
+    private final LoginViewModel loginViewModel;
+    private final ViewManagerModel viewManagerModel;
+    private final ProfileViewModel profileViewModel;
 
     public CancelAccountPresenter(CancelAccountViewModel cancelAccountViewModel,
                                   LoginViewModel loginViewModel,
-                                  ViewManagerModel viewManagerModel
-                                  // ProfileViewModel profileViewModel
+                                  ViewManagerModel viewManagerModel,
+                                  ProfileViewModel profileViewModel
     ) {
         this.cancelAccountViewModel = cancelAccountViewModel;
         this.loginViewModel = loginViewModel;
         this.viewManagerModel = viewManagerModel;
-        // this.profileViewModel = profileViewModel
+        this.profileViewModel = profileViewModel;
     }
 
 
@@ -53,7 +52,8 @@ public class CancelAccountPresenter implements CancelAccountOutputBoundary {
 
     @Override
     public void back() {
-
-        // Back to profile, wait for profile view.
+        // Back to profile.
+        viewManagerModel.setState(profileViewModel.getViewName());
+        viewManagerModel.firePropertyChange();
     }
 }
