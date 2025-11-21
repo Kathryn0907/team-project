@@ -9,6 +9,20 @@ import use_case.filter.*;
 
 import javax.swing.*;
 
+import app.FilterListingsUseCaseFactory;
+import app.SearchListingUseCaseFactory;
+import data_access.InMemoryListingDAO;
+import data_access.GoogleDistanceService;
+import Entities.*;
+import interface_adapter.ViewManagerModel;
+import interface_adapter.filter.FilterListingsController;
+import interface_adapter.listing_detail.ListingDetailViewModel;
+import interface_adapter.search_listings.*;
+import view.SearchView;
+import use_case.filter.*;
+
+import javax.swing.*;
+
 public class SearchViewTest {
 
     public static void main(String[] args) {
@@ -122,13 +136,28 @@ public class SearchViewTest {
         System.out.println("  - 4 listings loaded");
         System.out.println("  - 2 users created\n");
 
-        // Create view components
-        SearchListingViewModel viewModel = new SearchListingViewModel();
-        SearchListingController searchcontroller =
-                SearchListingUseCaseFactory.createSearchListingUseCase(viewModel, dataAccess);
-        FilterListingsController filtercontroller =  null;
+        // Create view components - FIX: Add all required dependencies
+        SearchListingViewModel searchViewModel = new SearchListingViewModel();
+        SearchListingController searchController =
+                SearchListingUseCaseFactory.createSearchListingUseCase(searchViewModel, dataAccess);
 
-        SearchView searchView = new SearchView(viewModel, searchcontroller, filtercontroller);
+        // FIX: Create the filter controller instead of leaving it null
+        DistanceService distanceService = new GoogleDistanceService();
+        FilterListingsController filterController =
+                FilterListingsUseCaseFactory.create(searchViewModel, dataAccess, distanceService);
+
+        // FIX: Create the required ViewManagerModel and ListingDetailViewModel
+        ViewManagerModel viewManagerModel = ViewManagerModel.getInstance();
+        ListingDetailViewModel listingDetailViewModel = ListingDetailViewModel.getInstance();
+
+        // FIX: Pass all required parameters to SearchView constructor
+        SearchView searchView = new SearchView(
+                searchViewModel,
+                searchController,
+                filterController,
+                viewManagerModel,
+                listingDetailViewModel
+        );
 
         System.out.println("✓ Search view created\n");
 
@@ -151,6 +180,10 @@ public class SearchViewTest {
                 System.out.println("  - 'lake' (should find 1 listing)");
                 System.out.println("  - 'downtown' (should find 2 listings)");
                 System.out.println("  - 'beachfront' (should show error + all listings)");
+                System.out.println("\nTry using the filter panel:");
+                System.out.println("  - Set max price to 200 (should filter to 3 listings)");
+                System.out.println("  - Set building type to VILLA (should show 2 listings)");
+                System.out.println("  - Set min bedrooms to 3 (should show 2 listings)");
                 System.out.println("\nClose the window to exit.");
             }
         });

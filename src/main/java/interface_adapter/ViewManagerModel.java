@@ -11,7 +11,7 @@ public class ViewManagerModel extends ViewModel<String> {
         return instance;
     }
 
-    private ViewManagerModel() {
+    public ViewManagerModel() {
         super("view manager");
         this.setState("");
     }
