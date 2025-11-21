@@ -12,16 +12,14 @@ import org.bson.types.ObjectId;
 import java.util.ArrayList;
 
 
-public class MongoDBListingDao {
+public class MongoDBListingDAO {
 
     private final MongoCollection<Document> listingsCollection;
     private MongoDBExtractToCache data;
 
-    public MongoDBListingDao() {
-        MongoClient client = MongoConfig.getClient();
-        MongoDatabase db = client.getDatabase("CSC207_group_project_2025");
-        this.listingsCollection = db.getCollection("Listings");
+    public MongoDBListingDAO() {
         this.data = new MongoDBExtractToCache();
+        this.listingsCollection = data.getDatabase().getCollection("Listings");
     }
 
     /**

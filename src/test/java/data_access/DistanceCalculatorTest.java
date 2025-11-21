@@ -15,14 +15,14 @@ public class DistanceCalculatorTest {
 
     // NOTE: For a real test environment, load your key from environment variables
     // or a secure configuration file, NOT hardcoded here.
-    private static final String API_KEY = "AIzaSyBXp5N97WR6RPh5H4yJIq4n0tPdRf6RBQQ";
+    private static final String API_KEY = System.getenv("GOOGLE_API_KEY");
     private static GeoApiContext context;
 
     @BeforeAll
     static void setUp() {
         // Initialize the context once before all tests run
-        if (API_KEY == null || API_KEY.equals("YOUR_API_KEY")) {
-            System.err.println("API Key not set. Skipping tests.");
+        if (API_KEY == null) {
+            System.err.println("API Key not set. Skipping tests. Set GOOGLE_API_KEY environment variable before running tests.");
             return;
         }
         context = new GeoApiContext.Builder()

@@ -33,7 +33,7 @@ public class CancelAccountInteractorTest {
             public void prepareSuccess(CancelAccountOutputData cancelAccountOutputData) {
                 assertEquals("Jason", cancelAccountOutputData.getUsername());
                 System.out.println("Line 34 test successful");
-                assertFalse(userRepository.existByUsername(cancelAccountOutputData.getUsername()));
+                assertFalse(userRepository.existsByName(cancelAccountOutputData.getUsername()));
                 System.out.println("Line 36 test successful");
                 assertFalse(userRepository.getAllActiveListings().contains(listing1));
                 System.out.println("Line 38 test successful");

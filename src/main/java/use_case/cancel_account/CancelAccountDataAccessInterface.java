@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public interface CancelAccountDataAccessInterface {
 
 
-    boolean existByUsername(String username);
+    boolean existsByName(String username);
 
 
     /**
