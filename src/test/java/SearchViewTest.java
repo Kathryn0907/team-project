@@ -3,6 +3,9 @@ import app.SearchListingUseCaseFactory;
 import data_access.InMemoryListingDAO;
 import Entities.*;
 import interface_adapter.filter.FilterListingsController;
+import interface_adapter.listing_detail.ListingDetailState;
+import interface_adapter.logged_in.LoggedInState;
+import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.search_listings.*;
 import view.SearchView;
 import use_case.filter.*;
@@ -22,6 +25,13 @@ import view.SearchView;
 import use_case.filter.*;
 
 import javax.swing.*;
+
+import interface_adapter.comment.CommentViewModel;
+import app.CommentUseCaseFactory;
+import interface_adapter.comment.CommentController;
+import view.ListingDetailView;
+import view.ViewManager;
+import java.awt.CardLayout;
 
 public class SearchViewTest {
 
@@ -150,6 +160,20 @@ public class SearchViewTest {
         ViewManagerModel viewManagerModel = ViewManagerModel.getInstance();
         ListingDetailViewModel listingDetailViewModel = ListingDetailViewModel.getInstance();
 
+        // === Set the "logged-in user" for detail & comment pages ===
+        User loggedInUser = user1; // choose who is "logged in"
+
+        // Set into ListingDetailViewModel
+        ListingDetailState detailState = listingDetailViewModel.getState();
+        detailState.setCurrentUser(loggedInUser);
+        listingDetailViewModel.setState(detailState);
+
+        // Also set into LoggedInViewModel
+        LoggedInViewModel loggedInViewModel = LoggedInViewModel.getInstance();
+        LoggedInState loggedState = loggedInViewModel.getState();
+        loggedState.setUser(loggedInUser);
+        loggedInViewModel.setState(loggedState);
+
         // FIX: Pass all required parameters to SearchView constructor
         SearchView searchView = new SearchView(
                 searchViewModel,
@@ -161,6 +185,37 @@ public class SearchViewTest {
 
         System.out.println("✓ Search view created\n");
 
+        // === Add: Comment use case + Detail page + CardLayout container ===
+
+        // 1. Comment ViewModel + UseCase + Controller
+        CommentViewModel commentViewModel = new CommentViewModel();
+        CommentController commentController =
+                CommentUseCaseFactory.create(viewManagerModel, commentViewModel);
+
+        // 2. Listing detail view
+        ListingDetailView listingDetailView = new ListingDetailView(
+                listingDetailViewModel,
+                commentController,
+                commentViewModel
+        );
+
+        // 3. CardLayout + ViewManager: manages SearchView and ListingDetailView screens
+        JPanel cardPanel = new JPanel();
+        CardLayout cardLayout = new CardLayout();
+        cardPanel.setLayout(cardLayout);
+
+        // Add both views to cardPanel
+        cardPanel.add(searchView, searchView.getViewName());
+        cardPanel.add(listingDetailView, ListingDetailViewModel.VIEW_NAME);
+
+        // ViewManager listens to ViewManagerModel state changes and switches screens
+        ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
+
+        // Initial screen is SearchView
+        viewManagerModel.setState(searchView.getViewName());
+        viewManagerModel.firePropertyChange();
+
+
         // Create and show window
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -169,7 +224,8 @@ public class SearchViewTest {
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.setSize(900, 700);
                 frame.setLocationRelativeTo(null);  // Center on screen
-                frame.add(searchView);
+        // Replace searchView with cardPanel to enable screen switching
+                frame.add(cardPanel);
                 frame.setVisible(true);
 
                 System.out.println("========================================");
