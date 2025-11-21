@@ -5,10 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c8630639-0e71-46c2-a612-c97ce40ba6fb" name="Changes" comment="google api working">
+      <change afterPath="$PROJECT_DIR$/src/test/java/data_access/TestWithRealAddresses.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/data_access/GoogleDistanceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/data_access/GoogleDistanceService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/use_case/filter/FilterListingsInteractor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/use_case/filter/FilterListingsInteractor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/data_access/DistanceCalculatorTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/data_access/DistanceCalculatorTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,29 +28,29 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestState"><![CDATA[{
-  "prStates": [
+  <component name="GitHubPullRequestState">{
+  &quot;prStates&quot;: [
     {
-      "id": {
-        "id": "PR_kwDOP_l8Fs604mAW",
-        "number": 41
+      &quot;id&quot;: {
+        &quot;id&quot;: &quot;PR_kwDOP_l8Fs604mAW&quot;,
+        &quot;number&quot;: 41
       },
-      "lastSeen": 1763753100394
+      &quot;lastSeen&quot;: 1763753100394
     }
   ]
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "recentNewPullRequestHead": {
-    "server": {
-      "useHttp": false,
-      "host": "github.com",
-      "port": null,
-      "suffix": null
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;recentNewPullRequestHead&quot;: {
+    &quot;server&quot;: {
+      &quot;useHttp&quot;: false,
+      &quot;host&quot;: &quot;github.com&quot;,
+      &quot;port&quot;: null,
+      &quot;suffix&quot;: null
     },
-    "owner": "Kathryn0907",
-    "repository": "team-project"
+    &quot;owner&quot;: &quot;Kathryn0907&quot;,
+    &quot;repository&quot;: &quot;team-project&quot;
   }
-}]]></component>
+}</component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.MessagingSystemTest.executor": "Run",
@@ -60,6 +58,7 @@
     "Application.TestAppBuilder.executor": "Run",
     "Application.TestDistanceFilter.executor": "Run",
     "Application.TestGoogleDistanceAPI.executor": "Run",
+    "Application.TestWithRealAddresses.executor": "Run",
     "Application.Unnamed.executor": "Run",
     "JUnit.DistanceCalculatorTest.executor": "Run",
     "git-widget-placeholder": "filter-with-api",
@@ -69,7 +68,7 @@
     "settings.editor.selected.configurable": "editor.preferences.tabs"
   }
 }]]></component>
-  <component name="RunManager" selected="Application.TestAppBuilder">
+  <component name="RunManager" selected="Application.TestWithRealAddresses">
     <configuration name="TestAppBuilder" type="Application" factoryName="Application" nameIsGenerated="true">
       <envs>
         <env name="GOOGLE_API_KEY" value="AIzaSyBXp5N97WR6RPh5H4yJIq4n0tPdRf6RBQQ" />
@@ -80,11 +79,27 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="TestWithRealAddresses" type="Application" factoryName="Application" nameIsGenerated="true">
+      <envs>
+        <env name="GOOGLE_API_KEY" value="AIzaSyBXp5N97WR6RPh5H4yJIq4n0tPdRf6RBQQ" />
+      </envs>
+      <option name="MAIN_CLASS_NAME" value="TestWithRealAddresses" />
+      <module name="TeamProject" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value=".*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="DistanceCalculatorTest" type="JUnit" factoryName="JUnit" nameIsGenerated="true">
       <module name="TeamProject" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="data_access.*" />
+          <option name="PATTERN" value=".*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -100,6 +115,7 @@
       </method>
     </configuration>
     <list>
+      <item itemvalue="Application.TestWithRealAddresses" />
       <item itemvalue="Application.TestAppBuilder" />
       <item itemvalue="JUnit.DistanceCalculatorTest" />
     </list>
