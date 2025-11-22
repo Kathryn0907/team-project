@@ -17,6 +17,7 @@ public class Main {
                 .addSignupUseCase()
                 .addLoginUseCase()
                 .addSearchListingUseCase()
+                .addListingDetailViewAndCommentUseCase()
                 .addSaveFavoriteUseCase()      // Add save favorite use case
                 .addCheckFavoriteUseCase()     // Add check favorite use case
                 .rebuildLoggedInView()         // Rebuild with all controllers
