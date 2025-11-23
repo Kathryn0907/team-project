@@ -6,6 +6,7 @@ import java.awt.*;
 import data_access.InMemoryListingDataAccessObject;
 import data_access.InMemoryUserDataAccessObject;
 import data_access.GoogleDistanceService;
+import data_access.MongoDBListingDAO;
 import interface_adapter.ProfileViewModel;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.create_listing.CreateListingController;
@@ -75,6 +76,8 @@ public class AppBuilder {
     // Data access objects
     public final InMemoryUserDataAccessObject userDataAccessObject = new InMemoryUserDataAccessObject();
     public final InMemoryListingDataAccessObject listingDataAccessObject = new InMemoryListingDataAccessObject();
+    public final MongoDBListingDAO mongoDBListingDAO = new MongoDBListingDAO();
+
 
     private SignupView signupView;
     private SignupViewModel signupViewModel;
@@ -147,6 +150,13 @@ public class AppBuilder {
 
         checkFavoriteView = new CheckFavoriteView(checkFavoriteViewModel, viewManagerModel);
         cardPanel.add(checkFavoriteView, checkFavoriteView.getViewName());
+        return this;
+    }
+
+    public AppBuilder addProfileView() {
+        profileViewModel = new ProfileViewModel();
+        profileView = new ProfileView(profileViewModel, viewManagerModel);
+        cardPanel.add(profileView, profileView.getViewName());
         return this;
     }
 
@@ -230,11 +240,14 @@ public class AppBuilder {
                         viewManagerModel
                 );
         final CreateListingInputBoundary createListingInteractor =
-                new CreateListingInteractor(listingDataAccessObject, createListingPresenter);
+                new CreateListingInteractor(mongoDBListingDAO, createListingPresenter);
 
         final CreateListingController createListingController =
                 new CreateListingController(createListingInteractor);
         createListingView.setCreateListingController(createListingController);
+        return this;
+    }
+
     public AppBuilder addListingDetailViewAndCommentUseCase() {
         listingDetailViewModel = ListingDetailViewModel.getInstance();
         commentViewModel = new CommentViewModel();
@@ -269,12 +282,6 @@ public class AppBuilder {
         return this;
     }
 
-    public AppBuilder addProfileView() {
-        profileViewModel = new ProfileViewModel();
-        profileView = new ProfileView(profileViewModel, viewManagerModel);
-        cardPanel.add(profileView, profileView.getViewName());
-        return this;
-    }
 
     public JFrame build() {
         final JFrame application = new JFrame("Airbnb Listing Browser");
