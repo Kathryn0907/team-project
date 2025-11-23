@@ -7,6 +7,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import interface_adapter.listing_detail.ListingDetailViewModel;
+import interface_adapter.ViewManagerModel;
+import interface_adapter.listing_detail.ListingDetailState;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.Cursor;
+import interface_adapter.logged_in.LoggedInViewModel;
 
 /**
  * Individual listing card display component with Save to Favorites functionality
@@ -17,6 +24,11 @@ public class ListingCardPanel extends JPanel {
     private final Listing listing;
     private SaveFavoriteController saveController;
     private String currentUsername;
+
+    // Needed for jumping to detail page
+    private final ViewManagerModel viewManagerModel = ViewManagerModel.getInstance();
+    private final ListingDetailViewModel listingDetailViewModel = ListingDetailViewModel.getInstance();
+    private final LoggedInViewModel loggedInViewModel = LoggedInViewModel.getInstance();
 
     // Constructor for backward compatibility (no favorites)
     public ListingCardPanel(Listing listing) {
@@ -66,6 +78,37 @@ public class ListingCardPanel extends JPanel {
 
         JLabel nameLabel = new JLabel(listing.getName());
         nameLabel.setFont(new Font("Arial", Font.BOLD, 16));
+
+        //Make the title look clickable
+        nameLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
+        //Add click listener to jump to detail page
+        nameLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                ListingDetailState state = listingDetailViewModel.getState();
+                state.setCurrentListing(listing);
+
+                state.setCurrentUser(loggedInViewModel.getState().getUser());
+
+                listingDetailViewModel.setState(state);
+                listingDetailViewModel.firePropertyChange();
+
+                viewManagerModel.setState(ListingDetailViewModel.VIEW_NAME);
+                viewManagerModel.firePropertyChange();
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                nameLabel.setForeground(Color.BLUE);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                nameLabel.setForeground(Color.BLACK);
+            }
+        });
+
 
         JLabel priceLabel = new JLabel(String.format("$%.2f per night", listing.getPrice()));
         priceLabel.setFont(new Font("Arial", Font.PLAIN, 14));

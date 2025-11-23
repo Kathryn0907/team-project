@@ -51,6 +51,15 @@ import use_case.check_favorite.CheckFavoriteInputBoundary;
 import use_case.check_favorite.CheckFavoriteInteractor;
 import use_case.check_favorite.CheckFavoriteOutputBoundary;
 import view.*;
+import view.LoggedInView;
+import view.LoginView;
+import view.SignupView;
+import view.CheckFavoriteView;
+import view.ViewManager;
+import interface_adapter.listing_detail.ListingDetailViewModel;
+import interface_adapter.comment.CommentViewModel;
+import interface_adapter.comment.CommentController;
+import view.ListingDetailView;
 
 /**
  * AppBuilder with Favorites functionality integrated
@@ -81,6 +90,9 @@ public class AppBuilder {
     private ProfileView profileView;
     private CreateListingView createListingView;
     private CreateListingViewModel createListingViewModel;
+    private ListingDetailViewModel listingDetailViewModel;
+    private CommentViewModel commentViewModel;
+    private ListingDetailView listingDetailView;
 
     // Controllers that will be created in use case methods
     private SearchListingController searchController;
@@ -202,7 +214,7 @@ public class AppBuilder {
         CheckFavoriteOutputBoundary checkPresenter =
                 new CheckFavoritePresenter(viewManagerModel, checkFavoriteViewModel);
 
-        // ✅ Use userDataAccessObject, which now implements CheckFavoriteDataAccessInterface
+        // Use userDataAccessObject, which now implements CheckFavoriteDataAccessInterface
         CheckFavoriteInputBoundary checkInteractor =
                 new CheckFavoriteInteractor(userDataAccessObject, checkPresenter);
 
@@ -223,6 +235,19 @@ public class AppBuilder {
         final CreateListingController createListingController =
                 new CreateListingController(createListingInteractor);
         createListingView.setCreateListingController(createListingController);
+    public AppBuilder addListingDetailViewAndCommentUseCase() {
+        listingDetailViewModel = ListingDetailViewModel.getInstance();
+        commentViewModel = new CommentViewModel();
+
+        CommentController commentController = CommentUseCaseFactory.create(viewManagerModel, commentViewModel);
+
+        listingDetailView = new ListingDetailView(
+                listingDetailViewModel,
+                commentController,
+                commentViewModel
+        );
+
+        cardPanel.add(listingDetailView, ListingDetailViewModel.VIEW_NAME);
 
         return this;
     }
