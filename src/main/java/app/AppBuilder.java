@@ -150,6 +150,13 @@ public class AppBuilder {
         return this;
     }
 
+    public AppBuilder addProfileView() {
+        profileViewModel = new ProfileViewModel();
+        profileView = new ProfileView(profileViewModel, viewManagerModel);
+        cardPanel.add(profileView, profileView.getViewName());
+        return this;
+    }
+
     public AppBuilder addCreateListingView() {
         createListingViewModel = new CreateListingViewModel();
         createListingView = new CreateListingView(createListingViewModel);
@@ -235,6 +242,9 @@ public class AppBuilder {
         final CreateListingController createListingController =
                 new CreateListingController(createListingInteractor);
         createListingView.setCreateListingController(createListingController);
+        return this;
+    }
+
     public AppBuilder addListingDetailViewAndCommentUseCase() {
         listingDetailViewModel = ListingDetailViewModel.getInstance();
         commentViewModel = new CommentViewModel();
@@ -269,12 +279,6 @@ public class AppBuilder {
         return this;
     }
 
-    public AppBuilder addProfileView() {
-        profileViewModel = new ProfileViewModel();
-        profileView = new ProfileView(profileViewModel, viewManagerModel);
-        cardPanel.add(profileView, profileView.getViewName());
-        return this;
-    }
 
     public JFrame build() {
         final JFrame application = new JFrame("Airbnb Listing Browser");
