@@ -13,7 +13,8 @@ public class Main {
                 .addLoginView()
                 .addSignupView()
                 .addLoggedInView()
-                .addCheckFavoriteView()        // Add the favorites view
+                .addCheckFavoriteView()
+                .addProfileView()
                 .addSignupUseCase()
                 .addLoginUseCase()
                 .addSearchListingUseCase()

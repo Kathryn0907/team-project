@@ -30,16 +30,26 @@ public class ProfileView extends JPanel implements PropertyChangeListener {
         title.setFont(new Font("Arial", Font.BOLD, 18));
         title.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 
+        JButton backToSearchButton = new JButton("← Back to Search");
+        backToSearchButton.setPreferredSize(new Dimension(150, 30));
+        backToSearchButton.addActionListener(e -> {
+            viewManagerModel.setState("logged in");
+            viewManagerModel.firePropertyChange();
+        });
+
         JButton createListingButton = new JButton("Create Listing");
         createListingButton.setPreferredSize(new Dimension(150, 30));
-
         createListingButton.addActionListener(e -> {
             viewManagerModel.setState("create listing");
             viewManagerModel.firePropertyChange();
         });
 
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 10));
+        buttonPanel.add(backToSearchButton);
+        buttonPanel.add(createListingButton);
+
         header.add(title, BorderLayout.WEST);
-        header.add(createListingButton, BorderLayout.EAST);
+        header.add(buttonPanel, BorderLayout.EAST);
 
         add(header, BorderLayout.NORTH);
 

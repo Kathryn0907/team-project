@@ -6,6 +6,7 @@ import java.awt.*;
 import data_access.InMemoryListingDataAccessObject;
 import data_access.InMemoryUserDataAccessObject;
 import data_access.GoogleDistanceService;
+import interface_adapter.ProfileViewModel;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.filter.FilterListingsController;
 import interface_adapter.logged_in.LoggedInViewModel;
@@ -43,11 +44,7 @@ import use_case.save_favorite.SaveFavoriteOutputBoundary;
 import use_case.check_favorite.CheckFavoriteInputBoundary;
 import use_case.check_favorite.CheckFavoriteInteractor;
 import use_case.check_favorite.CheckFavoriteOutputBoundary;
-import view.LoggedInView;
-import view.LoginView;
-import view.SignupView;
-import view.CheckFavoriteView;
-import view.ViewManager;
+import view.*;
 
 /**
  * AppBuilder with Favorites functionality integrated
@@ -74,6 +71,8 @@ public class AppBuilder {
     private LoggedInView loggedInView;
     private LoginView loginView;
     private CheckFavoriteView checkFavoriteView;
+    private ProfileViewModel profileViewModel;
+    private ProfileView profileView;
 
     // Controllers that will be created in use case methods
     private SearchListingController searchController;
@@ -211,6 +210,13 @@ public class AppBuilder {
         );
         cardPanel.add(loggedInView, loggedInView.getViewName());
 
+        return this;
+    }
+
+    public AppBuilder addProfileView() {
+        profileViewModel = new ProfileViewModel();
+        profileView = new ProfileView(profileViewModel, viewManagerModel);
+        cardPanel.add(profileView, profileView.getViewName());
         return this;
     }
 
