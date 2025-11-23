@@ -15,12 +15,14 @@ public class Main {
                 .addLoggedInView()
                 .addCheckFavoriteView()
                 .addProfileView()
+                .addCreateListingView()
                 .addSignupUseCase()
                 .addLoginUseCase()
                 .addSearchListingUseCase()
                 .addSaveFavoriteUseCase()      // Add save favorite use case
                 .addCheckFavoriteUseCase()     // Add check favorite use case
                 .rebuildLoggedInView()         // Rebuild with all controllers
+                .addCreateListingUseCase()
                 .build();
 
         application.pack();
