@@ -6,7 +6,11 @@ import java.awt.*;
 import data_access.InMemoryListingDataAccessObject;
 import data_access.InMemoryUserDataAccessObject;
 import data_access.GoogleDistanceService;
+import interface_adapter.ProfileViewModel;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.create_listing.CreateListingController;
+import interface_adapter.create_listing.CreateListingPresenter;
+import interface_adapter.create_listing.CreateListingViewModel;
 import interface_adapter.filter.FilterListingsController;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginController;
@@ -24,6 +28,9 @@ import interface_adapter.save_favorite.SaveFavoriteViewModel;
 import interface_adapter.check_favorite.CheckFavoriteController;
 import interface_adapter.check_favorite.CheckFavoritePresenter;
 import interface_adapter.check_favorite.CheckFavoriteViewModel;
+import use_case.create_listing.CreateListingInputBoundary;
+import use_case.create_listing.CreateListingInteractor;
+import use_case.create_listing.CreateListingOutputBoundary;
 import use_case.filter.DistanceService;
 import use_case.filter.FilterListingsInputBoundary;
 import use_case.filter.FilterListingsInteractor;
@@ -43,6 +50,7 @@ import use_case.save_favorite.SaveFavoriteOutputBoundary;
 import use_case.check_favorite.CheckFavoriteInputBoundary;
 import use_case.check_favorite.CheckFavoriteInteractor;
 import use_case.check_favorite.CheckFavoriteOutputBoundary;
+import view.*;
 import view.LoggedInView;
 import view.LoginView;
 import view.SignupView;
@@ -78,6 +86,10 @@ public class AppBuilder {
     private LoggedInView loggedInView;
     private LoginView loginView;
     private CheckFavoriteView checkFavoriteView;
+    private ProfileViewModel profileViewModel;
+    private ProfileView profileView;
+    private CreateListingView createListingView;
+    private CreateListingViewModel createListingViewModel;
     private ListingDetailViewModel listingDetailViewModel;
     private CommentViewModel commentViewModel;
     private ListingDetailView listingDetailView;
@@ -135,6 +147,13 @@ public class AppBuilder {
 
         checkFavoriteView = new CheckFavoriteView(checkFavoriteViewModel, viewManagerModel);
         cardPanel.add(checkFavoriteView, checkFavoriteView.getViewName());
+        return this;
+    }
+
+    public AppBuilder addCreateListingView() {
+        createListingViewModel = new CreateListingViewModel();
+        createListingView = new CreateListingView(createListingViewModel);
+        cardPanel.add(createListingView, createListingView.getViewName());
         return this;
     }
 
@@ -203,6 +222,19 @@ public class AppBuilder {
         return this;
     }
 
+    public AppBuilder addCreateListingUseCase() {
+        final CreateListingOutputBoundary createListingPresenter =
+                new CreateListingPresenter(
+                        createListingViewModel,
+                        profileViewModel,
+                        viewManagerModel
+                );
+        final CreateListingInputBoundary createListingInteractor =
+                new CreateListingInteractor(listingDataAccessObject, createListingPresenter);
+
+        final CreateListingController createListingController =
+                new CreateListingController(createListingInteractor);
+        createListingView.setCreateListingController(createListingController);
     public AppBuilder addListingDetailViewAndCommentUseCase() {
         listingDetailViewModel = ListingDetailViewModel.getInstance();
         commentViewModel = new CommentViewModel();
@@ -234,6 +266,13 @@ public class AppBuilder {
         );
         cardPanel.add(loggedInView, loggedInView.getViewName());
 
+        return this;
+    }
+
+    public AppBuilder addProfileView() {
+        profileViewModel = new ProfileViewModel();
+        profileView = new ProfileView(profileViewModel, viewManagerModel);
+        cardPanel.add(profileView, profileView.getViewName());
         return this;
     }
 

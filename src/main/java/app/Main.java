@@ -13,7 +13,9 @@ public class Main {
                 .addLoginView()
                 .addSignupView()
                 .addLoggedInView()
-                .addCheckFavoriteView()        // Add the favorites view
+                .addCheckFavoriteView()
+                .addProfileView()
+                .addCreateListingView()
                 .addSignupUseCase()
                 .addLoginUseCase()
                 .addSearchListingUseCase()
@@ -21,6 +23,7 @@ public class Main {
                 .addSaveFavoriteUseCase()      // Add save favorite use case
                 .addCheckFavoriteUseCase()     // Add check favorite use case
                 .rebuildLoggedInView()         // Rebuild with all controllers
+                .addCreateListingUseCase()
                 .build();
 
         application.pack();
