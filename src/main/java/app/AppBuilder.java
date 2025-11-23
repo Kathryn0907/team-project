@@ -76,7 +76,7 @@ public class AppBuilder {
     // Data access objects
     public final InMemoryUserDataAccessObject userDataAccessObject = new InMemoryUserDataAccessObject();
     public final InMemoryListingDataAccessObject listingDataAccessObject = new InMemoryListingDataAccessObject();
-    public final MongoDBListingDAO mongoDBListingDAO = new MongoDBListingDAO();
+    // public final MongoDBListingDAO mongoDBListingDAO = new MongoDBListingDAO();
 
 
     private SignupView signupView;
@@ -240,7 +240,7 @@ public class AppBuilder {
                         viewManagerModel
                 );
         final CreateListingInputBoundary createListingInteractor =
-                new CreateListingInteractor(mongoDBListingDAO, createListingPresenter);
+                new CreateListingInteractor(listingDataAccessObject, createListingPresenter);
 
         final CreateListingController createListingController =
                 new CreateListingController(createListingInteractor, LoggedInViewModel.getInstance());

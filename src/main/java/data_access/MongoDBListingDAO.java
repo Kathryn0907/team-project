@@ -13,7 +13,7 @@ import use_case.create_listing.CreateListingDataAccessInterface;
 import java.util.ArrayList;
 
 
-public class MongoDBListingDAO implements CreateListingDataAccessInterface {
+public class MongoDBListingDAO {
 
     private final MongoCollection<Document> listingsCollection;
     private MongoDBExtractToCache data;
@@ -63,11 +63,13 @@ public class MongoDBListingDAO implements CreateListingDataAccessInterface {
 
     }
 
+    /**
     @Override
     // this is temporary to satisfy the interface requirement, will move to saveListing later after verifying everything works
     public void save(Listing listing) {
         saveListing(listing);
     }
+    **/
 
 
     public void deleteListing(Listing listing) {
