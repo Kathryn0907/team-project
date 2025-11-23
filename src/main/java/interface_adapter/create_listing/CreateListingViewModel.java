@@ -15,6 +15,12 @@ public class CreateListingViewModel extends ViewModel<CreateListingState> {
 
     public static final String CREATE_BUTTON_LABEL = "Create Listing";
     public static final String CANCEL_BUTTON_LABEL = "Cancel";
+    public static final String PRICE_LABEL = "Price (CAD)";
+    public static final String ADDRESS_LABEL = "Address";
+    public static final String AREA_LABEL = "Area (sq ft)";
+    public static final String BEDROOMS_LABEL = "Number of Bedrooms";
+    public static final String BATHROOMS_LABEL = "Number of Bathrooms";
+    public static final String BUILDING_TYPE_LABEL = "Building Type";
 
     public CreateListingViewModel() {
         super("create listing");
