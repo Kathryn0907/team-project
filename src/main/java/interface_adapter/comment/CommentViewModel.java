@@ -23,6 +23,15 @@ public class CommentViewModel extends ViewModel {
         private String errorMessage;
         private String successMessage;
         private Comment newComment;
+        private java.util.List<Comment> comments = new java.util.ArrayList<>();
+
+        public java.util.List<Comment> getComments() {
+            return comments;
+        }
+
+        public void setComments(java.util.List<Comment> comments) {
+            this.comments = comments;
+        }
 
         public String getErrorMessage() {
             return errorMessage;

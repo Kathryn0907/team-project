@@ -35,6 +35,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     private final JTextField keywordField;
     private final JButton searchButton;
     private final JButton viewFavoritesButton;
+    private final JButton myProfileButton;
     private final JPanel resultsPanel;
     private final JScrollPane resultsScrollPane;
 
@@ -70,8 +71,11 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         searchPanel.add(keywordField);
         searchPanel.add(searchButton);
 
-        // Add "View My Favorites" button
+        // Add "View My Favorites" button and Profile button
         JPanel favoritesPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        myProfileButton = new JButton("My Profile");
+        myProfileButton.setFont(new Font("Arial", Font.BOLD, 12));
+        favoritesPanel.add(myProfileButton);
         viewFavoritesButton = new JButton("❤ View My Favorites");
         viewFavoritesButton.setFont(new Font("Arial", Font.BOLD, 12));
         favoritesPanel.add(viewFavoritesButton);
@@ -125,6 +129,11 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
                     );
                 }
             }
+        });
+
+        myProfileButton.addActionListener(e -> {
+            viewManagerModel.setState("profile");
+            viewManagerModel.firePropertyChange();
         });
     }
 

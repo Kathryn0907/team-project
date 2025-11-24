@@ -35,7 +35,8 @@ public class CreateListingView extends JPanel implements PropertyChangeListener 
             new JComboBox<>(Listing.BuildingType.values());
 
     private final JButton uploadButton = new JButton("Upload Photo");
-    private final JLabel photoPathLabel = new JLabel("No file selected");
+    private final JLabel photoPathLabel = new JLabel("No photo selected");
+
 
     private final JLabel photoPreviewLabel = new JLabel();
 
@@ -63,25 +64,24 @@ public class CreateListingView extends JPanel implements PropertyChangeListener 
         descriptionInputArea.setLineWrap(true);
         descriptionInputArea.setWrapStyleWord(true);
 
-    /*
-    view.add(new JLabel(CreateListingViewModel.PRICE_LABEL));
-    view.add(priceField);
+        view.add(new JLabel(CreateListingViewModel.PRICE_LABEL));
+        view.add(priceField);
 
-    view.add(new JLabel(CreateListingViewModel.ADDRESS_LABEL));
-    view.add(addressField);
+        view.add(new JLabel(CreateListingViewModel.ADDRESS_LABEL));
+        view.add(addressField);
 
-    view.add(new JLabel(CreateListingViewModel.AREA_LABEL));
-    view.add(areaField);
+        view.add(new JLabel(CreateListingViewModel.AREA_LABEL));
+        view.add(areaField);
 
-    view.add(new JLabel(CreateListingViewModel.BEDROOMS_LABEL));
-    view.add(bedroomsField);
+        view.add(new JLabel(CreateListingViewModel.BEDROOMS_LABEL));
+        view.add(bedroomsField);
 
-    view.add(new JLabel(CreateListingViewModel.BATHROOMS_LABEL));
-    view.add(bathroomsField);
+        view.add(new JLabel(CreateListingViewModel.BATHROOMS_LABEL));
+        view.add(bathroomsField);
 
-    view.add(new JLabel(CreateListingViewModel.BUILDING_TYPE_LABEL));
-    view.add(buildingTypeDropdown);
-    */
+        view.add(new JLabel(CreateListingViewModel.BUILDING_TYPE_LABEL));
+        view.add(buildingTypeDropdown);
+
 
         view.add(new JLabel(CreateListingViewModel.PHOTO_LABEL));
 
@@ -116,6 +116,11 @@ public class CreateListingView extends JPanel implements PropertyChangeListener 
 
         addNameListener();
         addDescriptionListener();
+        addPriceListener();
+        addAddressListener();
+        addAreaListener();
+        addBedroomsListener();
+        addBathroomsListener();
         setupButtonListeners();
     }
 
@@ -144,23 +149,119 @@ public class CreateListingView extends JPanel implements PropertyChangeListener 
             @Override public void changedUpdate(DocumentEvent e) { update(); }
         });
     }
+    private void addPriceListener() {
+        priceField.getDocument().addDocumentListener(new DocumentListener() {
+            private void update() {
+                CreateListingState state = createListingViewModel.getState();
+                state.setPrice(priceField.getText());
+                createListingViewModel.setState(state);
+            }
+            @Override public void insertUpdate(DocumentEvent e) { update(); }
+            @Override public void removeUpdate(DocumentEvent e) { update(); }
+            @Override public void changedUpdate(DocumentEvent e) { update(); }
+        });
+    }
+
+    private void addAddressListener() {
+        addressField.getDocument().addDocumentListener(new DocumentListener() {
+            private void update() {
+                CreateListingState state = createListingViewModel.getState();
+                state.setAddress(addressField.getText());
+                createListingViewModel.setState(state);
+            }
+            @Override public void insertUpdate(DocumentEvent e) { update(); }
+            @Override public void removeUpdate(DocumentEvent e) { update(); }
+            @Override public void changedUpdate(DocumentEvent e) { update(); }
+        });
+    }
+
+    private void addAreaListener() {
+        areaField.getDocument().addDocumentListener(new DocumentListener() {
+            private void update() {
+                CreateListingState state = createListingViewModel.getState();
+                state.setArea(areaField.getText());
+                createListingViewModel.setState(state);
+            }
+            @Override public void insertUpdate(DocumentEvent e) { update(); }
+            @Override public void removeUpdate(DocumentEvent e) { update(); }
+            @Override public void changedUpdate(DocumentEvent e) { update(); }
+        });
+    }
+
+    private void addBedroomsListener() {
+        bedroomsField.getDocument().addDocumentListener(new DocumentListener() {
+            private void update() {
+                CreateListingState state = createListingViewModel.getState();
+                state.setBedrooms(bedroomsField.getText());
+                createListingViewModel.setState(state);
+            }
+            @Override public void insertUpdate(DocumentEvent e) { update(); }
+            @Override public void removeUpdate(DocumentEvent e) { update(); }
+            @Override public void changedUpdate(DocumentEvent e) { update(); }
+        });
+    }
+
+    private void addBathroomsListener() {
+        bathroomsField.getDocument().addDocumentListener(new DocumentListener() {
+            private void update() {
+                CreateListingState state = createListingViewModel.getState();
+                state.setBathrooms(bathroomsField.getText());
+                createListingViewModel.setState(state);
+            }
+            @Override public void insertUpdate(DocumentEvent e) { update(); }
+            @Override public void removeUpdate(DocumentEvent e) { update(); }
+            @Override public void changedUpdate(DocumentEvent e) { update(); }
+        });
+    }
 
     private void setupButtonListeners() {
         createButton.addActionListener(e -> {
+
+            double price = 0.0;
+            try {
+                price = Double.parseDouble(priceField.getText());
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Price must be a number.");
+                return;
+            }
+
+            double area = 0.0;
+            try {
+                area = Double.parseDouble(areaField.getText());
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Area must be a number.");
+                return;
+            }
+
+            int bedrooms = 0;
+            try {
+                bedrooms = Integer.parseInt(bedroomsField.getText());
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Bedrooms must be a whole number.");
+                return;
+            }
+
+            int bathrooms = 0;
+            try {
+                bathrooms = Integer.parseInt(bathroomsField.getText());
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Bathrooms must be a whole number.");
+                return;
+            }
+
             if (createListingController != null) {
                 createListingController.execute(
                         nameInputField.getText(),
-                        null, // owner for testing
                         photoPathLabel.getText(),
                         null, // tags
                         null, // mainCategories
                         descriptionInputArea.getText(),
-                        100.0,
-                        "123 Test St",
+                        price,
+                        addressField.getText(),
                         1.0,
-                        50.0,
-                        1,
-                        1,
+                        area,
+                        bedrooms,
+                        bathrooms,
                         Listing.BuildingType.OTHER,
                         true
                 );
@@ -174,6 +275,7 @@ public class CreateListingView extends JPanel implements PropertyChangeListener 
             int result = chooser.showOpenDialog(this);
             if (result == JFileChooser.APPROVE_OPTION) {
                 String path = chooser.getSelectedFile().getAbsolutePath();
+
                 photoPathLabel.setText(path);
 
                 ImageIcon icon = new ImageIcon(path);

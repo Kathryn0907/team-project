@@ -15,14 +15,11 @@ import java.util.List;
 
 public class GoogleDistanceService implements DistanceService {
 
-
     private String apiKey;
-
 
     public void setApiKey(String apiKey) {
         this.apiKey = apiKey;
     }
-
 
     /**
      * This method returns a list of distances for one origin and multiple destinations.
@@ -61,10 +58,8 @@ public class GoogleDistanceService implements DistanceService {
             }
         }
 
-
         return distancesInMeters;
     }
-
 
     /**
      * Simple method that returns the distance in meters between single origin and single destination.
@@ -78,7 +73,6 @@ public class GoogleDistanceService implements DistanceService {
         String[] origins = {origin};
         String[] destinations = {destination};
         long distance;
-
 
         // Make the synchronous request to the Distance Matrix API
         DistanceMatrix matrix = DistanceMatrixApi.newRequest(context)
@@ -101,42 +95,53 @@ public class GoogleDistanceService implements DistanceService {
             distance = -1; // Indicate failure
         }
 
-
         return distance;
     }
-
 
     /**
      * For single origin and single destination.
      * @param origin String, the origin
      * @param destination String, the destination.
-     * @return long, distance in meters. return -1 if the call failed.
+     * @return double, distance in KILOMETERS. return -1 if the call failed.
      */
     @Override
     public double calculateDistanceKm(String origin, String destination) {
 
-        // I wrote the method here. But I recommend using getDistancesToDestinations above
-        // because I think it is efficient for your filter@samantha
-
-        long dis;
+        long distanceInMeters;
 
         setApiKey(System.getenv("GOOGLE_API_KEY"));
 
-        // Object for submitting Api key. Like request.
+        if (apiKey == null || apiKey.isEmpty()) {
+            System.err.println("⚠️  GOOGLE_API_KEY environment variable is not set!");
+            System.err.println("Please set it using: export GOOGLE_API_KEY=your_key_here");
+            return -1;
+        }
+
+        // Object for submitting Api key
         GeoApiContext context = new GeoApiContext.Builder()
                 .apiKey(apiKey)
                 .build();
 
         try{
-            dis = getDistanceForSingleDestination(context,origin,destination);
+            distanceInMeters = getDistanceForSingleDestination(context, origin, destination);
+            if (distanceInMeters == -1) {
+                return -1;
+            }
         }
         catch(Exception e){
-            dis = -1;
+            System.err.println("❌ Error calculating distance from '" + origin + "' to '" + destination + "': " + e.getMessage());
+            e.printStackTrace();
+            distanceInMeters = -1;
+        }
+        finally {
+            // NECESSARY! Shutdown the context
+            context.shutdown();
         }
 
-        // NECESSARY! Shutdown the context. Please have it at the end of your method.
-        context.shutdown();
-
-        return dis;
+        // Convert meters to kilometers
+        if (distanceInMeters > 0) {
+            return distanceInMeters / 1000.0;
+        }
+        return -1;
     }
 }

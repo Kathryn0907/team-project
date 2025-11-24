@@ -13,21 +13,28 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class DistanceCalculatorTest {
 
-    // NOTE: For a real test environment, load your key from environment variables
-    // or a secure configuration file, NOT hardcoded here.
+    // Load API key from environment variable
     private static final String API_KEY = System.getenv("GOOGLE_API_KEY");
     private static GeoApiContext context;
+    private static GoogleDistanceService distanceService;
 
     @BeforeAll
     static void setUp() {
         // Initialize the context once before all tests run
         if (API_KEY == null) {
-            System.err.println("API Key not set. Skipping tests. Set GOOGLE_API_KEY environment variable before running tests.");
+            System.err.println("⚠️  API Key not set. Skipping tests.");
+            System.err.println("Set GOOGLE_API_KEY environment variable before running tests.");
             return;
         }
+
+        distanceService = new GoogleDistanceService();
+        distanceService.setApiKey(API_KEY);
+
         context = new GeoApiContext.Builder()
                 .apiKey(API_KEY)
                 .build();
+
+        System.out.println("✓ Test setup complete");
     }
 
     @AfterAll
@@ -35,85 +42,125 @@ public class DistanceCalculatorTest {
         // Shut down the context after all tests complete
         if (context != null) {
             context.shutdown();
+            System.out.println("✓ Context shut down");
         }
     }
 
     @Test
     void testSingleDistanceCalculation() throws ApiException, InterruptedException, IOException {
-        if (context == null) return;
+        if (context == null) {
+            System.out.println("⚠️  Skipping test - API key not set");
+            return;
+        }
 
         String origin = "CN Tower, Toronto";
         String destination = "Bahen Centre for Information Technology, Toronto";
 
-        GoogleDistanceService singleDistanceCalculator = new GoogleDistanceService();
-
-        long distance = singleDistanceCalculator.getDistanceForSingleDestination(context, origin, destination);
+        // Call with context parameter
+        long distanceMeters = distanceService.getDistanceForSingleDestination(context, origin, destination);
 
         // Assert that the distance is a positive number (in meters)
-        assertTrue(distance > 0, "Distance should be positive");
+        assertTrue(distanceMeters > 0, "Distance should be positive");
 
-        // Assert that the distance is roughly within an expected range (e.g., Manhattan is ~8km across)
-        // We allow a range for traffic/route variations.
-        long expectedDistanceInMeters = 2000; // ~2 km
-        long tolerance = 500; // allow a 500m variance
-        assertTrue(distance >= expectedDistanceInMeters - tolerance &&
-                        distance <= expectedDistanceInMeters + tolerance,
-                "Distance should be around 2 km");
+        // Assert that the distance is roughly within an expected range
+        // CN Tower to Bahen Centre is approximately 2-3 km
+        long expectedDistanceInMeters = 2500; // ~2.5 km
+        long tolerance = 1000; // allow a 1km variance
+        assertTrue(distanceMeters >= expectedDistanceInMeters - tolerance &&
+                        distanceMeters <= expectedDistanceInMeters + tolerance,
+                "Distance should be around 2.5 km. Got: " + distanceMeters + " meters");
+
+        System.out.println("✓ Distance: " + distanceMeters + " meters (~" + (distanceMeters/1000.0) + " km)");
     }
 
     @Test
     void testMultiDestinationDistanceCalculation() throws ApiException, InterruptedException, IOException {
-        if (context == null) return;
+        if (context == null) {
+            System.out.println("⚠️  Skipping test - API key not set");
+            return;
+        }
 
-        String origin = "Eiffel Tower, Paris";
+        String origin = "CN Tower, Toronto";
         String[] destinations = {
-                "Louvre Museum, Paris", // Closer
-                "Palace of Versailles, Versailles" // Further
+                "Union Station, Toronto",           // Closer (~1 km)
+                "Toronto Pearson Airport, Toronto"  // Further (~25 km)
         };
 
-        GoogleDistanceService multiDestinationDistanceCalculator = new GoogleDistanceService();
-
-        List<Long> distances = multiDestinationDistanceCalculator.getDistancesToDestinations(context, origin, destinations);
+        // Call with context parameter
+        List<Long> distances = distanceService.getDistancesToDestinations(context, origin, destinations);
 
         assertNotNull(distances, "Distance list should not be null");
         assertEquals(2, distances.size(), "Should return exactly two distances");
 
-        long distanceToLouvre = distances.get(0);
-        long distanceToVersailles = distances.get(1);
-        System.out.println(distanceToLouvre + " " + distanceToVersailles);
+        Long distanceToUnion = distances.get(0);
+        Long distanceToPearson = distances.get(1);
 
-        assertTrue(distanceToLouvre > 0, "Distance to Louvre should be positive");
-        assertTrue(distanceToVersailles > 0, "Distance to Versailles should be positive");
+        assertNotNull(distanceToUnion, "Distance to Union Station should not be null");
+        assertNotNull(distanceToPearson, "Distance to Pearson should not be null");
 
-        // The distance to Versailles should be significantly greater than to the Louvre
-        assertTrue(distanceToVersailles > distanceToLouvre, "Versailles should be further than the Louvre");
+        assertTrue(distanceToUnion > 0, "Distance to Union Station should be positive");
+        assertTrue(distanceToPearson > 0, "Distance to Pearson should be positive");
 
-        // Check approximate distance to Louvre (~5km)
-        long expectedLouvreDistance = 3400;
-        long tolerance = 3000;
-        assertTrue(distanceToLouvre >= expectedLouvreDistance - tolerance &&
-                        distanceToLouvre <= expectedLouvreDistance + tolerance,
-                "Distance to Louvre should be around 3.4 km");
+        // The distance to Pearson should be significantly greater than to Union Station
+        assertTrue(distanceToPearson > distanceToUnion,
+                "Pearson Airport should be further than Union Station");
 
-        long expectedVersailleDistance = 20000;
-        long tolerance2 = 10000;
-        assertTrue(distanceToVersailles >= expectedVersailleDistance - tolerance2 &&
-                        distanceToVersailles <= expectedVersailleDistance + tolerance2,
-                "Distance to Louvre should be around 17 km");
+        System.out.println("✓ Distance to Union Station: " + distanceToUnion + " meters (~" + (distanceToUnion/1000.0) + " km)");
+        System.out.println("✓ Distance to Pearson Airport: " + distanceToPearson + " meters (~" + (distanceToPearson/1000.0) + " km)");
+
+        // Check approximate distance to Union Station (~1km)
+        long expectedUnionDistance = 1000;
+        long tolerance = 500;
+        assertTrue(distanceToUnion >= expectedUnionDistance - tolerance &&
+                        distanceToUnion <= expectedUnionDistance + tolerance,
+                "Distance to Union Station should be around 1 km");
+
+        // Check approximate distance to Pearson (~25km)
+        long expectedPearsonDistance = 25000;
+        long tolerance2 = 5000;
+        assertTrue(distanceToPearson >= expectedPearsonDistance - tolerance2 &&
+                        distanceToPearson <= expectedPearsonDistance + tolerance2,
+                "Distance to Pearson should be around 25 km");
     }
 
     @Test
     void testInvalidDestinationHandling() throws ApiException, InterruptedException, IOException {
-        if (context == null) return;
+        if (context == null) {
+            System.out.println("⚠️  Skipping test - API key not set");
+            return;
+        }
 
         // Use a non-existent place to force an error status
-        String origin = "London, UK";
-        String destination = "Imaginary NonExistent Place ABC 123";
+        String origin = "Toronto, ON";
+        String destination = "Imaginary NonExistent Place ABC XYZ 123456789";
 
-        GoogleDistanceService singleDistanceCalculator = new GoogleDistanceService();
         // The method handles the error internally and returns -1
-        long distance = singleDistanceCalculator.getDistanceForSingleDestination(context, origin, destination);
+        long distance = distanceService.getDistanceForSingleDestination(context, origin, destination);
 
         assertEquals(-1, distance, "Should return -1 for an invalid location");
+
+        System.out.println("✓ Invalid destination correctly returned -1");
+    }
+
+    @Test
+    void testCalculateDistanceKm() {
+        if (API_KEY == null) {
+            System.out.println("⚠️  Skipping test - API key not set");
+            return;
+        }
+
+        String origin = "CN Tower, Toronto";
+        String destination = "Bahen Centre, Toronto";
+
+        // This method creates its own context internally
+        double distanceKm = distanceService.calculateDistanceKm(origin, destination);
+
+        assertTrue(distanceKm > 0, "Distance in km should be positive");
+
+        // Should be around 2-3 km
+        assertTrue(distanceKm >= 1.5 && distanceKm <= 3.5,
+                "Distance should be between 1.5 and 3.5 km. Got: " + distanceKm + " km");
+
+        System.out.println("✓ Distance (using calculateDistanceKm): " + distanceKm + " km");
     }
 }

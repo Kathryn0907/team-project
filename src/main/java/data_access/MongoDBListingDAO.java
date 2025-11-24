@@ -8,6 +8,7 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import org.bson.Document;
 import org.bson.types.ObjectId;
+import use_case.create_listing.CreateListingDataAccessInterface;
 
 import java.util.ArrayList;
 
@@ -61,6 +62,14 @@ public class MongoDBListingDAO {
         listingsCollection.insertOne(listingDocument);
 
     }
+
+    /**
+    @Override
+    // this is temporary to satisfy the interface requirement, will move to saveListing later after verifying everything works
+    public void save(Listing listing) {
+        saveListing(listing);
+    }
+    **/
 
 
     public void deleteListing(Listing listing) {

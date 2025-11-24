@@ -100,8 +100,7 @@ public class FilterListingsInteractor implements FilterListingsInputBoundary {
 
                 String listingAddress = listing.getAddress();
                 if (listingAddress == null || listingAddress.trim().isEmpty()) {
-                    // can't compute distance, skip if user requested distance filtering
-                    continue;
+                    continue; // Skip listings without addresses
                 }
 
                 double distanceKm = distanceService.calculateDistanceKm(
@@ -109,11 +108,11 @@ public class FilterListingsInteractor implements FilterListingsInputBoundary {
                         listingAddress
                 );
 
-                // optional: store computed distance back into the entity
+                // Store the computed distance
                 listing.setDistance(distanceKm);
 
                 if (distanceKm > inputData.getMaxDistanceKm()) {
-                    continue;
+                    continue; // Skip listings beyond max distance
                 }
             }
 
@@ -123,5 +122,6 @@ public class FilterListingsInteractor implements FilterListingsInputBoundary {
 
         FilterListingsOutputData outputData = new FilterListingsOutputData(results);
         presenter.present(outputData);
+        
     }
 }
