@@ -29,12 +29,18 @@ public class ViewManager implements PropertyChangeListener {
             final String viewModelName = (String) evt.getNewValue();
             cardLayout.show(views, viewModelName);
 
-            // If switching to logged in view, load all listings
+            // Refresh views as needed
             if ("logged in".equals(viewModelName)) {
-                // Find the LoggedInView component and load listings
                 for (Component comp : views.getComponents()) {
                     if (comp instanceof LoggedInView) {
                         ((LoggedInView) comp).loadAllListings();
+                        break;
+                    }
+                }
+            } else if ("conversations".equals(viewModelName)) {
+                for (Component comp : views.getComponents()) {
+                    if (comp instanceof ConversationsView) {
+                        ((ConversationsView) comp).refreshConversations();
                         break;
                     }
                 }

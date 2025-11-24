@@ -1,5 +1,6 @@
 import app.ExtractTagsUseCaseFactory;
 import data_access.InMemoryListingDAO;
+import data_access.InMemoryListingDataAccessObject;
 import interface_adapter.extract_tags.*;
 import use_case.extract_tags.ExtractTagsOutputData;
 import Entities.*;
@@ -28,7 +29,7 @@ public class ExtractTagsUITest {
         frame.setLayout(new BorderLayout(10, 10));
 
         // Setup data access
-        InMemoryListingDAO dataAccess = new InMemoryListingDAO();
+        InMemoryListingDataAccessObject dataAccess = new InMemoryListingDataAccessObject();
         User testUser = new User("test_user", "password");
         dataAccess.addUser(testUser);
 
