@@ -17,7 +17,7 @@ import interface_adapter.listing_detail.ListingDetailViewModel;
 
 /**
  * Search View - Keyword search interface with results display
- * Mohamed's implementation of Use Case 5: Searching by keyword
+ * Updated with Messages button
  */
 public class SearchView extends JPanel implements PropertyChangeListener {
 
@@ -26,15 +26,14 @@ public class SearchView extends JPanel implements PropertyChangeListener {
     private final SearchListingViewModel searchViewModel;
     private final SearchListingController searchController;
     private final FilterListingsController filterController;
+    private final ViewManagerModel viewManagerModel;
 
     private final JTextField keywordField;
     private final JButton searchButton;
+    private final JButton messagesButton;
+    private final JButton viewFavoritesButton;
     private final JPanel resultsPanel;
     private final JScrollPane resultsScrollPane;
-
-    // REMOVED: These fields are not needed in this class
-    // private final ViewManagerModel viewManagerModel;
-    // private final ListingDetailViewModel listingDetailViewModel;
 
     public SearchView(SearchListingViewModel searchViewModel,
                       SearchListingController searchController,
@@ -45,14 +44,16 @@ public class SearchView extends JPanel implements PropertyChangeListener {
         this.searchViewModel = searchViewModel;
         this.searchController = searchController;
         this.filterController = filterController;
+        this.viewManagerModel = viewManagerModel;
         this.searchViewModel.addPropertyChangeListener(this);
-        // We receive these parameters but don't store them as fields
-        // They're used by ListingCardPanel which gets them via getInstance()
 
         this.setLayout(new BorderLayout(10, 10));
         this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        // Top: Search input panel
+        // Top: Search input panel with buttons
+        JPanel topPanel = new JPanel(new BorderLayout());
+
+        // Left side: Search bar
         JPanel searchPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JLabel searchLabel = new JLabel("Enter a key word:");
         keywordField = new JTextField(30);
@@ -62,19 +63,32 @@ public class SearchView extends JPanel implements PropertyChangeListener {
         searchPanel.add(keywordField);
         searchPanel.add(searchButton);
 
+        // Right side: Action buttons
+        JPanel actionPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        messagesButton = new JButton("✉️ Messages");
+        messagesButton.setFont(new Font("Arial", Font.BOLD, 12));
+        viewFavoritesButton = new JButton("❤ View My Favorites");
+        viewFavoritesButton.setFont(new Font("Arial", Font.BOLD, 12));
+
+        actionPanel.add(messagesButton);
+        actionPanel.add(viewFavoritesButton);
+
+        topPanel.add(searchPanel, BorderLayout.WEST);
+        topPanel.add(actionPanel, BorderLayout.EAST);
+
         // Center: Results display panel
         resultsPanel = new JPanel();
         resultsPanel.setLayout(new BoxLayout(resultsPanel, BoxLayout.Y_AXIS));
         resultsScrollPane = new JScrollPane(resultsPanel);
         resultsScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
-        // Left: Filter sidebar - Check if filterController is not null before creating panel
+        // Left: Filter sidebar
         if (filterController != null) {
             FilterSidebarPanel filterPanel = new FilterSidebarPanel(filterController);
             this.add(filterPanel, BorderLayout.WEST);
         }
 
-        this.add(searchPanel, BorderLayout.NORTH);
+        this.add(topPanel, BorderLayout.NORTH);
         this.add(resultsScrollPane, BorderLayout.CENTER);
 
         // Search button action
@@ -90,6 +104,28 @@ public class SearchView extends JPanel implements PropertyChangeListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 performSearch();
+            }
+        });
+
+        // Messages button action
+        messagesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (viewManagerModel != null) {
+                    viewManagerModel.setState("conversations");
+                    viewManagerModel.firePropertyChange();
+                }
+            }
+        });
+
+        // View Favorites button action
+        viewFavoritesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (viewManagerModel != null) {
+                    viewManagerModel.setState("favourite listings");
+                    viewManagerModel.firePropertyChange();
+                }
             }
         });
     }

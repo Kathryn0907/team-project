@@ -4,88 +4,162 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4233ef43-aa86-4f3e-a990-e26817d04b73" name="Changes" comment="Merge branch 'main' of https://github.com/Kathryn0907/team-project into Complete_messaging_system&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml">
-      <change afterPath="$PROJECT_DIR$/src/main/java/app/CommentUseCaseFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/data_access/MongoConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/data_access/MongoDBCommentDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/data_access/MongoDBExtractToCache.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/data_access/MongoDBListingDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/data_access/MongoDBUserDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/data_access/QuickStart.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/cancel_account/CancelAccountController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/cancel_account/CancelAccountPresenter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/cancel_account/CancelAccountState.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/cancel_account/CancelAccountViewModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/comment/CommentController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/comment/CommentPresenter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/comment/CommentViewModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/listing_detail/ListingDetailState.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/listing_detail/ListingDetailViewModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/use_case/cancel_account/CancelAccountDataAccessInterface.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/use_case/cancel_account/CancelAccountInputBoundary.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/use_case/cancel_account/CancelAccountInputData.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/use_case/cancel_account/CancelAccountInteractor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/use_case/cancel_account/CancelAccountOutputBoundary.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/use_case/cancel_account/CancelAccountOutputData.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/use_case/comment/CommentInputBoundary.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/use_case/comment/CommentInputData.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/use_case/comment/CommentInteractor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/use_case/comment/CommentOutputBoundary.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/use_case/comment/CommentOutputData.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/view/CancelAccountView.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/view/CommentView.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/view/ListingDetailView.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/data_access/DistanceCalculatorTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/data_access/MongoDBAddSampleData.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/use_case/cancel_account/CancelAccountInteractorTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/use_case/filter/FilterListingsInteractorTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/checkstyle-idea.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/checkstyle-idea.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="4233ef43-aa86-4f3e-a990-e26817d04b73" name="Changes" comment="Merging initial integration code for messaging system, deleting Extract Tags functionality for App builder, and a stepping stone for complete messaging system">
+      <change afterPath="$PROJECT_DIR$/src/main/java/view/ConversationsView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/TestMongoConnection.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Entities/Comment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Entities/Comment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Entities/Listing.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Entities/Listing.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Entities/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Entities/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/app/AppBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/AppBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/ExtractTagsUseCaseFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/ExtractTagsUseCaseFactory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/app/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/data_access/GoogleDistanceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/data_access/GoogleDistanceService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/data_access/InMemoryListingDataAccessObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/data_access/InMemoryListingDataAccessObject.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/data_access/InMemoryUserDataAccessObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/data_access/InMemoryUserDataAccessObject.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/interface_adapter/ViewManagerModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/ViewManagerModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/interface_adapter/check_favorite/CheckFavoritePresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/check_favorite/CheckFavoritePresenter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/interface_adapter/logged_in/LoggedInState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/logged_in/LoggedInState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/interface_adapter/logged_in/LoggedInViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/logged_in/LoggedInViewModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/interface_adapter/login/LoginPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/login/LoginPresenter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/interface_adapter/login/LoginState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/login/LoginState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/interface_adapter/signup/SignupPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/signup/SignupPresenter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/use_case/check_favorite/CheckFavoriteInteractor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/use_case/check_favorite/CheckFavoriteInteractor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/use_case/login/LoginInteractor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/use_case/login/LoginInteractor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/use_case/login/LoginOutputData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/use_case/login/LoginOutputData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/use_case/login/LoginUserDataAccessInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/use_case/login/LoginUserDataAccessInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/CheckFavoriteView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/CheckFavoriteView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/ListingCardPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/ListingCardPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/LoggedInView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/LoggedInView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/LoginView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/LoginView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/data_access/MongoDBMessageDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/data_access/MongoDBMessageDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/ListingDetailView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/ListingDetailView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/MessagingView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/MessagingView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/view/SearchView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/SearchView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/SignupView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/SignupView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/SearchViewTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/SearchViewTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/ViewManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/ViewManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/ExtractTagsUITest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ExtractTagsUITest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/MessagingSystemTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/MessagingSystemTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/TestAppBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/TestAppBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/TestFavoriteFeatures.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/TestFavoriteFeatures.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;monashat77&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Kathryn0907/team-project&quot;,
+    &quot;accountId&quot;: &quot;e8b53e13-ce07-42ff-bd89-a5bae6863ac6&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="35wX0JmziWYiuPWYZL9NGa07Cpa" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "git-widget-placeholder": "Merging Complete__messaging__system"
+    "Application.MessagingSystemTest.executor": "Run",
+    "Application.SearchViewTest.executor": "Run",
+    "Application.TestAppBuilder.executor": "Run",
+    "Application.TestMongoConnection.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "Complete__messaging__system",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="view" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.TestAppBuilder">
+    <configuration name="MessagingSystemTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="MessagingSystemTest" />
+      <module name="TeamProject" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SearchViewTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="SearchViewTest" />
+      <module name="TeamProject" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestAppBuilder" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <envs>
+        <env name="MONGODB_URI" value="mongodb+srv://monashat77:monashat77123@cluster0.6tcmlgq.mongodb.net/?appName=Cluster0 " />
+        <env name="GOOGLE_API_KEY" value="AIzaSyBXp5N97WR6RPh5H4yJIq4n0tPdRf6RBQQ" />
+      </envs>
+      <option name="MAIN_CLASS_NAME" value="TestAppBuilder" />
+      <module name="TeamProject" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestMongoConnection" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="TestMongoConnection" />
+      <module name="TeamProject" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.TestMongoConnection" />
+      <item itemvalue="Application.MessagingSystemTest" />
+      <item itemvalue="Application.SearchViewTest" />
+      <item itemvalue="Application.TestAppBuilder" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.TestAppBuilder" />
+        <item itemvalue="Application.TestMongoConnection" />
+        <item itemvalue="Application.MessagingSystemTest" />
+        <item itemvalue="Application.SearchViewTest" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.25557.131" />
+        <option value="bundled-js-predefined-d6986cc7102b-b598e85cdad2-JavaScript-IU-252.25557.131" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="TaskManager">
+    <task id="LOCAL-00001" summary="pull main">
+      <option name="closed" value="true" />
+      <created>1763748440490</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1763748440490</updated>
+    </task>
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="4233ef43-aa86-4f3e-a990-e26817d04b73" name="Changes" comment="pull main" />
+      <created>1764021885048</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1764021885048</updated>
+      <workItem from="1764021886138" duration="3927000" />
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="pull main" />
+    <MESSAGE value="Merging initial integration code for messaging system, deleting Extract Tags functionality for App builder, and a stepping stone for complete messaging system" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merging initial integration code for messaging system, deleting Extract Tags functionality for App builder, and a stepping stone for complete messaging system" />
   </component>
 </project>
