@@ -72,6 +72,6 @@ public class CreateListingController {
         createListingUseCaseInteractor.execute(createListingInputData);
     }
     public void switchToProfileView() {
-        createListingUseCaseInteractor.swtichToProfileView();
+        createListingUseCaseInteractor.switchToProfileView();
     }
 }

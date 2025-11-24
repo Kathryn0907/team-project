@@ -200,8 +200,15 @@ public class AppBuilder {
 
     public AppBuilder addCreateListingView() {
         createListingViewModel = new CreateListingViewModel();
-        createListingView = new CreateListingView(createListingViewModel);
-        cardPanel.add(createListingView, createListingView.getViewName());
+        createListingView = new CreateListingView(createListingViewModel, viewManagerModel);
+
+        JScrollPane scrollPane = new JScrollPane(
+                createListingView,
+                JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER
+        );
+
+        cardPanel.add(scrollPane, createListingView.getViewName());
         return this;
     }
 
