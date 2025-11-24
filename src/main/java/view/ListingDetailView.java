@@ -7,6 +7,7 @@ import interface_adapter.comment.CommentController;
 import interface_adapter.comment.CommentViewModel;
 import interface_adapter.listing_detail.ListingDetailState;
 import interface_adapter.listing_detail.ListingDetailViewModel;
+import interface_adapter.ViewManagerModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -43,8 +44,21 @@ public class ListingDetailView extends JPanel implements PropertyChangeListener 
         setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         JPanel detailsPanel = buildDetailsPanel();
-        add(detailsPanel, BorderLayout.NORTH);
 
+        // Add Back to Search button
+        JButton backButton = new JButton("← Back to Search");
+        backButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        backButton.addActionListener(e -> {
+            ViewManagerModel.getInstance().setState("search");
+            ViewManagerModel.getInstance().firePropertyChange();
+        });
+
+        // Panel for Back button + Details
+        JPanel topPanel = new JPanel(new BorderLayout());
+        topPanel.add(backButton, BorderLayout.NORTH);
+        topPanel.add(detailsPanel, BorderLayout.CENTER);
+
+        add(topPanel, BorderLayout.NORTH);
         add(commentView, BorderLayout.SOUTH);
     }
 
