@@ -262,7 +262,7 @@ public class CreateListingView extends JPanel implements PropertyChangeListener 
                         area,
                         bedrooms,
                         bathrooms,
-                        Listing.BuildingType.OTHER,
+                        buildingTypeDropdown.getItemAt(buildingTypeDropdown.getSelectedIndex()),
                         true
                 );
             }
