@@ -184,26 +184,28 @@ public class MongoDBUserDAO implements SignupUserDataAccessInterface,
     @Override
     public void setCurrentUsername(String name) {
         System.out.println(msg);
-        throw new RuntimeException("method name: setCurrentUsername");
+//        throw new RuntimeException("method name: setCurrentUsername");
     }
     @Override
     public String getCurrentUsername() {
         System.out.println(msg);
-        throw new RuntimeException("method name: getCurrentUsername");
+//        throw new RuntimeException("method name: getCurrentUsername");
+        return null;
     }
     @Override
     public void addListing(Listing listing) {
         System.out.println(msg);
-        throw new RuntimeException("method name: addListing");
+//        throw new RuntimeException("method name: addListing");
     }
     @Override
     public void addUser(User user) {
         System.out.println(msg);
-        throw new RuntimeException("method name: addUser");
+//        throw new RuntimeException("method name: addUser");
     }
     @Override
     public ArrayList<Listing> getAllActiveListings() {
         System.out.println(msg);
-        throw new RuntimeException("method name: getAllActiveListings");
+//        throw new RuntimeException("method name: getAllActiveListings");
+        return null;
     }
 }

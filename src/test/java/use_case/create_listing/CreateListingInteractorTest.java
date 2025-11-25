@@ -124,7 +124,7 @@ class CreateListingInteractorTest {
         };
 
         CreateListingInteractor interactor = new CreateListingInteractor(listingRepo, presenter);
-        interactor.swtichToProfileView();
+        interactor.switchToProfileView();
     }
 }
 
