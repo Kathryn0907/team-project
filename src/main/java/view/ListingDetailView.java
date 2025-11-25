@@ -28,6 +28,7 @@ public class ListingDetailView extends JPanel implements PropertyChangeListener 
     private JLabel areaLabel;
     private JLabel typeLabel;
     private JLabel tagsLabel;
+    private JLabel descriptionLabel;
 
     public ListingDetailView(ListingDetailViewModel viewModel,
                              CommentController commentController,
@@ -75,6 +76,7 @@ public class ListingDetailView extends JPanel implements PropertyChangeListener 
         areaLabel = new JLabel("");
         typeLabel = new JLabel("");
         tagsLabel = new JLabel("");
+        descriptionLabel = new JLabel("");
 
         panel.add(titleLabel);
         panel.add(priceLabel);
@@ -83,6 +85,7 @@ public class ListingDetailView extends JPanel implements PropertyChangeListener 
         panel.add(areaLabel);
         panel.add(typeLabel);
         panel.add(tagsLabel);
+        panel.add(descriptionLabel);
 
         return panel;
     }
@@ -104,6 +107,7 @@ public class ListingDetailView extends JPanel implements PropertyChangeListener 
         roomsLabel.setText(l.getBedrooms() + " bedrooms, " + l.getBathrooms() + " bathrooms");
         areaLabel.setText("Area: " + l.getArea());
         typeLabel.setText("Type: " + l.getBuildingType());
+        descriptionLabel.setText("Description: " + l.getDescription());
 
         String tagsText = l.getTags().isEmpty() ? "No tags" : String.join(", ", l.getTags());
         tagsLabel.setText("Tags: " + tagsText);
