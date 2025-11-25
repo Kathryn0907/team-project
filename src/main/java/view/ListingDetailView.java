@@ -13,6 +13,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.List;
 
 public class ListingDetailView extends JPanel implements PropertyChangeListener {
     public final String viewName = ListingDetailViewModel.VIEW_NAME;
@@ -29,14 +30,17 @@ public class ListingDetailView extends JPanel implements PropertyChangeListener 
     private JLabel typeLabel;
     private JLabel tagsLabel;
     private JLabel descriptionLabel;
+    private JLabel photoLabel;
+    private JButton getTagsButton;
+    private JProgressBar tagsProgressBar;
 
     public ListingDetailView(ListingDetailViewModel viewModel,
                              CommentController commentController,
-                             CommentViewModel commentViewModel) {
+                             CommentViewModel commentViewModel
+                             ) {
 
         this.viewModel = viewModel;
         this.commentController = commentController;
-
         this.commentView = new CommentView(commentController, commentViewModel);
 
         this.viewModel.addPropertyChangeListener(this);
@@ -75,15 +79,39 @@ public class ListingDetailView extends JPanel implements PropertyChangeListener 
         roomsLabel = new JLabel("");
         areaLabel = new JLabel("");
         typeLabel = new JLabel("");
+
+        // Photo section
+        JPanel photoPanel = new JPanel(new BorderLayout(5, 5));
+        photoLabel = new JLabel("", SwingConstants.CENTER);
+        photoLabel.setPreferredSize(new Dimension(200, 200));
+        photoLabel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+
+        JPanel photoButtonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        getTagsButton = new JButton("🏷️ Get Tags from Image");
+        getTagsButton.setFont(new Font("Arial", Font.BOLD, 12));
+        tagsProgressBar = new JProgressBar();
+        tagsProgressBar.setIndeterminate(true);
+        tagsProgressBar.setVisible(false);
+
+        photoButtonPanel.add(getTagsButton);
+        photoButtonPanel.add(tagsProgressBar);
+
+        photoPanel.add(photoLabel, BorderLayout.CENTER);
+        photoPanel.add(photoButtonPanel, BorderLayout.SOUTH);
+
         tagsLabel = new JLabel("");
         descriptionLabel = new JLabel("");
 
         panel.add(titleLabel);
+        panel.add(Box.createVerticalStrut(10));
+        panel.add(photoPanel);
+        panel.add(Box.createVerticalStrut(10));
         panel.add(priceLabel);
         panel.add(locationLabel);
         panel.add(roomsLabel);
         panel.add(areaLabel);
         panel.add(typeLabel);
+        panel.add(Box.createVerticalStrut(10));
         panel.add(tagsLabel);
         panel.add(descriptionLabel);
 
@@ -96,7 +124,7 @@ public class ListingDetailView extends JPanel implements PropertyChangeListener 
         Listing l = state.getCurrentListing();
         User u = state.getCurrentUser();
 
-        if(l == null){
+        if (l == null) {
             titleLabel.setText("No Listing Selected");
             return;
         }
@@ -109,8 +137,19 @@ public class ListingDetailView extends JPanel implements PropertyChangeListener 
         typeLabel.setText("Type: " + l.getBuildingType());
         descriptionLabel.setText("Description: " + l.getDescription());
 
-        String tagsText = l.getTags().isEmpty() ? "No tags" : String.join(", ", l.getTags());
-        tagsLabel.setText("Tags: " + tagsText);
+        // Display photo if available
+        if (l.getPhotoPath() != null && !l.getPhotoPath().isEmpty()) {
+            try {
+                ImageIcon icon = new ImageIcon(l.getPhotoPath());
+                Image scaled = icon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+                photoLabel.setIcon(new ImageIcon(scaled));
+            } catch (Exception e) {
+                photoLabel.setText("Photo not available");
+            }
+        } else {
+            photoLabel.setText("No photo");
+        }
+
 
         commentView.setListing(l);
         commentView.setUser(u);

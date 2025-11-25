@@ -2,6 +2,7 @@
 import java.awt.Window;
 import app.MessagingUseCaseFactory;
 import data_access.InMemoryMessageDAO;
+import interface_adapter.ViewManagerModel;
 import interface_adapter.messaging.*;
 import view.MessagingView;
 import websocket.*;
@@ -96,9 +97,10 @@ public class MessagingSystemTest {
                     MessageController controller = MessagingUseCaseFactory.createMessagingUseCase(
                             viewModel, dataAccess
                     );
+                    ViewManagerModel viewManagerModel = new ViewManagerModel();
 
                     MessagingView messagingView = new MessagingView(
-                            username, viewModel, controller, chatClient
+                            username, viewModel, controller, chatClient, "mohamed", viewManagerModel
                     );
 
                     // Create window

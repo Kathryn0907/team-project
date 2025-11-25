@@ -2,7 +2,9 @@ package app;
 
 import javax.swing.*;
 import java.awt.*;
+import java.net.URI;
 
+import data_access.*;
 import data_access.InMemoryListingDataAccessObject;
 import data_access.InMemoryUserDataAccessObject;
 import data_access.GoogleDistanceService;
@@ -29,6 +31,12 @@ import interface_adapter.save_favorite.SaveFavoriteViewModel;
 import interface_adapter.check_favorite.CheckFavoriteController;
 import interface_adapter.check_favorite.CheckFavoritePresenter;
 import interface_adapter.check_favorite.CheckFavoriteViewModel;
+import interface_adapter.messaging.MessageController;
+import interface_adapter.messaging.MessageViewModel;
+import interface_adapter.messaging.MessagePresenter;
+import interface_adapter.extract_tags.ExtractTagsController;
+import interface_adapter.extract_tags.ExtractTagsViewModel;
+
 import use_case.create_listing.CreateListingInputBoundary;
 import use_case.create_listing.CreateListingInteractor;
 import use_case.create_listing.CreateListingOutputBoundary;
@@ -51,6 +59,14 @@ import use_case.save_favorite.SaveFavoriteOutputBoundary;
 import use_case.check_favorite.CheckFavoriteInputBoundary;
 import use_case.check_favorite.CheckFavoriteInteractor;
 import use_case.check_favorite.CheckFavoriteOutputBoundary;
+import use_case.messaging.SendMessageInputBoundary;
+import use_case.messaging.SendMessageInteractor;
+import use_case.messaging.SendMessageOutputBoundary;
+
+import view.*;
+import websocket.ChatClient;
+import websocket.ChatServer;
+import websocket.MessageHandler;
 import view.*;
 import view.LoggedInView;
 import view.LoginView;
@@ -76,8 +92,14 @@ public class AppBuilder {
     // Data access objects
     public final InMemoryUserDataAccessObject userDataAccessObject = new InMemoryUserDataAccessObject();
     public final InMemoryListingDataAccessObject listingDataAccessObject = new InMemoryListingDataAccessObject();
-    // public final MongoDBListingDAO mongoDBListingDAO = new MongoDBListingDAO();
 
+    // MongoDB DAOs
+    private MongoDBMessageDAO mongoMessageDAO;
+    private MongoDBUserDAO mongoUserDAO;
+
+    // WebSocket
+    private ChatServer chatServer;
+    private ChatClient chatClient;
 
     private SignupView signupView;
     private SignupViewModel signupViewModel;
@@ -86,6 +108,7 @@ public class AppBuilder {
     private SearchListingViewModel searchListingViewModel;
     private SaveFavoriteViewModel saveFavoriteViewModel;
     private CheckFavoriteViewModel checkFavoriteViewModel;
+    private MessageViewModel messageViewModel;
     private LoggedInView loggedInView;
     private LoginView loginView;
     private CheckFavoriteView checkFavoriteView;
@@ -96,16 +119,31 @@ public class AppBuilder {
     private ListingDetailViewModel listingDetailViewModel;
     private CommentViewModel commentViewModel;
     private ListingDetailView listingDetailView;
+    private ConversationsView conversationsView;
 
     // Controllers that will be created in use case methods
     private SearchListingController searchController;
     private FilterListingsController filterController;
     private SaveFavoriteController saveController;
     private CheckFavoriteController checkController;
+    private MessageController messageController;
+    private ExtractTagsController extractTagsController;
+
+    private String currentUsername;
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
         userDataAccessObject.setListingDataAccessObject(listingDataAccessObject);
+
+        // Initialize MongoDB DAOs
+        try {
+            mongoMessageDAO = new MongoDBMessageDAO();
+            mongoUserDAO = new MongoDBUserDAO();
+            System.out.println("✅ MongoDB DAOs initialized");
+        } catch (Exception e) {
+            System.err.println("❌ Failed to initialize MongoDB: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     public AppBuilder addSignupView() {
@@ -162,11 +200,35 @@ public class AppBuilder {
 
     public AppBuilder addCreateListingView() {
         createListingViewModel = new CreateListingViewModel();
-        createListingView = new CreateListingView(createListingViewModel);
-        cardPanel.add(createListingView, createListingView.getViewName());
+        createListingView = new CreateListingView(createListingViewModel, viewManagerModel);
+
+        JScrollPane scrollPane = new JScrollPane(
+                createListingView,
+                JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER
+        );
+
+        cardPanel.add(scrollPane, createListingView.getViewName());
         return this;
     }
 
+    public AppBuilder addConversationsView(String username) {
+        this.currentUsername = username;
+
+        if (mongoMessageDAO != null && mongoUserDAO != null && chatClient != null) {
+            conversationsView = new ConversationsView(
+                    username,
+                    viewManagerModel,
+                    mongoMessageDAO,
+                    mongoUserDAO,
+                    messageController,
+                    chatClient
+            );
+            cardPanel.add(conversationsView, "conversations");
+        }
+
+        return this;
+    }
 
     public AppBuilder addSignupUseCase() {
         final SignupOutputBoundary signupOutputBoundary = new SignupPresenter(viewManagerModel,
@@ -261,6 +323,81 @@ public class AppBuilder {
         );
 
         cardPanel.add(listingDetailView, ListingDetailViewModel.VIEW_NAME);
+
+        return this;
+    }
+    public AppBuilder addMessagingUseCase() {
+        if (mongoMessageDAO != null) {
+            messageViewModel = new MessageViewModel();
+            SendMessageOutputBoundary messagePresenter = new MessagePresenter(messageViewModel);
+            SendMessageInputBoundary messageInteractor =
+                    new SendMessageInteractor(mongoMessageDAO, messagePresenter);
+            messageController = new MessageController(messageInteractor);
+
+            System.out.println("✅ Messaging use case initialized");
+        }
+        return this;
+    }
+
+
+    public AppBuilder startWebSocketServer() {
+        if (mongoMessageDAO == null) {
+            System.err.println("❌ Cannot start WebSocket server: MongoDB not initialized");
+            return this;
+        }
+
+        try {
+            MessageHandler messageHandler = (from, to, listingId, content) -> {
+                SendMessageInputBoundary interactor =
+                        new SendMessageInteractor(mongoMessageDAO, new MessagePresenter(new MessageViewModel()));
+
+                use_case.messaging.SendMessageInputData inputData =
+                        new use_case.messaging.SendMessageInputData(from, to, listingId, content);
+
+                use_case.messaging.SendMessageOutputData result = interactor.execute(inputData);
+                return result.getMessage();
+            };
+
+            chatServer = new ChatServer(Config.getWebSocketPort(), messageHandler);
+            chatServer.start();
+
+            System.out.println("✅ WebSocket server started on port " + Config.getWebSocketPort());
+
+            // Add shutdown hook
+            Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+                try {
+                    if (chatServer != null) {
+                        chatServer.stop(1000);
+                        System.out.println("✅ WebSocket server stopped");
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }));
+
+        } catch (Exception e) {
+            System.err.println("❌ Failed to start WebSocket server: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return this;
+    }
+
+    public AppBuilder connectWebSocketClient(String username) {
+        try {
+            URI serverUri = new URI("ws://localhost:" + Config.getWebSocketPort());
+            chatClient = new ChatClient(serverUri, username);
+            chatClient.connect();
+
+            // Wait for connection
+            Thread.sleep(500);
+
+            System.out.println("✅ WebSocket client connected for user: " + username);
+
+        } catch (Exception e) {
+            System.err.println("❌ Failed to connect WebSocket client: " + e.getMessage());
+            e.printStackTrace();
+        }
 
         return this;
     }

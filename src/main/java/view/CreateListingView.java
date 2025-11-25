@@ -1,5 +1,6 @@
 package view;
 
+import interface_adapter.ViewManagerModel;
 import interface_adapter.create_listing.CreateListingState;
 import interface_adapter.create_listing.CreateListingViewModel;
 import interface_adapter.create_listing.CreateListingController;
@@ -21,6 +22,7 @@ public class CreateListingView extends JPanel implements PropertyChangeListener 
     private final String viewName = "create listing";
 
     private final CreateListingViewModel createListingViewModel;
+    private final ViewManagerModel viewManagerModel;
     private CreateListingController createListingController = null;
 
     private final JTextField nameInputField = new JTextField(15);
@@ -41,16 +43,26 @@ public class CreateListingView extends JPanel implements PropertyChangeListener 
     private final JLabel photoPreviewLabel = new JLabel();
 
     private final JButton createButton = new JButton(CreateListingViewModel.CREATE_BUTTON_LABEL);
-    private final JButton cancelButton = new JButton(CreateListingViewModel.CANCEL_BUTTON_LABEL);
 
-    public CreateListingView(CreateListingViewModel createListingViewModel) {
+
+
+    public CreateListingView(CreateListingViewModel createListingViewModel, ViewManagerModel viewManagerModel) {
         this.createListingViewModel = createListingViewModel;
+        this.viewManagerModel = viewManagerModel;
         createListingViewModel.addPropertyChangeListener(this);
 
-        this.setBorder(new EmptyBorder(20, 20, 20, 20)); // top, left, bottom, right
+        this.setBorder(new EmptyBorder(20, 20, 20, 20));
 
         JLabel title = new JLabel(CreateListingViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JButton backToProfileButton = new JButton("← Back to Profile");
+        backToProfileButton.setPreferredSize(new Dimension(150, 30));
+        backToProfileButton.addActionListener(e -> {
+            viewManagerModel.setState("profile");
+            viewManagerModel.firePropertyChange();
+        });
+
 
         JPanel view = new JPanel();
         view.setLayout(new GridLayout(0, 2, 12, 12));
@@ -86,7 +98,7 @@ public class CreateListingView extends JPanel implements PropertyChangeListener 
         view.add(new JLabel(CreateListingViewModel.PHOTO_LABEL));
 
         JPanel photoPanel = new JPanel();
-        photoPanel.setLayout(new BorderLayout(5, 5));  // spacing inside the photo panel
+        photoPanel.setLayout(new BorderLayout(5, 5));
         photoPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 
         JPanel buttonAndPath = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 0));
@@ -102,16 +114,16 @@ public class CreateListingView extends JPanel implements PropertyChangeListener 
         view.add(photoPanel);
 
         JPanel buttons = new JPanel();
-        buttons.setBorder(new EmptyBorder(10, 0, 0, 0));   // space above buttons
+        buttons.setBorder(new EmptyBorder(10, 0, 0, 0));
         buttons.add(createButton);
-        buttons.add(cancelButton);
+        buttons.add(backToProfileButton);
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         add(title);
 
-        add(Box.createRigidArea(new Dimension(0, 10))); // space between title and form
+        add(Box.createRigidArea(new Dimension(0, 10)));
         add(view);
-        add(Box.createRigidArea(new Dimension(0, 10))); // space between form and buttons
+        add(Box.createRigidArea(new Dimension(0, 10)));
         add(buttons);
 
         addNameListener();
@@ -262,13 +274,11 @@ public class CreateListingView extends JPanel implements PropertyChangeListener 
                         area,
                         bedrooms,
                         bathrooms,
-                        Listing.BuildingType.OTHER,
+                        buildingTypeDropdown.getItemAt(buildingTypeDropdown.getSelectedIndex()),
                         true
                 );
             }
         });
-
-        cancelButton.addActionListener(e -> JOptionPane.showMessageDialog(this, "Cancel pressed"));
 
         uploadButton.addActionListener(e -> {
             JFileChooser chooser = new JFileChooser();

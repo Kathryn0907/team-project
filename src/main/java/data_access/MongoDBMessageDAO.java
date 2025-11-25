@@ -3,44 +3,33 @@ package data_access;
 import Entities.Message;
 import use_case.messaging.MessageDataAccessInterface;
 import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Sorts;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
- * MongoDB implementation of message storage
- * Your friend implements this using MongoDB
+ * MongoDB implementation of message storage with conversation tracking
  */
 public class MongoDBMessageDAO implements MessageDataAccessInterface {
 
-    private final MongoClient mongoClient;
     private final MongoDatabase database;
     private final MongoCollection<Document> messagesCollection;
 
-    /**
-     * Constructor with connection string
-     * @param connectionString MongoDB connection string (e.g., "mongodb://localhost:27017")
-     * @param databaseName Name of the database
-     */
-    public MongoDBMessageDAO(String connectionString, String databaseName) {
-        this.mongoClient = MongoClients.create(connectionString);
-        this.database = mongoClient.getDatabase(databaseName);
-        this.messagesCollection = database.getCollection("messages");
-
-        System.out.println("✅ Connected to MongoDB: " + databaseName);
-    }
-
-    /**
-     * Default constructor - connects to local MongoDB
-     */
     public MongoDBMessageDAO() {
-        this("mongodb://localhost:27017", "airbnb_messaging");
+        MongoClient client = MongoConfig.getClient();
+        this.database = client.getDatabase("CSC207_group_project_2025");
+        this.messagesCollection = database.getCollection("Messages");
+
+        System.out.println("✅ Connected to MongoDB Messages collection");
     }
 
     @Override
@@ -49,7 +38,6 @@ public class MongoDBMessageDAO implements MessageDataAccessInterface {
             Document doc = new Document("_id", message.getId())
                     .append("fromUsername", message.getFromUsername())
                     .append("toUsername", message.getToUsername())
-                    .append("listingId", message.getListingId())
                     .append("content", message.getContent())
                     .append("timestamp", Date.from(message.getTimestamp()))
                     .append("isRead", message.isRead());
@@ -68,13 +56,12 @@ public class MongoDBMessageDAO implements MessageDataAccessInterface {
         ArrayList<Message> userMessages = new ArrayList<>();
 
         try {
-            // Query: Find messages where user is sender OR recipient
-            Document query = new Document("$or", Arrays.asList(
-                    new Document("fromUsername", username),
-                    new Document("toUsername", username)
-            ));
+            Bson query = Filters.or(
+                    Filters.eq("fromUsername", username),
+                    Filters.eq("toUsername", username)
+            );
 
-            for (Document doc : messagesCollection.find(query)) {
+            for (Document doc : messagesCollection.find(query).sort(Sorts.ascending("timestamp"))) {
                 userMessages.add(documentToMessage(doc));
             }
 
@@ -92,14 +79,18 @@ public class MongoDBMessageDAO implements MessageDataAccessInterface {
         ArrayList<Message> conversation = new ArrayList<>();
 
         try {
-            // Query: Messages between two specific users (both directions)
-            Document query = new Document("$or", Arrays.asList(
-                    new Document("fromUsername", user1).append("toUsername", user2),
-                    new Document("fromUsername", user2).append("toUsername", user1)
-            ));
+            Bson query = Filters.or(
+                    Filters.and(
+                            Filters.eq("fromUsername", user1),
+                            Filters.eq("toUsername", user2)
+                    ),
+                    Filters.and(
+                            Filters.eq("fromUsername", user2),
+                            Filters.eq("toUsername", user1)
+                    )
+            );
 
-            // Sort by timestamp ascending (oldest first)
-            for (Document doc : messagesCollection.find(query).sort(new Document("timestamp", 1))) {
+            for (Document doc : messagesCollection.find(query).sort(Sorts.ascending("timestamp"))) {
                 conversation.add(documentToMessage(doc));
             }
 
@@ -118,9 +109,10 @@ public class MongoDBMessageDAO implements MessageDataAccessInterface {
         ArrayList<Message> unreadMessages = new ArrayList<>();
 
         try {
-            // Query: Unread messages sent TO this user
-            Document query = new Document("toUsername", username)
-                    .append("isRead", false);
+            Bson query = Filters.and(
+                    Filters.eq("toUsername", username),
+                    Filters.eq("isRead", false)
+            );
 
             for (Document doc : messagesCollection.find(query)) {
                 unreadMessages.add(documentToMessage(doc));
@@ -139,7 +131,7 @@ public class MongoDBMessageDAO implements MessageDataAccessInterface {
     @Override
     public void markAsRead(String messageId) {
         try {
-            Document query = new Document("_id", messageId);
+            Bson query = Filters.eq("_id", messageId);
             Document update = new Document("$set", new Document("isRead", true));
 
             messagesCollection.updateOne(query, update);
@@ -148,6 +140,70 @@ public class MongoDBMessageDAO implements MessageDataAccessInterface {
         } catch (Exception e) {
             System.err.println("Error marking message as read: " + e.getMessage());
         }
+    }
+
+    /**
+     * Get all unique conversation partners for a user
+     */
+    public ArrayList<String> getConversationPartners(String username) {
+        Set<String> partners = new HashSet<>();
+
+        try {
+            Bson query = Filters.or(
+                    Filters.eq("fromUsername", username),
+                    Filters.eq("toUsername", username)
+            );
+
+            for (Document doc : messagesCollection.find(query)) {
+                String from = doc.getString("fromUsername");
+                String to = doc.getString("toUsername");
+
+                if (!from.equals(username)) {
+                    partners.add(from);
+                }
+                if (!to.equals(username)) {
+                    partners.add(to);
+                }
+            }
+
+            System.out.println("👥 [MongoDB] Found " + partners.size() + " conversation partners for: " + username);
+
+        } catch (Exception e) {
+            System.err.println("Error getting conversation partners: " + e.getMessage());
+        }
+
+        return new ArrayList<>(partners);
+    }
+
+    /**
+     * Get the last message in a conversation
+     */
+    public Message getLastMessage(String user1, String user2) {
+        try {
+            Bson query = Filters.or(
+                    Filters.and(
+                            Filters.eq("fromUsername", user1),
+                            Filters.eq("toUsername", user2)
+                    ),
+                    Filters.and(
+                            Filters.eq("fromUsername", user2),
+                            Filters.eq("toUsername", user1)
+                    )
+            );
+
+            Document doc = messagesCollection.find(query)
+                    .sort(Sorts.descending("timestamp"))
+                    .first();
+
+            if (doc != null) {
+                return documentToMessage(doc);
+            }
+
+        } catch (Exception e) {
+            System.err.println("Error getting last message: " + e.getMessage());
+        }
+
+        return null;
     }
 
     /**
@@ -167,15 +223,5 @@ public class MongoDBMessageDAO implements MessageDataAccessInterface {
         message.setRead(isRead);
 
         return message;
-    }
-
-    /**
-     * Close MongoDB connection
-     */
-    public void close() {
-        if (mongoClient != null) {
-            mongoClient.close();
-            System.out.println("🔌 MongoDB connection closed");
-        }
     }
 }
