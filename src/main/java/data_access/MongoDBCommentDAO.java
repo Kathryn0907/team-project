@@ -1,16 +1,19 @@
 package data_access;
 
 import Entities.Comment;
+import Entities.Listing;
+import Entities.User;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import org.bson.Document;
 import org.bson.types.ObjectId;
+import use_case.comment.CommentDataAccessInterface;
 
 import java.util.ArrayList;
 
-public class MongoDBCommentDAO {
+public class MongoDBCommentDAO implements CommentDataAccessInterface {
 
     private final MongoCollection<Document> commentsCollection;
     private MongoDBExtractToCache data;
@@ -22,10 +25,9 @@ public class MongoDBCommentDAO {
         this.data = new MongoDBExtractToCache();
     }
 
-
     /**
      * Save or update the comment to Database.
-     * To update, make sure the Id is correct.
+     * To update, make sure the id is correct.
      * @param comment the comment.
      */
     public void saveComment(Comment comment) {
@@ -43,9 +45,8 @@ public class MongoDBCommentDAO {
                 .append("idForDB", comment.getIdForDB());
 
         commentsCollection.insertOne(doc);
+        refreshData();
     }
-
-
 
     public void deleteComment(Comment comment) {
         ObjectId commentId = comment.getIdForDB();
@@ -56,9 +57,6 @@ public class MongoDBCommentDAO {
                     + comment.getId() +" not found in database");
         }
     }
-
-
-
 
     /**
      * Find the comment in local cache. You can use refresh method if you just
@@ -85,5 +83,17 @@ public class MongoDBCommentDAO {
      */
     public ArrayList<Comment> getAllComments() {
         return data.getCommentsCache();
+    }
+
+    @Override
+    public void updateListing(Listing listing) {
+        MongoDBListingDAO listingDAO = new MongoDBListingDAO();
+        listingDAO.saveListing(listing);
+    }
+
+    @Override
+    public void updateUser(User user) {
+        MongoDBUserDAO userDAO = new MongoDBUserDAO();
+        userDAO.saveUser(user);
     }
 }

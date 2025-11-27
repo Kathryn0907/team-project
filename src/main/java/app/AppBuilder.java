@@ -96,6 +96,8 @@ public class AppBuilder {
     // MongoDB DAOs
     private MongoDBMessageDAO mongoMessageDAO;
     private MongoDBUserDAO mongoUserDAO;
+    private MongoDBListingDAO mongoListingDAO;
+    private MongoDBCommentDAO mongoCommentDAO;
 
     // WebSocket
     private ChatServer chatServer;
@@ -139,6 +141,8 @@ public class AppBuilder {
         try {
             mongoMessageDAO = new MongoDBMessageDAO();
             mongoUserDAO = new MongoDBUserDAO();
+            mongoListingDAO = new MongoDBListingDAO();
+            mongoCommentDAO = new MongoDBCommentDAO();
             System.out.println("✅ MongoDB DAOs initialized");
         } catch (Exception e) {
             System.err.println("❌ Failed to initialize MongoDB: " + e.getMessage());
@@ -257,7 +261,7 @@ public class AppBuilder {
         SearchListingOutputBoundary searchPresenter =
                 new SearchListingPresenter(searchListingViewModel);
         SearchListingInputBoundary searchInteractor =
-                new SearchListingInteractor(listingDataAccessObject, searchPresenter);
+                new SearchListingInteractor(mongoListingDAO, searchPresenter);
         searchController = new SearchListingController(searchInteractor);
 
         // Create filter use case
@@ -265,7 +269,7 @@ public class AppBuilder {
         FilterListingsOutputBoundary filterPresenter =
                 new interface_adapter.filter.FilterListingsPresenter(searchListingViewModel);
         FilterListingsInputBoundary filterInteractor =
-                new FilterListingsInteractor(listingDataAccessObject, distanceService, filterPresenter);
+                new FilterListingsInteractor(mongoListingDAO, distanceService, filterPresenter);
         filterController = new FilterListingsController(filterInteractor);
 
         return this;
@@ -276,7 +280,7 @@ public class AppBuilder {
         SaveFavoriteOutputBoundary savePresenter =
                 new SaveFavoritePresenter(saveFavoriteViewModel);
         SaveFavoriteInputBoundary saveInteractor =
-                new SaveFavoriteInteractor(userDataAccessObject, savePresenter);
+                new SaveFavoriteInteractor(mongoUserDAO, savePresenter);
         saveController = new SaveFavoriteController(saveInteractor);
 
         return this;
@@ -288,7 +292,7 @@ public class AppBuilder {
 
         // Use userDataAccessObject, which now implements CheckFavoriteDataAccessInterface
         CheckFavoriteInputBoundary checkInteractor =
-                new CheckFavoriteInteractor(userDataAccessObject, checkPresenter);
+                new CheckFavoriteInteractor(mongoUserDAO, checkPresenter);
 
         checkController = new CheckFavoriteController(checkInteractor);
         return this;
@@ -302,7 +306,7 @@ public class AppBuilder {
                         viewManagerModel
                 );
         final CreateListingInputBoundary createListingInteractor =
-                new CreateListingInteractor(listingDataAccessObject, createListingPresenter);
+                new CreateListingInteractor(mongoListingDAO, createListingPresenter);
 
         final CreateListingController createListingController =
                 new CreateListingController(createListingInteractor, LoggedInViewModel.getInstance());
@@ -314,7 +318,7 @@ public class AppBuilder {
         listingDetailViewModel = ListingDetailViewModel.getInstance();
         commentViewModel = new CommentViewModel();
 
-        CommentController commentController = CommentUseCaseFactory.create(viewManagerModel, commentViewModel);
+        CommentController commentController = CommentUseCaseFactory.create(viewManagerModel, commentViewModel,mongoCommentDAO);
 
         listingDetailView = new ListingDetailView(
                 listingDetailViewModel,
