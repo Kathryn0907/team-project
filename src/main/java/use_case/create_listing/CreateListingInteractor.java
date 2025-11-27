@@ -46,7 +46,7 @@ public class CreateListingInteractor implements CreateListingInputBoundary {
         }
     }
     @Override
-    public void swtichToProfileView() {
+    public void switchToProfileView() {
         listingPresenter.switchToProfileView();
     }
 }

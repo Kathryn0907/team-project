@@ -1,8 +1,10 @@
 package data_access;
 
+import Entities.Comment;
 import Entities.Listing;
 import Entities.User;
 import interface_adapter.filter.FilterListingsPresenter;
+import use_case.comment.CommentDataAccessInterface;
 import use_case.filter.FilterListingsDataAccessInterface;
 import use_case.search_listings.SearchListingDataAccessInterface;
 import use_case.my_listings.MyListingsDataAccessInterface;
@@ -12,13 +14,15 @@ import java.util.*;
 
 public class InMemoryListingDAO implements SearchListingDataAccessInterface,
         MyListingsDataAccessInterface,
-        ExtractTagsDataAccessInterface, FilterListingsDataAccessInterface {
+        ExtractTagsDataAccessInterface, FilterListingsDataAccessInterface, CommentDataAccessInterface {
     private final ArrayList<Listing> listings;
     private final HashMap<String, User> users;
+    private final ArrayList<Comment> comments;
 
     public InMemoryListingDAO() {
         this.listings = new ArrayList<>();
         this.users = new HashMap<>();
+        this.comments = new ArrayList<>();
     }
 
     @Override
@@ -60,4 +64,15 @@ public class InMemoryListingDAO implements SearchListingDataAccessInterface,
     public void addUser(User user) {
         users.put(user.getUsername(), user);
     }
+
+    @Override
+    public void saveComment(Comment comment) {
+        comments.add(comment);
+    }
+
+    @Override
+    public void updateListing(Listing listing) {}
+
+    @Override
+    public void updateUser(User user) {}
 }

@@ -4,6 +4,7 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.comment.CommentController;
 import interface_adapter.comment.CommentPresenter;
 import interface_adapter.comment.CommentViewModel;
+import use_case.comment.CommentDataAccessInterface;
 import use_case.comment.CommentInputBoundary;
 import use_case.comment.CommentInteractor;
 import use_case.comment.CommentOutputBoundary;
@@ -14,7 +15,8 @@ public class CommentUseCaseFactory {
 
     public static CommentController create(
             ViewManagerModel viewManagerModel,
-            CommentViewModel commentViewModel
+            CommentViewModel commentViewModel,
+            CommentDataAccessInterface commentDataAccess
     ) {
 
         // 1. Presenter
@@ -23,7 +25,7 @@ public class CommentUseCaseFactory {
 
         // 2. Interactor
         CommentInputBoundary interactor =
-                new CommentInteractor(presenter);
+                new CommentInteractor(presenter, commentDataAccess);
 
         // 3. Controller
         return new CommentController(interactor);
