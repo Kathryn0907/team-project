@@ -37,6 +37,8 @@ public class MongoDBListingDAO implements CreateListingDataAccessInterface,
         // so this will renew the data.
         if (listingsCollection.find(Filters.eq("id", listing.getId())).first() != null ) {
             listingsCollection.deleteOne(Filters.eq("id", listing.getId()));
+        } else if (listingsCollection.find(Filters.eq("name", listing.getName())).first() != null) {
+            listingsCollection.deleteOne(Filters.eq("name", listing.getName()));
         }
 
         ArrayList<ObjectId> commentsIds = new ArrayList<>();

@@ -46,6 +46,8 @@ public class MongoDBUserDAO implements SignupUserDataAccessInterface,
         // so this will renew the data.
         if (usersCollection.find(Filters.eq("id", user.getId())).first() != null) {
             usersCollection.deleteOne(Filters.eq("id", user.getId()));
+        } else if (usersCollection.find(Filters.eq("username", user.getUsername())).first() != null) {
+            usersCollection.deleteOne(Filters.eq("username", user.getUsername()));
         }
 
         ArrayList<ObjectId> myListingsIds = new ArrayList<>();
