@@ -25,7 +25,7 @@ public class MongoDBListingDAO {
 
     /**
      * Save or update the listing in Database.
-     * To update, make sure the Id is correct.
+     * To update, make sure the id is correct.
      * @param listing The listing.
      */
     public void saveListing(Listing listing) {
@@ -34,6 +34,8 @@ public class MongoDBListingDAO {
         // so this will renew the data.
         if (listingsCollection.find(Filters.eq("id", listing.getId())).first() != null ) {
             listingsCollection.deleteOne(Filters.eq("id", listing.getId()));
+        } else if (listingsCollection.find(Filters.eq("name",listing.getName())).first() != null) {
+            listingsCollection.deleteOne(Filters.eq("name", listing.getName()));
         }
 
         ArrayList<ObjectId> commentsIds = new ArrayList<>();

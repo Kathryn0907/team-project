@@ -31,7 +31,7 @@ public class MongoDBUserDAO implements SignupUserDataAccessInterface,
 
     /**
      * Save or update the user in database.
-     * To update, make sure the Id is correct.
+     * To update, make sure the id is correct.
      * @param user the user.
      */
     public void saveUser(User user) {
@@ -40,8 +40,9 @@ public class MongoDBUserDAO implements SignupUserDataAccessInterface,
         // so this will renew the data.
         if (usersCollection.find(Filters.eq("id", user.getId())).first() != null) {
             usersCollection.deleteOne(Filters.eq("id", user.getId()));
+        } else if (usersCollection.find(Filters.eq("username", user.getUsername())).first() != null) {
+            usersCollection.deleteOne(Filters.eq("username", user.getUsername()));
         }
-
 
         ArrayList<ObjectId> myListingsIds = new ArrayList<>();
         for (Listing listing : user.getMyListings()) {
