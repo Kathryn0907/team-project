@@ -32,7 +32,6 @@ public class ListingDetailView extends JPanel implements PropertyChangeListener 
     private JLabel photoLabel;
     private JButton getTagsButton;
     private JProgressBar tagsProgressBar;
-    private JLabel descriptionLabel;
 
     public ListingDetailView(ListingDetailViewModel viewModel,
                              CommentController commentController,
@@ -100,7 +99,6 @@ public class ListingDetailView extends JPanel implements PropertyChangeListener 
         photoPanel.add(photoButtonPanel, BorderLayout.SOUTH);
 
         tagsLabel = new JLabel("");
-        descriptionLabel = new JLabel("");
 
         panel.add(titleLabel);
         panel.add(Box.createVerticalStrut(10));
@@ -113,7 +111,6 @@ public class ListingDetailView extends JPanel implements PropertyChangeListener 
         panel.add(typeLabel);
         panel.add(Box.createVerticalStrut(10));
         panel.add(tagsLabel);
-        panel.add(descriptionLabel);
 
         return panel;
     }
@@ -135,7 +132,6 @@ public class ListingDetailView extends JPanel implements PropertyChangeListener 
         roomsLabel.setText(l.getBedrooms() + " bedrooms, " + l.getBathrooms() + " bathrooms");
         areaLabel.setText("Area: " + l.getArea());
         typeLabel.setText("Type: " + l.getBuildingType());
-        descriptionLabel.setText("Description: " + l.getDescription());
 
         // Display photo if available
         if (l.getPhotoPath() != null && !l.getPhotoPath().isEmpty()) {
