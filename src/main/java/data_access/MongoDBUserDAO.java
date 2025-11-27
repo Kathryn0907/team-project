@@ -3,22 +3,29 @@ package data_access;
 import Entities.Comment;
 import Entities.Listing;
 import Entities.User;
-import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Updates;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import use_case.cancel_account.CancelAccountDataAccessInterface;
+import use_case.change_password.ChangePasswordUserDataAccessInterface;
+import use_case.check_favorite.CheckFavoriteDataAccessInterface;
 import use_case.login.LoginUserDataAccessInterface;
 import use_case.logout.LogoutUserDataAccessInterface;
+import use_case.my_listings.MyListingsDataAccessInterface;
+import use_case.save_favorite.SaveFavoriteDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
 
 import java.util.ArrayList;
 
 public class MongoDBUserDAO implements SignupUserDataAccessInterface,
         LoginUserDataAccessInterface,
-        LogoutUserDataAccessInterface, CancelAccountDataAccessInterface {
+        LogoutUserDataAccessInterface,
+        CancelAccountDataAccessInterface,
+        ChangePasswordUserDataAccessInterface,
+        CheckFavoriteDataAccessInterface,
+        MyListingsDataAccessInterface, SaveFavoriteDataAccessInterface {
 
     private final MongoCollection<Document> usersCollection;
     private MongoDBExtractToCache data;
@@ -28,10 +35,9 @@ public class MongoDBUserDAO implements SignupUserDataAccessInterface,
         this.usersCollection = data.getDatabase().getCollection("Users");
     }
 
-
     /**
      * Save or update the user in database.
-     * To update, make sure the Id is correct.
+     * To update, make sure the id is correct.
      * @param user the user.
      */
     public void saveUser(User user) {
@@ -41,7 +47,6 @@ public class MongoDBUserDAO implements SignupUserDataAccessInterface,
         if (usersCollection.find(Filters.eq("id", user.getId())).first() != null) {
             usersCollection.deleteOne(Filters.eq("id", user.getId()));
         }
-
 
         ArrayList<ObjectId> myListingsIds = new ArrayList<>();
         for (Listing listing : user.getMyListings()) {
@@ -58,7 +63,6 @@ public class MongoDBUserDAO implements SignupUserDataAccessInterface,
             myCommentsIds.add(comment.getIdForDB());
         }
 
-
         Document userDocument = new Document()
                 .append("id", user.getId())
                 .append("username", user.getUsername())
@@ -68,9 +72,7 @@ public class MongoDBUserDAO implements SignupUserDataAccessInterface,
                 .append("myComments", myCommentsIds);
 
         usersCollection.insertOne(userDocument);
-
     }
-
 
     public void deleteUser(User user) {
         ObjectId userId = user.getId();
@@ -82,7 +84,6 @@ public class MongoDBUserDAO implements SignupUserDataAccessInterface,
         }
     }
 
-
     /**
      * Find the user in local cache. You can use refresh method if you just
      * save something but didn't find it.
@@ -92,7 +93,6 @@ public class MongoDBUserDAO implements SignupUserDataAccessInterface,
     public User findUserById(ObjectId userId) {
         return data.findUserById(userId);
     }
-
 
     /**
      * Find the user in local cache. You can use refresh method if you just
@@ -108,14 +108,12 @@ public class MongoDBUserDAO implements SignupUserDataAccessInterface,
         } return null;
     }
 
-
     /**
      * Refresh the local cache.
      */
     public void refreshData() {
         this.data = new MongoDBExtractToCache();
     }
-
 
     /**
      * Get all users in local cache. You can use refresh method if you just
@@ -134,7 +132,6 @@ public class MongoDBUserDAO implements SignupUserDataAccessInterface,
         return usersCollection.find(Filters.eq("username", username)).first() != null;
     }
 
-
     @Override
     public void cancelAccount(String username) {
         MongoDBListingDAO mongoDBListingDAO = new MongoDBListingDAO();
@@ -150,10 +147,8 @@ public class MongoDBUserDAO implements SignupUserDataAccessInterface,
         usersCollection.deleteOne(Filters.eq("username", username));
     }
 
-
     @Override
     public void save(User user) {saveUser(user);}
-
 
     @Override
     public User getUser(String username) {
@@ -171,8 +166,29 @@ public class MongoDBUserDAO implements SignupUserDataAccessInterface,
         return null;
     }
 
+    // This should be in MongoDBListingDAO, but to achieve that , I have to change SaveFavoriteInteractor.
+    // This may cause bug, so I will just do it here.
+    @Override
+    public Listing getListingByName(String listingName) {
+        MongoCollection<Document> listingCollection = data.getDatabase().getCollection("Listings");
+        Document listingDocument = listingCollection.find(Filters.eq("listingName", listingName)).first();
+        if (listingDocument != null) {
+            ObjectId listingId = listingDocument.getObjectId("id");
+            return data.findListingById(listingId);
+        } else {
+            return null;
+        }
+    }
 
+    @Override
+    public User getUserByUsername(String username) {
+        return getUser(username);
+    }
 
+    @Override
+    public void changePassword(User user) {
+        usersCollection.updateOne(Filters.eq("username", user.getUsername()), Updates.set("password", user.getPassword()));
+    }
 
 
     //----------------------------------------------------------------------
