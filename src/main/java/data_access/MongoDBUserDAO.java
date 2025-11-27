@@ -31,7 +31,7 @@ public class MongoDBUserDAO implements SignupUserDataAccessInterface,
 
     /**
      * Save or update the user in database.
-     * To update, make sure the Id is correct.
+     * To update, make sure the id is correct.
      * @param user the user.
      */
     public void saveUser(User user) {
@@ -40,8 +40,9 @@ public class MongoDBUserDAO implements SignupUserDataAccessInterface,
         // so this will renew the data.
         if (usersCollection.find(Filters.eq("id", user.getId())).first() != null) {
             usersCollection.deleteOne(Filters.eq("id", user.getId()));
+        } else if (usersCollection.find(Filters.eq("username", user.getUsername())).first() != null) {
+            usersCollection.deleteOne(Filters.eq("username", user.getUsername()));
         }
-
 
         ArrayList<ObjectId> myListingsIds = new ArrayList<>();
         for (Listing listing : user.getMyListings()) {
@@ -184,26 +185,28 @@ public class MongoDBUserDAO implements SignupUserDataAccessInterface,
     @Override
     public void setCurrentUsername(String name) {
         System.out.println(msg);
-        throw new RuntimeException("method name: setCurrentUsername");
+//        throw new RuntimeException("method name: setCurrentUsername");
     }
     @Override
     public String getCurrentUsername() {
         System.out.println(msg);
-        throw new RuntimeException("method name: getCurrentUsername");
+//        throw new RuntimeException("method name: getCurrentUsername");
+        return null;
     }
     @Override
     public void addListing(Listing listing) {
         System.out.println(msg);
-        throw new RuntimeException("method name: addListing");
+//        throw new RuntimeException("method name: addListing");
     }
     @Override
     public void addUser(User user) {
         System.out.println(msg);
-        throw new RuntimeException("method name: addUser");
+//        throw new RuntimeException("method name: addUser");
     }
     @Override
     public ArrayList<Listing> getAllActiveListings() {
         System.out.println(msg);
-        throw new RuntimeException("method name: getAllActiveListings");
+//        throw new RuntimeException("method name: getAllActiveListings");
+        return null;
     }
 }

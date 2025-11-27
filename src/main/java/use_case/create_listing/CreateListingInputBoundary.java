@@ -11,4 +11,5 @@ public interface CreateListingInputBoundary {
     void execute(CreateListingInputData createListingInputData);
 
     void switchToProfileView();
+
 }
