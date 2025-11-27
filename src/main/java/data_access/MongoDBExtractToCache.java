@@ -98,15 +98,15 @@ public class MongoDBExtractToCache {
         MongoCollection<Document> listingsCollection = database.getCollection(LISTINGS_COLLECTION);
         MongoCollection<Document> commentsCollection = database.getCollection(COMMENTS_COLLECTION);
 
-        if (usersCollection.countDocuments() == 0) {
-            System.out.println("No users found");
-        }
-        if (listingsCollection.countDocuments() == 0) {
-            System.out.println("No listings found");
-        }
-        if (commentsCollection.countDocuments() == 0) {
-            System.out.println("No comments found");
-        }
+//        if (usersCollection.countDocuments() == 0) {
+//            System.out.println("No users found");
+//        }
+//        if (listingsCollection.countDocuments() == 0) {
+//            System.out.println("No listings found");
+//        }
+//        if (commentsCollection.countDocuments() == 0) {
+//            System.out.println("No comments found");
+//        }
 
         loadAllUsers(usersCollection);
         loadAllListings(listingsCollection);

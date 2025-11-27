@@ -74,6 +74,7 @@ public class MongoDBUserDAO implements SignupUserDataAccessInterface,
                 .append("myComments", myCommentsIds);
 
         usersCollection.insertOne(userDocument);
+        refreshData();
     }
 
     public void deleteUser(User user) {
@@ -92,9 +93,7 @@ public class MongoDBUserDAO implements SignupUserDataAccessInterface,
      * @param userId The id of the user.
      * @return null if not found.
      */
-    public User findUserById(ObjectId userId) {
-        return data.findUserById(userId);
-    }
+    public User findUserById(ObjectId userId) {return data.findUserById(userId);}
 
     /**
      * Find the user in local cache. You can use refresh method if you just
@@ -173,7 +172,7 @@ public class MongoDBUserDAO implements SignupUserDataAccessInterface,
     @Override
     public Listing getListingByName(String listingName) {
         MongoCollection<Document> listingCollection = data.getDatabase().getCollection("Listings");
-        Document listingDocument = listingCollection.find(Filters.eq("listingName", listingName)).first();
+        Document listingDocument = listingCollection.find(Filters.eq("name", listingName)).first();
         if (listingDocument != null) {
             ObjectId listingId = listingDocument.getObjectId("id");
             return data.findListingById(listingId);

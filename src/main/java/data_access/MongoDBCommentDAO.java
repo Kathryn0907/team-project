@@ -45,6 +45,7 @@ public class MongoDBCommentDAO implements CommentDataAccessInterface {
                 .append("idForDB", comment.getIdForDB());
 
         commentsCollection.insertOne(doc);
+        refreshData();
     }
 
     public void deleteComment(Comment comment) {

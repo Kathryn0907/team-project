@@ -65,7 +65,7 @@ public class MongoDBListingDAO implements CreateListingDataAccessInterface,
                 .append("comments", commentsIds);
 
         listingsCollection.insertOne(listingDocument);
-
+        refreshData();
     }
 
     /**
