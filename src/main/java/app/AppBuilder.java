@@ -96,6 +96,8 @@ public class AppBuilder {
     // MongoDB DAOs
     private MongoDBMessageDAO mongoMessageDAO;
     private MongoDBUserDAO mongoUserDAO;
+    private MongoDBListingDAO mongoListingDAO;
+    private MongoDBCommentDAO mongoCommentDAO;
 
     // WebSocket
     private ChatServer chatServer;
@@ -139,6 +141,8 @@ public class AppBuilder {
         try {
             mongoMessageDAO = new MongoDBMessageDAO();
             mongoUserDAO = new MongoDBUserDAO();
+            mongoListingDAO = new MongoDBListingDAO();
+            mongoCommentDAO = new MongoDBCommentDAO();
             System.out.println("✅ MongoDB DAOs initialized");
         } catch (Exception e) {
             System.err.println("❌ Failed to initialize MongoDB: " + e.getMessage());
@@ -314,7 +318,7 @@ public class AppBuilder {
         listingDetailViewModel = ListingDetailViewModel.getInstance();
         commentViewModel = new CommentViewModel();
 
-        CommentController commentController = CommentUseCaseFactory.create(viewManagerModel, commentViewModel);
+        CommentController commentController = CommentUseCaseFactory.create(viewManagerModel, commentViewModel,mongoCommentDAO);
 
         listingDetailView = new ListingDetailView(
                 listingDetailViewModel,

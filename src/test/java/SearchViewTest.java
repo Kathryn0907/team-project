@@ -192,7 +192,7 @@ public class SearchViewTest {
         // 1. Comment ViewModel + UseCase + Controller
         CommentViewModel commentViewModel = new CommentViewModel();
         CommentController commentController =
-                CommentUseCaseFactory.create(viewManagerModel, commentViewModel);
+                CommentUseCaseFactory.create(viewManagerModel, commentViewModel,dataAccess);
 
         // 2. Listing detail view
         ListingDetailView listingDetailView = new ListingDetailView(

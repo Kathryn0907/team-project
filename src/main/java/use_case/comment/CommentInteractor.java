@@ -9,9 +9,11 @@ import java.time.Instant;
 public class CommentInteractor implements CommentInputBoundary {
 
     private final CommentOutputBoundary presenter;
+    private final CommentDataAccessInterface commentDataAccess;
 
-    public CommentInteractor(CommentOutputBoundary presenter) {
+    public CommentInteractor(CommentOutputBoundary presenter, CommentDataAccessInterface dataAccessInterface) {
         this.presenter = presenter;
+        this.commentDataAccess = dataAccessInterface;
     }
 
     @Override
@@ -39,9 +41,12 @@ public class CommentInteractor implements CommentInputBoundary {
                 listing,
                 Instant.now()
         );
+        commentDataAccess.saveComment(newComment);
 
         //4: Add comment to listing
         listing.addComment(newComment);
+        commentDataAccess.updateListing(listing);
+        commentDataAccess.updateUser(user);
 
         //5: prepare success output
         CommentOutputData outputData = new CommentOutputData(newComment);
