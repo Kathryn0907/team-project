@@ -309,7 +309,8 @@ public class AppBuilder {
                 new CreateListingInteractor(mongoListingDAO, createListingPresenter);
 
         final CreateListingController createListingController =
-                new CreateListingController(createListingInteractor, LoggedInViewModel.getInstance());
+                new CreateListingController(createListingInteractor, loggedInViewModel);
+
         createListingView.setCreateListingController(createListingController);
         return this;
     }

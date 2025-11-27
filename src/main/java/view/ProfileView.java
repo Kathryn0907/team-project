@@ -3,7 +3,6 @@ package view;
 import Entities.Listing;
 import interface_adapter.ProfileViewModel;
 import interface_adapter.ViewManagerModel;
-
 import javax.swing.*;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
@@ -31,14 +30,12 @@ public class ProfileView extends JPanel implements PropertyChangeListener {
         title.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 
         JButton backToSearchButton = new JButton("← Back to Search");
-        backToSearchButton.setPreferredSize(new Dimension(150, 30));
         backToSearchButton.addActionListener(e -> {
             viewManagerModel.setState("logged in");
             viewManagerModel.firePropertyChange();
         });
 
         JButton createListingButton = new JButton("Create Listing");
-        createListingButton.setPreferredSize(new Dimension(150, 30));
         createListingButton.addActionListener(e -> {
             viewManagerModel.setState("create listing");
             viewManagerModel.firePropertyChange();
@@ -54,7 +51,9 @@ public class ProfileView extends JPanel implements PropertyChangeListener {
         add(header, BorderLayout.NORTH);
 
         listingsPanel.setLayout(new BoxLayout(listingsPanel, BoxLayout.Y_AXIS));
+
         JScrollPane scrollPane = new JScrollPane(listingsPanel);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
         add(scrollPane, BorderLayout.CENTER);
     }
@@ -69,22 +68,12 @@ public class ProfileView extends JPanel implements PropertyChangeListener {
 
         for (Listing listing : profileViewModel.getMyListings()) {
 
-            JPanel listingCard = new JPanel(new BorderLayout());
-            listingCard.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+            ListingCardPanel card = new ListingCardPanel(listing);
 
-            if (listing.getPhotoPath() != null && !listing.getPhotoPath().isEmpty()) {
-                ImageIcon icon = new ImageIcon(listing.getPhotoPath());
-                Image scaled = icon.getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH);
+            card.setAlignmentX(Component.LEFT_ALIGNMENT);
+            listingsPanel.add(card);
 
-                JLabel imageLabel = new JLabel(new ImageIcon(scaled));
-                listingCard.add(imageLabel, BorderLayout.WEST);
-            }
-            JLabel nameLabel = new JLabel(listing.getName());
-            nameLabel.setFont(new Font("Arial", Font.BOLD, 14));
-
-            listingCard.add(nameLabel, BorderLayout.CENTER);
-
-            listingsPanel.add(listingCard);
+            listingsPanel.add(Box.createVerticalStrut(10)); // spacing between cards
         }
 
         listingsPanel.revalidate();
