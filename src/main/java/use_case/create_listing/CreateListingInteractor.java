@@ -40,16 +40,8 @@ public class CreateListingInteractor implements CreateListingInputBoundary {
                     true
                     );
             listingDataAccessObject.save(listing);
-
-            final CreateListingOutputData createListingOutputData = new CreateListingOutputData(
-                    listing.getName(), listing.getDescription(), listing.getPhotoPath());
-            listingPresenter.prepareSuccessView(createListingOutputData);
-
-            User owner = createListingInputData.getOwner();
-            owner.addMyListing(listing);
-
-            listingDataAccessObject.save(listing);
-            listingDataAccessObject.saveUser(owner);
+            listingDataAccessObject.addListingToUser(createListingInputData.getOwner(), listing);
+            listingPresenter.prepareSuccessView(new CreateListingOutputData(listing));
         }
     }
     @Override
