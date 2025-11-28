@@ -2,6 +2,7 @@ package data_access;
 
 import Entities.Comment;
 import Entities.Listing;
+import Entities.User;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import org.bson.Document;
@@ -11,7 +12,6 @@ import use_case.filter.FilterListingsDataAccessInterface;
 import use_case.search_listings.SearchListingDataAccessInterface;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class MongoDBListingDAO implements CreateListingDataAccessInterface,
@@ -130,4 +130,9 @@ public class MongoDBListingDAO implements CreateListingDataAccessInterface,
         }
         return listings;
     }
-}
+
+    public void addListingToUser(User user, Listing listing) {
+        user.addMyListing(listing);
+        MongoDBUserDAO userDAO = new MongoDBUserDAO();
+        userDAO.saveUser(user);
+    }}

@@ -1,6 +1,7 @@
 package use_case.create_listing;
 
 import Entities.Listing;
+import Entities.User;
 
 /**
  * The Create Listing Interactor.
@@ -39,10 +40,8 @@ public class CreateListingInteractor implements CreateListingInputBoundary {
                     true
                     );
             listingDataAccessObject.save(listing);
-
-            final CreateListingOutputData createListingOutputData = new CreateListingOutputData(
-                    listing.getName(), listing.getDescription(), listing.getPhotoPath());
-            listingPresenter.prepareSuccessView(createListingOutputData);
+            listingDataAccessObject.addListingToUser(createListingInputData.getOwner(), listing);
+            listingPresenter.prepareSuccessView(new CreateListingOutputData(listing));
         }
     }
     @Override
