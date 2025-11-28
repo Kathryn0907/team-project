@@ -1,7 +1,6 @@
 package interface_adapter;
 
 import Entities.Listing;
-import interface_adapter.ViewModel;
 
 import java.util.ArrayList;
 import java.util.List;

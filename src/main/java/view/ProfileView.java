@@ -3,6 +3,8 @@ package view;
 import Entities.Listing;
 import interface_adapter.ProfileViewModel;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.delete_listing.DeleteListingController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
@@ -12,12 +14,16 @@ public class ProfileView extends JPanel implements PropertyChangeListener {
 
     private final ProfileViewModel profileViewModel;
     private final ViewManagerModel viewManagerModel;
+    private DeleteListingController deleteListingController;
+
 
     private final JPanel listingsPanel = new JPanel();
 
-    public ProfileView(ProfileViewModel vm, ViewManagerModel viewManagerModel) {
+    public ProfileView(ProfileViewModel vm, ViewManagerModel viewManagerModel,
+                       DeleteListingController deleteListingController) {
         this.profileViewModel = vm;
         this.viewManagerModel = viewManagerModel;
+        this.deleteListingController = deleteListingController;
 
         vm.addPropertyChangeListener(this);
 
@@ -69,15 +75,43 @@ public class ProfileView extends JPanel implements PropertyChangeListener {
         for (Listing listing : profileViewModel.getMyListings()) {
 
             ListingCardPanel card = new ListingCardPanel(listing);
+            JPanel wrapper = new JPanel(new BorderLayout());
+            wrapper.add(card, BorderLayout.CENTER);
 
-            card.setAlignmentX(Component.LEFT_ALIGNMENT);
-            listingsPanel.add(card);
+            JButton deleteButton = new JButton("Delete");
+            deleteButton.setPreferredSize(new Dimension(100, 40));
 
-            listingsPanel.add(Box.createVerticalStrut(10)); // spacing between cards
+            deleteButton.addActionListener(e -> {
+                int confirm = JOptionPane.showConfirmDialog(
+                        this,
+                        "Are you sure you want to delete this listing?",
+                        "Confirm Delete",
+                        JOptionPane.YES_NO_OPTION
+                );
+                if (confirm == JOptionPane.YES_OPTION) {
+                    deleteListingController.execute(listing.getId(), listing.getOwnerId());
+                }
+            });
+
+            JPanel rightPanel = new JPanel(new BorderLayout());
+            rightPanel.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
+            rightPanel.add(deleteButton, BorderLayout.NORTH);
+
+            wrapper.add(rightPanel, BorderLayout.EAST);
+
+            wrapper.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
+            wrapper.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+            listingsPanel.add(wrapper);
+            listingsPanel.add(Box.createVerticalStrut(10));
         }
 
         listingsPanel.revalidate();
         listingsPanel.repaint();
+    }
+
+    public void setDeleteListingController(DeleteListingController controller) {
+        this.deleteListingController = controller;
     }
 
     public String getViewName() {

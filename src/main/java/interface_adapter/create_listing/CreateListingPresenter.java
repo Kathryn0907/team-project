@@ -1,6 +1,5 @@
 package interface_adapter.create_listing;
 
-import Entities.Listing;
 import interface_adapter.ProfileViewModel;
 import interface_adapter.ViewManagerModel;
 import use_case.create_listing.CreateListingOutputBoundary;

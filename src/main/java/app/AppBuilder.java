@@ -14,6 +14,8 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.create_listing.CreateListingController;
 import interface_adapter.create_listing.CreateListingPresenter;
 import interface_adapter.create_listing.CreateListingViewModel;
+import interface_adapter.delete_listing.DeleteListingController;
+import interface_adapter.delete_listing.DeleteListingPresenter;
 import interface_adapter.filter.FilterListingsController;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginController;
@@ -35,11 +37,13 @@ import interface_adapter.messaging.MessageController;
 import interface_adapter.messaging.MessageViewModel;
 import interface_adapter.messaging.MessagePresenter;
 import interface_adapter.extract_tags.ExtractTagsController;
-import interface_adapter.extract_tags.ExtractTagsViewModel;
 
 import use_case.create_listing.CreateListingInputBoundary;
 import use_case.create_listing.CreateListingInteractor;
 import use_case.create_listing.CreateListingOutputBoundary;
+import use_case.delete_listing.DeleteListingInputBoundary;
+import use_case.delete_listing.DeleteListingInteractor;
+import use_case.delete_listing.DeleteListingOutputBoundary;
 import use_case.filter.DistanceService;
 import use_case.filter.FilterListingsInputBoundary;
 import use_case.filter.FilterListingsInteractor;
@@ -67,7 +71,6 @@ import view.*;
 import websocket.ChatClient;
 import websocket.ChatServer;
 import websocket.MessageHandler;
-import view.*;
 import view.LoggedInView;
 import view.LoginView;
 import view.SignupView;
@@ -197,7 +200,7 @@ public class AppBuilder {
 
     public AppBuilder addProfileView() {
         profileViewModel = new ProfileViewModel();
-        profileView = new ProfileView(profileViewModel, viewManagerModel);
+        profileView = new ProfileView(profileViewModel, viewManagerModel, null);
         cardPanel.add(profileView, profileView.getViewName());
         return this;
     }
@@ -341,6 +344,14 @@ public class AppBuilder {
 
             System.out.println("✅ Messaging use case initialized");
         }
+        return this;
+    }
+
+    public AppBuilder addDeleteListingUseCase() {
+        DeleteListingOutputBoundary presenter = new DeleteListingPresenter(profileViewModel, viewManagerModel);
+        DeleteListingInputBoundary interactor = new DeleteListingInteractor(mongoListingDAO, presenter);
+        DeleteListingController deleteListingController = new DeleteListingController(interactor);
+        profileView.setDeleteListingController(deleteListingController);
         return this;
     }
 

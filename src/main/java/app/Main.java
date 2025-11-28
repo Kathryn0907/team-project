@@ -35,6 +35,7 @@ public class Main {
                 .rebuildLoggedInView()         // Rebuild with all controllers
                 .addCreateListingUseCase()
                 .addCheckFavoriteUseCase()
+                .addDeleteListingUseCase()
                 .addMessagingUseCase()
                 .build();
 
