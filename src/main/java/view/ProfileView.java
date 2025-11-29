@@ -4,6 +4,7 @@ import Entities.Listing;
 import interface_adapter.ProfileViewModel;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.delete_listing.DeleteListingController;
+import interface_adapter.edit_listing.EditListingController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,16 +15,21 @@ public class ProfileView extends JPanel implements PropertyChangeListener {
 
     private final ProfileViewModel profileViewModel;
     private final ViewManagerModel viewManagerModel;
-    private DeleteListingController deleteListingController;
 
+    private DeleteListingController deleteListingController;
+    private EditListingController editListingController;
 
     private final JPanel listingsPanel = new JPanel();
 
-    public ProfileView(ProfileViewModel vm, ViewManagerModel viewManagerModel,
-                       DeleteListingController deleteListingController) {
+    public ProfileView(ProfileViewModel vm,
+                       ViewManagerModel viewManagerModel,
+                       DeleteListingController deleteListingController,
+                       EditListingController editListingController) {
+
         this.profileViewModel = vm;
         this.viewManagerModel = viewManagerModel;
         this.deleteListingController = deleteListingController;
+        this.editListingController = editListingController;
 
         vm.addPropertyChangeListener(this);
 
@@ -75,8 +81,34 @@ public class ProfileView extends JPanel implements PropertyChangeListener {
         for (Listing listing : profileViewModel.getMyListings()) {
 
             ListingCardPanel card = new ListingCardPanel(listing);
+
             JPanel wrapper = new JPanel(new BorderLayout());
             wrapper.add(card, BorderLayout.CENTER);
+
+
+            JButton editButton = new JButton("Edit");
+            editButton.setPreferredSize(new Dimension(100, 40));
+            editButton.addActionListener(e -> {
+                viewManagerModel.setState("create listing");
+                viewManagerModel.firePropertyChange();
+
+                SwingUtilities.invokeLater(() -> {
+                    CreateListingView view =
+                            (CreateListingView) SwingUtilities.getAncestorOfClass(
+                                    CreateListingView.class, this);
+
+                    Component root = SwingUtilities.getRoot(this);
+                    if (root instanceof JFrame frame) {
+                        for (Component comp : frame.getContentPane().getComponents()) {
+                            if (comp instanceof JScrollPane scroll &&
+                                    scroll.getViewport().getView() instanceof CreateListingView clv) {
+                                clv.enterEditMode(listing);
+                                break;
+                            }
+                        }
+                    }
+                });
+            });
 
             JButton deleteButton = new JButton("Delete");
             deleteButton.setPreferredSize(new Dimension(100, 40));
@@ -93,9 +125,13 @@ public class ProfileView extends JPanel implements PropertyChangeListener {
                 }
             });
 
-            JPanel rightPanel = new JPanel(new BorderLayout());
+            JPanel rightPanel = new JPanel();
+            rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
             rightPanel.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
-            rightPanel.add(deleteButton, BorderLayout.NORTH);
+
+            rightPanel.add(editButton);
+            rightPanel.add(Box.createVerticalStrut(10));
+            rightPanel.add(deleteButton);
 
             wrapper.add(rightPanel, BorderLayout.EAST);
 
@@ -112,6 +148,10 @@ public class ProfileView extends JPanel implements PropertyChangeListener {
 
     public void setDeleteListingController(DeleteListingController controller) {
         this.deleteListingController = controller;
+    }
+
+    public void setEditListingController(EditListingController controller) {
+        this.editListingController = controller;
     }
 
     public String getViewName() {

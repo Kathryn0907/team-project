@@ -27,6 +27,7 @@ public class Main {
                 .addCheckFavoriteView()
                 .addProfileView()
                 .addCreateListingView()
+                .addEditListingUseCase()
                 .addSignupUseCase()
                 .addLoginUseCase()
                 .addSearchListingUseCase()
