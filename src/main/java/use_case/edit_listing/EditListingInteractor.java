@@ -17,7 +17,6 @@ public class EditListingInteractor implements EditListingInputBoundary {
     public void saveEdits(EditListingInputData data) {
         Listing listing = data.getListing();
 
-        // Simple validation (same as CreateListing rules)
         if (listing.getName() == null || listing.getName().isEmpty()) {
             presenter.prepareFailView("Listing name cannot be empty.");
             return;

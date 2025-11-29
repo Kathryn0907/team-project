@@ -372,7 +372,6 @@ public class CreateListingView extends JPanel implements PropertyChangeListener 
                 return;
             }
 
-            // Apply updated values to the listing
             editingTarget.setName(nameInputField.getText());
             editingTarget.setDescription(descriptionInputArea.getText());
             editingTarget.setPrice(price);
@@ -383,8 +382,6 @@ public class CreateListingView extends JPanel implements PropertyChangeListener 
             editingTarget.setBuildingType(
                     buildingTypeDropdown.getItemAt(buildingTypeDropdown.getSelectedIndex()));
             editingTarget.setPhotoPath(photoPathLabel.getText());
-
-            // Call the Edit Interactor
             editListingController.saveEdits(editingTarget);
         });
     }
