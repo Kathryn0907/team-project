@@ -85,6 +85,7 @@ public class MongoDBListingDAO implements CreateListingDataAccessInterface,
             System.out.println("Listing with id: " + listingId + " and name: "
                     + listing.getName() + " not found in Database");
         }
+        refreshData();
     }
 
     /**
