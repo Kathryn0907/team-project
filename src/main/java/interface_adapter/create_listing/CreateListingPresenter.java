@@ -1,6 +1,5 @@
 package interface_adapter.create_listing;
 
-import Entities.Listing;
 import interface_adapter.ProfileViewModel;
 import interface_adapter.ViewManagerModel;
 import use_case.create_listing.CreateListingOutputBoundary;
@@ -20,9 +19,7 @@ public class CreateListingPresenter implements CreateListingOutputBoundary {
     @Override
     public void prepareSuccessView(CreateListingOutputData response) {
         profileViewModel.addListing(
-                new Listing(response.getName(), null, response.getPhotoPath(), null, null,
-                        response.getDescription(), 0, "", 0, 0, 0, 0, Listing.BuildingType.OTHER, true)
-        );
+                response.getListing());
 
         viewManagerModel.setState(profileViewModel.getViewName());
         viewManagerModel.firePropertyChange();
@@ -37,7 +34,7 @@ public class CreateListingPresenter implements CreateListingOutputBoundary {
 
     @Override
     public void switchToProfileView() {
-        viewManagerModel.setState(createListingViewModel.getViewName());
+        viewManagerModel.setState(profileViewModel.getViewName());
         viewManagerModel.firePropertyChange();
     }
 }

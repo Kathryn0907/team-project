@@ -8,6 +8,7 @@ import com.mongodb.client.model.Filters;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import use_case.create_listing.CreateListingDataAccessInterface;
+import use_case.delete_listing.DeleteListingDataAccessInterface;
 import use_case.filter.FilterListingsDataAccessInterface;
 import use_case.search_listings.SearchListingDataAccessInterface;
 
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 
 public class MongoDBListingDAO implements CreateListingDataAccessInterface,
         FilterListingsDataAccessInterface,
-        SearchListingDataAccessInterface {
+        SearchListingDataAccessInterface, DeleteListingDataAccessInterface {
 
     private final MongoCollection<Document> listingsCollection;
     private MongoDBExtractToCache data;
@@ -75,7 +76,7 @@ public class MongoDBListingDAO implements CreateListingDataAccessInterface,
         saveListing(listing);
     }
     **/
-
+    @Override
     public void deleteListing(Listing listing) {
         ObjectId listingId = listing.getId();
         if (listingsCollection.find(Filters.eq("id", listingId)).first() != null) {
@@ -135,4 +136,16 @@ public class MongoDBListingDAO implements CreateListingDataAccessInterface,
         user.addMyListing(listing);
         MongoDBUserDAO userDAO = new MongoDBUserDAO();
         userDAO.saveUser(user);
-    }}
+    }
+
+    @Override
+    public void removeListingFromUser(ObjectId ownerId, Listing listing) {
+        MongoDBUserDAO userDAO = new MongoDBUserDAO();
+        User owner = userDAO.findUserById(ownerId);
+
+        if (owner != null) {
+            owner.removeMyListing(listing);
+            userDAO.saveUser(owner);
+    }
+}
+}

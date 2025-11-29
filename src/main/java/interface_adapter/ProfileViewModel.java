@@ -1,7 +1,6 @@
 package interface_adapter;
 
 import Entities.Listing;
-import interface_adapter.ViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,5 +22,11 @@ public class ProfileViewModel extends ViewModel<List<Listing>> {
 
     public List<Listing> getMyListings() {
         return myListings;
+    }
+
+    public void setListings(List<Listing> listings) {
+        this.myListings = listings != null ? listings : new ArrayList<>();
+        setState(this.myListings);
+        firePropertyChange();
     }
 }

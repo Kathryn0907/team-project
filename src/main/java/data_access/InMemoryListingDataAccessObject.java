@@ -98,4 +98,12 @@ public class InMemoryListingDataAccessObject implements SearchListingDataAccessI
     public void saveUser(User user) {
         users.put(user.getUsername(), user);
     }
+
+
+    // this is just to satisfy CreateListingDataAccessInterface requirement, this will not really be used
+    @Override
+    public void addListingToUser(User user, Listing listing) {
+        user.addMyListing(listing);
+        users.put(user.getUsername(), user);
+    }
 }

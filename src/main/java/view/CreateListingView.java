@@ -56,7 +56,7 @@ public class CreateListingView extends JPanel implements PropertyChangeListener 
         JLabel title = new JLabel(CreateListingViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JButton backToProfileButton = new JButton("← Back to Profile");
+        JButton backToProfileButton = new JButton(CreateListingViewModel.PROFILE_BUTTON_LABEL);
         backToProfileButton.setPreferredSize(new Dimension(150, 30));
         backToProfileButton.addActionListener(e -> {
             viewManagerModel.setState("profile");
@@ -229,7 +229,7 @@ public class CreateListingView extends JPanel implements PropertyChangeListener 
     private void setupButtonListeners() {
         createButton.addActionListener(e -> {
 
-            double price = 0.0;
+            double price;
             try {
                 price = Double.parseDouble(priceField.getText());
             } catch (NumberFormatException ex) {
@@ -237,7 +237,7 @@ public class CreateListingView extends JPanel implements PropertyChangeListener 
                 return;
             }
 
-            double area = 0.0;
+            double area;
             try {
                 area = Double.parseDouble(areaField.getText());
             } catch (NumberFormatException ex) {
@@ -265,8 +265,8 @@ public class CreateListingView extends JPanel implements PropertyChangeListener 
                 createListingController.execute(
                         nameInputField.getText(),
                         photoPathLabel.getText(),
-                        null, // tags
-                        null, // mainCategories
+                        null,
+                        null,
                         descriptionInputArea.getText(),
                         price,
                         addressField.getText(),
