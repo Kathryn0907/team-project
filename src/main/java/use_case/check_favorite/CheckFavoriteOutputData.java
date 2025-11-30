@@ -1,18 +1,16 @@
 package use_case.check_favorite;
 
+import Entities.Listing;
 import java.util.List;
 
-/**
- * Output Data for the Check Favorite Use Case.
- */
 public class CheckFavoriteOutputData {
-    private final List<String> favouriteListingNames;
+    private final List<Listing> favouriteListings;
 
-    public CheckFavoriteOutputData(List<String> favouriteListingNames) {
-        this.favouriteListingNames = favouriteListingNames;
+    public CheckFavoriteOutputData(List<Listing> favouriteListings) {
+        this.favouriteListings = favouriteListings;
     }
 
-    public List<String> getFavouriteListingNames() {
-        return favouriteListingNames;
+    public List<Listing> getFavouriteListings() {
+        return favouriteListings;
     }
 }

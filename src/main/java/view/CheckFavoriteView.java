@@ -1,11 +1,15 @@
 package view;
 
+import Entities.Listing;
+
+import interface_adapter.ViewManagerModel;
 import interface_adapter.check_favorite.CheckFavoriteController;
 import interface_adapter.check_favorite.CheckFavoriteState;
 import interface_adapter.check_favorite.CheckFavoriteViewModel;
-import interface_adapter.save_favorite.SaveFavoriteController;
-import interface_adapter.ViewManagerModel;
+import interface_adapter.listing_detail.ListingDetailState;
+import interface_adapter.listing_detail.ListingDetailViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
+import interface_adapter.save_favorite.SaveFavoriteController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,6 +31,9 @@ public class CheckFavoriteView extends JPanel implements PropertyChangeListener 
     private final SaveFavoriteController saveFavoriteController;
     private final LoggedInViewModel loggedInViewModel;
 
+    // For jumping to detail page – same pattern as ListingCardPanel
+    private final ListingDetailViewModel listingDetailViewModel;
+
     private final JPanel listingsPanel;
     private final JLabel titleLabel;
 
@@ -41,6 +48,7 @@ public class CheckFavoriteView extends JPanel implements PropertyChangeListener 
         this.checkFavoriteController = checkFavoriteController;
         this.saveFavoriteController = saveFavoriteController;
         this.loggedInViewModel = loggedInViewModel;
+        this.listingDetailViewModel = ListingDetailViewModel.getInstance();
 
         this.viewModel.addPropertyChangeListener(this);
 
@@ -78,14 +86,14 @@ public class CheckFavoriteView extends JPanel implements PropertyChangeListener 
         if (state.getError() != null) {
             displayError(state.getError());
         } else {
-            displayFavoriteListings(state.getFavouriteListingNames());
+            displayFavoriteListings(state.getFavouriteListings());
         }
     }
 
-    private void displayFavoriteListings(List<String> listingNames) {
+    private void displayFavoriteListings(List<Listing> listings) {
         listingsPanel.removeAll();
 
-        if (listingNames.isEmpty()) {
+        if (listings == null || listings.isEmpty()) {
             titleLabel.setText("My Favorite Listings");
 
             JLabel emptyLabel = new JLabel("You have no favorite listings yet.");
@@ -94,10 +102,10 @@ public class CheckFavoriteView extends JPanel implements PropertyChangeListener 
 
             listingsPanel.add(emptyLabel);
         } else {
-            titleLabel.setText("My Favorite Listings (" + listingNames.size() + ")");
+            titleLabel.setText("My Favorite Listings (" + listings.size() + ")");
 
-            for (String listingName : listingNames) {
-                JPanel listingCard = createListingCard(listingName);
+            for (Listing listing : listings) {
+                JPanel listingCard = createListingCard(listing);
                 listingsPanel.add(listingCard);
                 listingsPanel.add(Box.createVerticalStrut(10));
             }
@@ -107,7 +115,7 @@ public class CheckFavoriteView extends JPanel implements PropertyChangeListener 
         listingsPanel.repaint();
     }
 
-    private JPanel createListingCard(String listingName) {
+    private JPanel createListingCard(Listing listing) {
         JPanel card = new JPanel(new BorderLayout(10, 10));
         card.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1),
@@ -115,27 +123,30 @@ public class CheckFavoriteView extends JPanel implements PropertyChangeListener 
         ));
         card.setMaximumSize(new Dimension(Integer.MAX_VALUE, 80));
 
-        JLabel nameLabel = new JLabel(listingName);
+        JLabel nameLabel = new JLabel(listing.getName());
         nameLabel.setFont(new Font("Arial", Font.BOLD, 14));
 
         JButton viewButton = new JButton("View Details");
         JButton removeButton = new JButton("Remove");
         removeButton.setForeground(Color.RED);
 
-        // VIEW DETAILS (placeholder)
+        // VIEW DETAILS – same behavior as clicking title in ListingCardPanel
         viewButton.addActionListener(e -> {
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Open details for listing: " + listingName,
-                    "Listing Details",
-                    JOptionPane.INFORMATION_MESSAGE
-            );
+            ListingDetailState state = listingDetailViewModel.getState();
+            state.setCurrentListing(listing);
+            state.setCurrentUser(loggedInViewModel.getState().getUser());
+
+            listingDetailViewModel.setState(state);
+            listingDetailViewModel.firePropertyChange();
+
+            viewManagerModel.setState(ListingDetailViewModel.VIEW_NAME);
+            viewManagerModel.firePropertyChange();
         });
 
         // REMOVE FAVORITE (toggle)
         removeButton.addActionListener(e -> {
             String username = loggedInViewModel.getState().getUsername();
-            saveFavoriteController.addToFavorites(username, listingName);
+            saveFavoriteController.addToFavorites(username, listing.getName());
             checkFavoriteController.loadFavouriteListings(username);
         });
 
