@@ -8,6 +8,7 @@ import interface_adapter.comment.CommentViewModel;
 import interface_adapter.listing_detail.ListingDetailState;
 import interface_adapter.listing_detail.ListingDetailViewModel;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.logged_in.LoggedInState;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,6 +22,7 @@ public class ListingDetailView extends JPanel implements PropertyChangeListener 
     private final ListingDetailViewModel viewModel;
     private final CommentController commentController;
     private final CommentView commentView;
+    private final ViewManagerModel viewManagerModel;
 
     private JLabel titleLabel;
     private JLabel priceLabel;
@@ -42,7 +44,7 @@ public class ListingDetailView extends JPanel implements PropertyChangeListener 
         this.viewModel = viewModel;
         this.commentController = commentController;
         this.commentView = new CommentView(commentController, commentViewModel);
-
+        this.viewManagerModel = ViewManagerModel.getInstance();
         this.viewModel.addPropertyChangeListener(this);
 
         setLayout(new BorderLayout(10, 10));
@@ -50,12 +52,14 @@ public class ListingDetailView extends JPanel implements PropertyChangeListener 
 
         JPanel detailsPanel = buildDetailsPanel();
 
-        // Add Back to Search button
-        JButton backButton = new JButton("← Back to Search");
+        // Add Back button
+        JButton backButton = new JButton("← Back");
         backButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         backButton.addActionListener(e -> {
-            ViewManagerModel.getInstance().setState("search");
-            ViewManagerModel.getInstance().firePropertyChange();
+            LoggedInState loggedInState = new LoggedInState();
+            loggedInState.setUser(viewModel.getState().getCurrentUser());
+            viewManagerModel.setState("logged in");
+            viewManagerModel.firePropertyChange();
         });
 
         // Panel for Back button + Details
