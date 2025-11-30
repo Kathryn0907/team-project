@@ -18,8 +18,7 @@ public class FilterSidebarPanel extends JPanel {
     private final JTextField maxAreaField = new JTextField(6);
     private final JTextField minBedroomsField = new JTextField(4);
     private final JTextField minBathroomsField = new JTextField(4);
-    private final JComboBox<Listing.BuildingType> buildingTypeComboBox =
-            new JComboBox<>(Listing.BuildingType.values());
+    private final JComboBox<Object> buildingTypeComboBox;
 
     private final JButton applyButton = new JButton("Filter");
 
@@ -33,6 +32,15 @@ public class FilterSidebarPanel extends JPanel {
         gbc.insets = new Insets(3, 3, 3, 3);
         gbc.anchor = GridBagConstraints.WEST;
         gbc.fill = GridBagConstraints.HORIZONTAL;
+
+        // The buildingTypeComboBox will initialize here. Add a null object at the top
+        // of the combo box.
+        buildingTypeComboBox = new JComboBox<>();
+        buildingTypeComboBox.addItem(null);
+
+        for (Listing.BuildingType buildingType : Listing.BuildingType.values()) {
+            buildingTypeComboBox.addItem(buildingType);
+        }
 
         int row = 0;
         addRow("User Address:", userAddressField, row++, gbc);
