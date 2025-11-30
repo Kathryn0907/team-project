@@ -1,7 +1,11 @@
 package view;
 
-import interface_adapter.check_favorite.*;
+import interface_adapter.check_favorite.CheckFavoriteController;
+import interface_adapter.check_favorite.CheckFavoriteState;
+import interface_adapter.check_favorite.CheckFavoriteViewModel;
+import interface_adapter.save_favorite.SaveFavoriteController;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.logged_in.LoggedInViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,16 +19,28 @@ import java.util.List;
 public class CheckFavoriteView extends JPanel implements PropertyChangeListener {
 
     private final String viewName = "favourite listings";
+
     private final CheckFavoriteViewModel viewModel;
-    private final ViewManagerModel viewManagerModel;   // 👈 add this
+    private final ViewManagerModel viewManagerModel;
+
+    private final CheckFavoriteController checkFavoriteController;
+    private final SaveFavoriteController saveFavoriteController;
+    private final LoggedInViewModel loggedInViewModel;
 
     private final JPanel listingsPanel;
     private final JLabel titleLabel;
 
     public CheckFavoriteView(CheckFavoriteViewModel viewModel,
-                             ViewManagerModel viewManagerModel) {  // 👈 take it in
+                             ViewManagerModel viewManagerModel,
+                             CheckFavoriteController checkFavoriteController,
+                             SaveFavoriteController saveFavoriteController,
+                             LoggedInViewModel loggedInViewModel) {
+
         this.viewModel = viewModel;
-        this.viewManagerModel = viewManagerModel;                  // 👈 store it
+        this.viewManagerModel = viewManagerModel;
+        this.checkFavoriteController = checkFavoriteController;
+        this.saveFavoriteController = saveFavoriteController;
+        this.loggedInViewModel = loggedInViewModel;
 
         this.viewModel.addPropertyChangeListener(this);
 
@@ -40,7 +56,6 @@ public class CheckFavoriteView extends JPanel implements PropertyChangeListener 
         // Back button
         JButton backButton = new JButton("← Back to Listings");
         backButton.addActionListener(e -> {
-            // Must match LoggedInView.getViewName()
             viewManagerModel.setState("logged in");
             viewManagerModel.firePropertyChange();
         });
@@ -71,9 +86,12 @@ public class CheckFavoriteView extends JPanel implements PropertyChangeListener 
         listingsPanel.removeAll();
 
         if (listingNames.isEmpty()) {
+            titleLabel.setText("My Favorite Listings");
+
             JLabel emptyLabel = new JLabel("You have no favorite listings yet.");
             emptyLabel.setFont(new Font("Arial", Font.ITALIC, 14));
             emptyLabel.setForeground(Color.GRAY);
+
             listingsPanel.add(emptyLabel);
         } else {
             titleLabel.setText("My Favorite Listings (" + listingNames.size() + ")");
@@ -104,9 +122,22 @@ public class CheckFavoriteView extends JPanel implements PropertyChangeListener 
         JButton removeButton = new JButton("Remove");
         removeButton.setForeground(Color.RED);
 
-        // TODO: add action listeners later if you want real behavior
-        // viewButton.addActionListener(...);
-        // removeButton.addActionListener(...);
+        // VIEW DETAILS (placeholder)
+        viewButton.addActionListener(e -> {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Open details for listing: " + listingName,
+                    "Listing Details",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+        });
+
+        // REMOVE FAVORITE (toggle)
+        removeButton.addActionListener(e -> {
+            String username = loggedInViewModel.getState().getUsername();
+            saveFavoriteController.addToFavorites(username, listingName);
+            checkFavoriteController.loadFavouriteListings(username);
+        });
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         buttonPanel.add(viewButton);
@@ -124,6 +155,7 @@ public class CheckFavoriteView extends JPanel implements PropertyChangeListener 
         JLabel errorLabel = new JLabel("Error: " + errorMessage);
         errorLabel.setFont(new Font("Arial", Font.BOLD, 14));
         errorLabel.setForeground(Color.RED);
+
         listingsPanel.add(errorLabel);
 
         listingsPanel.revalidate();

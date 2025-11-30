@@ -14,6 +14,7 @@ import java.util.Arrays;
  * - Imagga Tag Extraction
  */
 public class TestAppBuilder {
+
     public static void main(String[] args) {
         System.out.println("========================================");
         System.out.println("TESTING COMPLETE APP INTEGRATION");
@@ -259,16 +260,25 @@ public class TestAppBuilder {
 
                 // Build the complete application with all features
                 JFrame application = appBuilder
-                        .addLoginView()
+                        // 1. Basic views
                         .addSignupView()
+                        .addLoginView()
                         .addLoggedInView()
+
+                        // 2. Use cases / controllers that favorites depends on
+                        .addSearchListingUseCase()
+                        .addSaveFavoriteUseCase()    // sets saveController
+                        .addCheckFavoriteUseCase()   // sets checkController
+
+                        // 3. Views that need those controllers
                         .addCheckFavoriteView()
+                        .addMessagingUseCase()
+
+                        // 4. Hook up auth use cases (these just need VMs)
                         .addSignupUseCase()
                         .addLoginUseCase()
-                        .addSearchListingUseCase()
-                        .addSaveFavoriteUseCase()
-                        .addCheckFavoriteUseCase()
-                        .addMessagingUseCase()
+
+                        // 5. Now rebuild LoggedInView with all controllers wired
                         .rebuildLoggedInView()
                         .build();
 
