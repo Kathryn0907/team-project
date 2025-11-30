@@ -33,11 +33,11 @@ public class Main {
                 .addSearchListingUseCase()
                 .addListingDetailViewAndCommentUseCase()
                 .addSaveFavoriteUseCase()      // Add save favorite use case
-                .rebuildLoggedInView()         // Rebuild with all controllers
                 .addCreateListingUseCase()
                 .addCheckFavoriteUseCase()
                 .addDeleteListingUseCase()
                 .addMessagingUseCase()
+                .rebuildLoggedInView()         // Rebuild with all controllers
                 .build();
 
         application.pack();
