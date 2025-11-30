@@ -15,6 +15,7 @@ public class ListingDetailViewModel extends ViewModel<ListingDetailState> {
 
     private ListingDetailViewModel(){
         super(VIEW_NAME);
+        setState(state);
     }
 
     public ListingDetailState getState(){
