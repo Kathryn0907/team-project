@@ -16,6 +16,8 @@ import interface_adapter.create_listing.CreateListingPresenter;
 import interface_adapter.create_listing.CreateListingViewModel;
 import interface_adapter.delete_listing.DeleteListingController;
 import interface_adapter.delete_listing.DeleteListingPresenter;
+import interface_adapter.edit_listing.EditListingController;
+import interface_adapter.edit_listing.EditListingPresenter;
 import interface_adapter.filter.FilterListingsController;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginController;
@@ -44,6 +46,9 @@ import use_case.create_listing.CreateListingOutputBoundary;
 import use_case.delete_listing.DeleteListingInputBoundary;
 import use_case.delete_listing.DeleteListingInteractor;
 import use_case.delete_listing.DeleteListingOutputBoundary;
+import use_case.edit_listing.EditListingInputBoundary;
+import use_case.edit_listing.EditListingInteractor;
+import use_case.edit_listing.EditListingOutputBoundary;
 import use_case.filter.DistanceService;
 import use_case.filter.FilterListingsInputBoundary;
 import use_case.filter.FilterListingsInteractor;
@@ -200,7 +205,7 @@ public class AppBuilder {
 
     public AppBuilder addProfileView() {
         profileViewModel = new ProfileViewModel();
-        profileView = new ProfileView(profileViewModel, viewManagerModel, null);
+        profileView = new ProfileView(profileViewModel, viewManagerModel, null, null);
         cardPanel.add(profileView, profileView.getViewName());
         return this;
     }
@@ -352,6 +357,14 @@ public class AppBuilder {
         DeleteListingInputBoundary interactor = new DeleteListingInteractor(mongoListingDAO, presenter);
         DeleteListingController deleteListingController = new DeleteListingController(interactor);
         profileView.setDeleteListingController(deleteListingController);
+        return this;
+    }
+
+    public AppBuilder addEditListingUseCase() {
+        EditListingOutputBoundary presenter = new EditListingPresenter(profileViewModel, viewManagerModel);
+        EditListingInputBoundary interactor = new EditListingInteractor(mongoListingDAO, presenter);
+        EditListingController controller = new EditListingController(interactor);
+        createListingView.setEditListingController(controller);
         return this;
     }
 

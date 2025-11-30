@@ -29,4 +29,15 @@ public class ProfileViewModel extends ViewModel<List<Listing>> {
         setState(this.myListings);
         firePropertyChange();
     }
+
+    public void replaceListing(Listing updated) {
+        for (int i = 0; i < myListings.size(); i++) {
+            if (myListings.get(i).getId().equals(updated.getId())) {
+                myListings.set(i, updated);
+                break;
+            }
+        }
+        setState(myListings);
+        firePropertyChange();
+    }
 }
