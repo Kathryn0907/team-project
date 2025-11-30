@@ -46,7 +46,7 @@ public class CreateListingInputData {
                                   double area,
                                   int bedrooms,
                                   int bathrooms,
-                                  Listing.BuildingType buildingType,  // NEW
+                                  Listing.BuildingType buildingType,
                                   boolean active) {
         this.name = name;
         this.owner = owner;
