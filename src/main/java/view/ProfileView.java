@@ -18,6 +18,8 @@ public class ProfileView extends JPanel implements PropertyChangeListener {
 
     private DeleteListingController deleteListingController;
     private EditListingController editListingController;
+    private CreateListingView createListingView;
+
 
     private final JPanel listingsPanel = new JPanel();
 
@@ -88,26 +90,11 @@ public class ProfileView extends JPanel implements PropertyChangeListener {
 
             JButton editButton = new JButton("Edit");
             editButton.setPreferredSize(new Dimension(100, 40));
+
             editButton.addActionListener(e -> {
                 viewManagerModel.setState("create listing");
                 viewManagerModel.firePropertyChange();
-
-                SwingUtilities.invokeLater(() -> {
-                    CreateListingView view =
-                            (CreateListingView) SwingUtilities.getAncestorOfClass(
-                                    CreateListingView.class, this);
-
-                    Component root = SwingUtilities.getRoot(this);
-                    if (root instanceof JFrame frame) {
-                        for (Component comp : frame.getContentPane().getComponents()) {
-                            if (comp instanceof JScrollPane scroll &&
-                                    scroll.getViewport().getView() instanceof CreateListingView clv) {
-                                clv.enterEditMode(listing);
-                                break;
-                            }
-                        }
-                    }
-                });
+                createListingView.enterEditMode(listing);
             });
 
             JButton deleteButton = new JButton("Delete");
@@ -156,5 +143,9 @@ public class ProfileView extends JPanel implements PropertyChangeListener {
 
     public String getViewName() {
         return "profile";
+    }
+
+    public void setCreateListingView(CreateListingView createListingView) {
+        this.createListingView = createListingView;
     }
 }

@@ -31,12 +31,9 @@ public class ProfileViewModel extends ViewModel<List<Listing>> {
     }
 
     public void replaceListing(Listing updated) {
-        for (int i = 0; i < myListings.size(); i++) {
-            if (myListings.get(i).getId().equals(updated.getId())) {
-                myListings.set(i, updated);
-                break;
-            }
-        }
+        myListings.removeIf(l -> l.getId().equals(updated.getId()));
+        myListings.add(updated);
+
         setState(myListings);
         firePropertyChange();
     }

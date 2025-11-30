@@ -206,6 +206,7 @@ public class AppBuilder {
     public AppBuilder addProfileView() {
         profileViewModel = new ProfileViewModel();
         profileView = new ProfileView(profileViewModel, viewManagerModel, null, null);
+        profileView.setCreateListingView(createListingView);
         cardPanel.add(profileView, profileView.getViewName());
         return this;
     }
@@ -221,6 +222,9 @@ public class AppBuilder {
         );
 
         cardPanel.add(scrollPane, createListingView.getViewName());
+        if (profileView != null) {
+            profileView.setCreateListingView(createListingView);
+        }
         return this;
     }
 
