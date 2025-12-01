@@ -18,6 +18,7 @@ import use_case.save_favorite.SaveFavoriteDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MongoDBUserDAO implements SignupUserDataAccessInterface,
         LoginUserDataAccessInterface,
@@ -125,6 +126,17 @@ public class MongoDBUserDAO implements SignupUserDataAccessInterface,
         return data.getUsersCache();
     }
 
+    public void removeFavorite(ObjectId userId, ObjectId favouriteId) {
+        if (usersCollection.find(Filters.eq("id", userId)).first() != null) {
+            Document userDoc = usersCollection.find(Filters.eq("id", userId)).first();
+            assert userDoc != null;
+            if (userDoc.get("favouriteListings") != null) {
+                List<ObjectId> FavoriteIds = userDoc.getList("favouriteListings", ObjectId.class);
+                FavoriteIds.remove(favouriteId);
+                usersCollection.updateOne(Filters.eq("id", userId), Updates.set("favouriteListings", FavoriteIds));
+            }
+        }
+    }
 
     //-------------------- Override Methods ----------------------
 
@@ -140,12 +152,12 @@ public class MongoDBUserDAO implements SignupUserDataAccessInterface,
         User user = findUserByUsername(username);
         for (Listing listing : user.getMyListings()) {
             for (Comment comment : listing.getComments()) {
-                comment.setListing(null);
-                mongoDBCommentDAO.saveComment(comment);
+                mongoDBCommentDAO.deleteComment(comment);
             }
             mongoDBListingDAO.deleteListing(listing);
         }
-        usersCollection.deleteOne(Filters.eq("username", username));
+        deleteUser(user);
+        refreshData();
     }
 
     @Override

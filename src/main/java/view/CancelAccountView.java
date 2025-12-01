@@ -143,6 +143,7 @@ public class CancelAccountView extends JPanel implements ActionListener, Propert
 
     private void setFields(CancelAccountState state) {
         usernameInputField.setText(state.getUsername());
+        passwordInputField.setText(state.getPassword());
     }
 
 
