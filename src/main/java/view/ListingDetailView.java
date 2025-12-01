@@ -8,22 +8,20 @@ import interface_adapter.comment.CommentViewModel;
 import interface_adapter.listing_detail.ListingDetailState;
 import interface_adapter.listing_detail.ListingDetailViewModel;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.logged_in.LoggedInState;
 
 import javax.swing.*;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.List;
 
 public class ListingDetailView extends JPanel implements PropertyChangeListener {
-    public final String viewName = ListingDetailViewModel.VIEW_NAME;
 
     private final ListingDetailViewModel viewModel;
     private final CommentController commentController;
     private final CommentView commentView;
     private final ViewManagerModel viewManagerModel;
 
+    // labels for info
     private JLabel titleLabel;
     private JLabel priceLabel;
     private JLabel locationLabel;
@@ -31,95 +29,81 @@ public class ListingDetailView extends JPanel implements PropertyChangeListener 
     private JLabel areaLabel;
     private JLabel typeLabel;
     private JLabel tagsLabel;
-    private JLabel photoLabel;
-    private JButton getTagsButton;
-    private JProgressBar tagsProgressBar;
     private JLabel descriptionLabel;
+    private JLabel photoLabel;
+
+    private static final int PHOTO_WIDTH = 400;
+    private static final int PHOTO_HEIGHT = 230;
 
     public ListingDetailView(ListingDetailViewModel viewModel,
                              CommentController commentController,
-                             CommentViewModel commentViewModel
-                             ) {
+                             CommentViewModel commentViewModel) {
 
         this.viewModel = viewModel;
         this.commentController = commentController;
         this.commentView = new CommentView(commentController, commentViewModel);
         this.viewManagerModel = ViewManagerModel.getInstance();
+
         this.viewModel.addPropertyChangeListener(this);
 
         setLayout(new BorderLayout(10, 10));
         setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        JPanel detailsPanel = buildDetailsPanel();
+        // Back button + Title
+        JPanel headerPanel = new JPanel(new BorderLayout());
 
-        // Add Back button
         JButton backButton = new JButton("← Back");
         backButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         backButton.addActionListener(e -> {
-            LoggedInState loggedInState = new LoggedInState();
-            loggedInState.setUser(viewModel.getState().getCurrentUser());
-            viewManagerModel.setState("logged in");
+            viewManagerModel.setState("search");
             viewManagerModel.firePropertyChange();
         });
-
-        // Panel for Back button + Details
-        JPanel topPanel = new JPanel(new BorderLayout());
-        topPanel.add(backButton, BorderLayout.NORTH);
-        topPanel.add(detailsPanel, BorderLayout.CENTER);
-
-        add(topPanel, BorderLayout.NORTH);
-        add(commentView, BorderLayout.SOUTH);
-    }
-
-    private JPanel buildDetailsPanel() {
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        headerPanel.add(backButton, BorderLayout.WEST);
 
         titleLabel = new JLabel("");
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        headerPanel.add(titleLabel, BorderLayout.CENTER);
 
-        priceLabel = new JLabel("");
-        locationLabel = new JLabel("");
-        roomsLabel = new JLabel("");
-        areaLabel = new JLabel("");
-        typeLabel = new JLabel("");
+        add(headerPanel, BorderLayout.NORTH);
 
-        // Photo section
-        JPanel photoPanel = new JPanel(new BorderLayout(5, 5));
-        photoLabel = new JLabel("", SwingConstants.CENTER);
-        photoLabel.setPreferredSize(new Dimension(200, 200));
+        // photo + listing info
+        JPanel centerPanel = new JPanel(new BorderLayout(10, 10));
+
+        photoLabel = new JLabel("No photo", SwingConstants.CENTER);
+        Dimension photoSize = new Dimension(PHOTO_WIDTH, PHOTO_HEIGHT);
+        photoLabel.setPreferredSize(photoSize);
+        photoLabel.setMinimumSize(photoSize);
+        photoLabel.setMaximumSize(photoSize);
+
         photoLabel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+        centerPanel.add(photoLabel, BorderLayout.CENTER);
 
-        JPanel photoButtonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        getTagsButton = new JButton("🏷️ Get Tags from Image");
-        getTagsButton.setFont(new Font("Arial", Font.BOLD, 12));
-        tagsProgressBar = new JProgressBar();
-        tagsProgressBar.setIndeterminate(true);
-        tagsProgressBar.setVisible(false);
+        JPanel infoPanel = new JPanel();
+        infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
 
-        photoButtonPanel.add(getTagsButton);
-        photoButtonPanel.add(tagsProgressBar);
+        priceLabel = new JLabel();
+        locationLabel = new JLabel();
+        roomsLabel = new JLabel();
+        areaLabel = new JLabel();
+        typeLabel = new JLabel();
+        tagsLabel = new JLabel();
+        descriptionLabel = new JLabel();
 
-        photoPanel.add(photoLabel, BorderLayout.CENTER);
-        photoPanel.add(photoButtonPanel, BorderLayout.SOUTH);
+        infoPanel.add(priceLabel);
+        infoPanel.add(locationLabel);
+        infoPanel.add(roomsLabel);
+        infoPanel.add(areaLabel);
+        infoPanel.add(typeLabel);
+        infoPanel.add(tagsLabel);
+        infoPanel.add(descriptionLabel);
 
-        tagsLabel = new JLabel("");
-        descriptionLabel = new JLabel("");
+        centerPanel.add(infoPanel, BorderLayout.SOUTH);
 
-        panel.add(titleLabel);
-        panel.add(Box.createVerticalStrut(10));
-        panel.add(photoPanel);
-        panel.add(Box.createVerticalStrut(10));
-        panel.add(priceLabel);
-        panel.add(locationLabel);
-        panel.add(roomsLabel);
-        panel.add(areaLabel);
-        panel.add(typeLabel);
-        panel.add(Box.createVerticalStrut(10));
-        panel.add(tagsLabel);
-        panel.add(descriptionLabel);
+        add(centerPanel, BorderLayout.CENTER);
 
-        return panel;
+        // comments section
+        add(commentView, BorderLayout.SOUTH);
     }
 
     @Override
@@ -139,25 +123,49 @@ public class ListingDetailView extends JPanel implements PropertyChangeListener 
         roomsLabel.setText(l.getBedrooms() + " bedrooms, " + l.getBathrooms() + " bathrooms");
         areaLabel.setText("Area: " + l.getArea());
         typeLabel.setText("Type: " + l.getBuildingType());
+
+        String tagsText = (l.getTags() == null || l.getTags().isEmpty())
+                ? "Tags: No tags"
+                : "Tags: " + String.join(", ", l.getTags());
+        tagsLabel.setText(tagsText);
+
         descriptionLabel.setText("Description: " + l.getDescription());
 
-        // Display photo if available
         if (l.getPhotoPath() != null && !l.getPhotoPath().isEmpty()) {
             try {
                 ImageIcon icon = new ImageIcon(l.getPhotoPath());
-                Image scaled = icon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
-                photoLabel.setIcon(new ImageIcon(scaled));
+                Image img = icon.getImage();
+
+                int imgW = img.getWidth(null);
+                int imgH = img.getHeight(null);
+
+                if (imgW > 0 && imgH > 0) {
+                    double scale = Math.min(
+                            (double) PHOTO_WIDTH / imgW,
+                            (double) PHOTO_HEIGHT / imgH
+                    );
+                    int newW = (int) (imgW * scale);
+                    int newH = (int) (imgH * scale);
+
+                    Image scaled = img.getScaledInstance(newW, newH, Image.SCALE_SMOOTH);
+                    photoLabel.setIcon(new ImageIcon(scaled));
+                    photoLabel.setText("");
+                } else {
+                    photoLabel.setIcon(null);
+                    photoLabel.setText("Photo not available");
+                }
             } catch (Exception e) {
+                photoLabel.setIcon(null);
                 photoLabel.setText("Photo not available");
             }
         } else {
+            photoLabel.setIcon(null);
             photoLabel.setText("No photo");
         }
 
-
+        // Bind comments section to the current listing and user
         commentView.setListing(l);
         commentView.setUser(u);
-
         commentView.revalidate();
         commentView.repaint();
     }
