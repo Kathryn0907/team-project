@@ -52,7 +52,7 @@ public class MongoDBListingDAO implements CreateListingDataAccessInterface,
                 .append("id", listing.getId())
                 .append("name", listing.getName())
                 .append("owner_id", listing.getOwner().getId())
-                .append("photoPath", listing.getPhotoPath())
+                .append("photoBase64", listing.getPhotoBase64())
                 .append("tags", listing.getTags())
                 .append("mainCategories", listing.getMainCategories())
                 .append("description", listing.getDescription())
@@ -71,12 +71,9 @@ public class MongoDBListingDAO implements CreateListingDataAccessInterface,
     }
 
     /**
-    @Override
-    // this is temporary to satisfy the interface requirement, will move to saveListing later after verifying everything works
-    public void save(Listing listing) {
-        saveListing(listing);
-    }
-    **/
+     * Delete the listing from Database.
+     * @param listing The listing.
+     */
     @Override
     public void deleteListing(Listing listing) {
         ObjectId listingId = listing.getId();
@@ -156,7 +153,7 @@ public class MongoDBListingDAO implements CreateListingDataAccessInterface,
                 .append("id", listing.getId())
                 .append("name", listing.getName())
                 .append("owner_id", listing.getOwner().getId())
-                .append("photoPath", listing.getPhotoPath())
+                .append("photoBase64", listing.getPhotoBase64())
                 .append("tags", listing.getTags())
                 .append("mainCategories", listing.getMainCategories())
                 .append("description", listing.getDescription())

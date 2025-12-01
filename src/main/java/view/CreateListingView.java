@@ -15,6 +15,11 @@ import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.Base64;
+
 /**
  * View for creating a new listing.
  */
@@ -156,10 +161,22 @@ public class CreateListingView extends JPanel implements PropertyChangeListener 
         bedroomsField.setText(String.valueOf(listing.getBedrooms()));
         bathroomsField.setText(String.valueOf(listing.getBathrooms()));
         buildingTypeDropdown.setSelectedItem(listing.getBuildingType());
-        photoPathLabel.setText(listing.getPhotoPath());
 
-        createButton.setVisible(false);
-        updateButton.setVisible(true);
+        CreateListingState state = createListingViewModel.getState();
+        state.setPhotoBase64(listing.getPhotoBase64());
+        createListingViewModel.setState(state);
+        photoPathLabel.setText("No photo selected");
+
+        if (listing.getPhotoBase64() != null && !listing.getPhotoBase64().isEmpty()) {
+            try {
+                byte[] bytes = java.util.Base64.getDecoder().decode(listing.getPhotoBase64());
+                ImageIcon icon = new ImageIcon(bytes);
+                Image img = icon.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+                photoPreviewLabel.setIcon(new ImageIcon(img));
+            } catch (IllegalArgumentException ex) {
+                photoPreviewLabel.setIcon(null);
+            }
+        }
     }
 
     public void resetToCreateMode() {
@@ -177,8 +194,23 @@ public class CreateListingView extends JPanel implements PropertyChangeListener 
         photoPathLabel.setText("No photo selected");
         photoPreviewLabel.setIcon(null);
 
+        CreateListingState state = createListingViewModel.getState();
+        state.setPhotoBase64("");
+        createListingViewModel.setState(state);
+
         createButton.setVisible(true);
         updateButton.setVisible(false);
+    }
+
+    private String encodeFileToBase64(File file) {
+        try {
+            byte[] bytes = Files.readAllBytes(file.toPath());
+            return Base64.getEncoder().encodeToString(bytes);
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this,
+                    "Failed to read image file: " + e.getMessage());
+            return null;
+        }
     }
 
     private void addNameListener() {
@@ -307,9 +339,11 @@ public class CreateListingView extends JPanel implements PropertyChangeListener 
             }
 
             if (createListingController != null) {
+                CreateListingState state = createListingViewModel.getState();
+
                 createListingController.execute(
                         nameInputField.getText(),
-                        photoPathLabel.getText(),
+                        state.getPhotoBase64(),
                         null,
                         null,
                         descriptionInputArea.getText(),
@@ -329,13 +363,21 @@ public class CreateListingView extends JPanel implements PropertyChangeListener 
             JFileChooser chooser = new JFileChooser();
             int result = chooser.showOpenDialog(this);
             if (result == JFileChooser.APPROVE_OPTION) {
-                String path = chooser.getSelectedFile().getAbsolutePath();
+                File file = chooser.getSelectedFile();
+                String path = file.getAbsolutePath();
 
-                photoPathLabel.setText(path);
+                photoPathLabel.setText(file.getName());
 
                 ImageIcon icon = new ImageIcon(path);
                 Image img = icon.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
                 photoPreviewLabel.setIcon(new ImageIcon(img));
+
+                String base64 = encodeFileToBase64(file);
+                if (base64 != null) {
+                    CreateListingState state = createListingViewModel.getState();
+                    state.setPhotoBase64(base64);
+                    createListingViewModel.setState(state);
+                }
             }
         });
 
@@ -381,7 +423,8 @@ public class CreateListingView extends JPanel implements PropertyChangeListener 
             editingTarget.setBathrooms(bathrooms);
             editingTarget.setBuildingType(
                     buildingTypeDropdown.getItemAt(buildingTypeDropdown.getSelectedIndex()));
-            editingTarget.setPhotoPath(photoPathLabel.getText());
+            CreateListingState state = createListingViewModel.getState();
+            editingTarget.setPhotoBase64(state.getPhotoBase64());
             editListingController.saveEdits(editingTarget);
         });
     }
