@@ -198,7 +198,13 @@ public class AppBuilder {
             checkFavoriteViewModel = new CheckFavoriteViewModel();
         }
 
-        checkFavoriteView = new CheckFavoriteView(checkFavoriteViewModel, viewManagerModel);
+        checkFavoriteView = new CheckFavoriteView(
+                checkFavoriteViewModel,
+                viewManagerModel,
+                checkController,     // must be initialized first
+                saveController,      // must be initialized first
+                loggedInViewModel    // must be initialized first
+        );
         cardPanel.add(checkFavoriteView, checkFavoriteView.getViewName());
         return this;
     }

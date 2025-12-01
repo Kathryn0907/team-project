@@ -34,20 +34,21 @@ public class CheckFavoriteInteractor implements CheckFavoriteInputBoundary {
         // Get the user's favorite listings (may be null / empty)
         final ArrayList<Listing> favouriteListings = user.getFavourite();
 
-        // Extract listing names (only active listings)
-        final List<String> favouriteListingNames = new ArrayList<>();
+    // Keep the actual Listing entities, only active ones
+        final List<Listing> activeFavouriteListings = new ArrayList<>();
         if (favouriteListings != null) {
             for (Listing listing : favouriteListings) {
                 if (listing != null && listing.isActive()) {
-                    favouriteListingNames.add(listing.getName());
+                    activeFavouriteListings.add(listing);
                 }
             }
         }
 
-        // Prepare output data
+    // Prepare output data
         final CheckFavoriteOutputData outputData =
-                new CheckFavoriteOutputData(favouriteListingNames);
+                new CheckFavoriteOutputData(activeFavouriteListings);
 
         presenter.prepareSuccessView(outputData);
+
     }
 }

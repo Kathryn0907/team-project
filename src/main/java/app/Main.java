@@ -21,24 +21,36 @@ public class Main {
 
         // Build the application
         JFrame application = appBuilder
-                .addLoginView()
+                // 1. Basic views
                 .addSignupView()
+                .addLoginView()
                 .addLoggedInView()
+
+                // 2. Use cases that create controllers the views need
+                .addSearchListingUseCase()
+                .addSaveFavoriteUseCase()      // sets saveController
+                .addCheckFavoriteUseCase()     // sets checkController
+
+                // 3. Views that depend on those controllers / viewmodels
                 .addCheckFavoriteView()
                 .addProfileView()
                 .addCreateListingView()
+                .addCreateListingUseCase()
+                .addListingDetailViewAndCommentUseCase()
+                .addDeleteListingUseCase()
                 .addEditListingUseCase()
+                .addMessagingUseCase()
+
+                // 4. Hook up login/signup use cases (they just need the viewmodels)
                 .addSignupUseCase()
                 .addLoginUseCase()
-                .addSearchListingUseCase()
-                .addListingDetailViewAndCommentUseCase()
-                .addSaveFavoriteUseCase()      // Add save favorite use case
-                .addCreateListingUseCase()
-                .addCheckFavoriteUseCase()
-                .addDeleteListingUseCase()
-                .addMessagingUseCase()
-                .rebuildLoggedInView()         // Rebuild with all controllers
+
+                // 5. Now that search/save/check controllers exist, rebuild LoggedInView with them
+                .rebuildLoggedInView()
+
+                // 6. Finish
                 .build();
+
 
         application.pack();
         application.setSize(1200, 800);
