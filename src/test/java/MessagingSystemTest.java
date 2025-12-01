@@ -1,7 +1,6 @@
-
 import java.awt.Window;
 import app.MessagingUseCaseFactory;
-import data_access.InMemoryMessageDAO;
+import data_access.MongoDBMessageDAO;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.messaging.*;
 import view.MessagingView;
@@ -13,23 +12,28 @@ import java.net.URI;
 public class MessagingSystemTest {
 
     private static final int SERVER_PORT = 8887;
-    private static ChatServer server;  // Make it static so shutdown hook can access
+    private static ChatServer server;
+    private static MongoDBMessageDAO messageDAO;
 
     public static void main(String[] args) {
         System.out.println("========================================");
-        System.out.println("MESSAGING SYSTEM TEST (WebSocket)");
+        System.out.println("MESSAGING SYSTEM TEST (WebSocket + MongoDB)");
         System.out.println("========================================\n");
 
-        // Initialize data access
-        InMemoryMessageDAO dataAccess = new InMemoryMessageDAO();
+        try {
+            messageDAO = new MongoDBMessageDAO();
+            System.out.println("✅ MongoDB connected\n");
+        } catch (Exception e) {
+            System.err.println("❌ MongoDB connection failed: " + e.getMessage());
+            System.err.println("Test will continue with limited functionality\n");
+        }
 
-        // Start WebSocket server
         MessageHandler messageHandler = new MessageHandler() {
             @Override
             public Entities.Message handleMessage(String from, String to, String listingId, String content) {
                 MessageViewModel viewModel = new MessageViewModel();
                 MessageController controller = MessagingUseCaseFactory.createMessagingUseCase(
-                        viewModel, dataAccess
+                        viewModel, messageDAO
                 );
 
                 use_case.messaging.SendMessageOutputData result =
@@ -41,7 +45,6 @@ public class MessagingSystemTest {
 
         server = new ChatServer(SERVER_PORT, messageHandler);
 
-        // Add shutdown hook to properly close server
         Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
             @Override
             public void run() {
@@ -60,53 +63,53 @@ public class MessagingSystemTest {
         server.start();
         System.out.println("✅ Server started on port " + SERVER_PORT + "\n");
 
-        // Give server time to start
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        // Create two user windows for testing
-        createUserWindow("alice", dataAccess);
-        createUserWindow("bob", dataAccess);
+        createUserWindow("alice", "bob", messageDAO);
+        createUserWindow("bob", "alice", messageDAO);
 
         System.out.println("\n========================================");
         System.out.println("TWO CHAT WINDOWS OPENED");
         System.out.println("========================================");
         System.out.println("\nTry sending messages between alice and bob!");
         System.out.println("Messages should appear instantly in both windows.");
+        System.out.println("Messages are saved to MongoDB and will persist after restart.");
         System.out.println("\n⚠️  Close ALL windows to stop the server properly.\n");
     }
 
-    private static void createUserWindow(String username, use_case.messaging.MessageDataAccessInterface dataAccess) {
+    private static void createUserWindow(String username, String recipient, MongoDBMessageDAO messageDAO) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
                 try {
-                    // Create WebSocket client
                     URI serverUri = new URI("ws://localhost:" + SERVER_PORT);
                     ChatClient chatClient = new ChatClient(serverUri, username);
                     chatClient.connect();
 
-                    // Give client time to connect
                     Thread.sleep(500);
 
-                    // Create view components
                     MessageViewModel viewModel = new MessageViewModel();
                     MessageController controller = MessagingUseCaseFactory.createMessagingUseCase(
-                            viewModel, dataAccess
+                            viewModel, messageDAO
                     );
                     ViewManagerModel viewManagerModel = new ViewManagerModel();
 
                     MessagingView messagingView = new MessagingView(
-                            username, viewModel, controller, chatClient, "mohamed", viewManagerModel
+                            username,
+                            viewModel,
+                            controller,
+                            chatClient,
+                            recipient,
+                            viewManagerModel,
+                            messageDAO
                     );
 
-                    // Create window
                     JFrame frame = new JFrame("Chat - " + username);
 
-                    // CHANGED: Use DISPOSE_ON_CLOSE instead of EXIT_ON_CLOSE
                     frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
                     frame.setSize(600, 500);
@@ -114,14 +117,12 @@ public class MessagingSystemTest {
                     frame.add(messagingView);
                     frame.setVisible(true);
 
-                    // Add window listener to close client connection and check if all windows closed
                     frame.addWindowListener(new java.awt.event.WindowAdapter() {
                         @Override
                         public void windowClosing(java.awt.event.WindowEvent windowEvent) {
                             chatClient.close();
                             System.out.println("👋 " + username + " disconnected");
 
-                            // Check if this was the last window
                             SwingUtilities.invokeLater(new Runnable() {
                                 @Override
                                 public void run() {
@@ -134,7 +135,7 @@ public class MessagingSystemTest {
                         }
                     });
 
-                    System.out.println("✅ Created chat window for: " + username);
+                    System.out.println("✅ Created chat window for: " + username + " (chatting with " + recipient + ")");
 
                 } catch (Exception e) {
                     e.printStackTrace();

@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 /**
  * View showing all conversations for the current user
+ * Fixed: Properly passes MessageDAO to MessagingView
  */
 public class ConversationsView extends JPanel {
 
@@ -53,8 +54,8 @@ public class ConversationsView extends JPanel {
         titleLabel.setFont(new Font("Arial", Font.BOLD, 18));
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        newConversationButton = new JButton("➕ New Conversation");
-        backButton = new JButton("← Back");
+        newConversationButton = new JButton("New Conversation");
+        backButton = new JButton("Back");
         buttonPanel.add(newConversationButton);
         buttonPanel.add(backButton);
 
@@ -126,7 +127,7 @@ public class ConversationsView extends JPanel {
         JPanel infoPanel = new JPanel();
         infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
 
-        JLabel nameLabel = new JLabel("💬 " + partner);
+        JLabel nameLabel = new JLabel("Chat with " + partner);
         nameLabel.setFont(new Font("Arial", Font.BOLD, 16));
 
         // Get last message
@@ -214,15 +215,15 @@ public class ConversationsView extends JPanel {
     }
 
     private void openConversation(String partner) {
-        // Switch to messaging view
-        // Note: You'll need to create MessagingView and add it to the card layout
+        // Create MessagingView and pass messageDAO
         MessagingView messagingView = new MessagingView(
                 currentUsername,
-                null, // Pass appropriate ViewModel
+                null,
                 messageController,
                 chatClient,
                 partner,
-                viewManagerModel
+                viewManagerModel,
+                messageDAO  // Pass the DAO so messages can be marked as read
         );
 
         // Add to parent container

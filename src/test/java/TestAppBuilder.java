@@ -263,6 +263,7 @@ public class TestAppBuilder {
                         .addSignupView()
                         .addLoggedInView()
                         .addCheckFavoriteView()
+                        .addProfileView()
                         .addSignupUseCase()
                         .addLoginUseCase()
                         .addSearchListingUseCase()

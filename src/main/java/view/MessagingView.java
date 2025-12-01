@@ -4,16 +4,20 @@ import Entities.Message;
 import interface_adapter.messaging.*;
 import interface_adapter.ViewManagerModel;
 import websocket.ChatClient;
+import data_access.MongoDBMessageDAO;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 /**
  * Messaging UI with WebSocket real-time updates and back navigation
+ * Fixed: Marks messages as read and displays timestamps
  */
 public class MessagingView extends JPanel implements PropertyChangeListener {
 
@@ -23,24 +27,30 @@ public class MessagingView extends JPanel implements PropertyChangeListener {
     private final MessageController controller;
     private final ChatClient chatClient;
     private final ViewManagerModel viewManagerModel;
+    private final MongoDBMessageDAO messageDAO;
 
     private JTextArea conversationArea;
     private JTextField messageField;
     private JButton sendButton;
     private JButton backButton;
 
+    private static final DateTimeFormatter TIME_FORMATTER =
+            DateTimeFormatter.ofPattern("HH:mm").withZone(ZoneId.systemDefault());
+
     public MessagingView(String currentUsername,
                          MessageViewModel viewModel,
                          MessageController controller,
                          ChatClient chatClient,
                          String recipientUsername,
-                         ViewManagerModel viewManagerModel) {
+                         ViewManagerModel viewManagerModel,
+                         MongoDBMessageDAO messageDAO) {
         this.currentUsername = currentUsername;
         this.recipientUsername = recipientUsername;
         this.viewModel = viewModel;
         this.controller = controller;
         this.chatClient = chatClient;
         this.viewManagerModel = viewManagerModel;
+        this.messageDAO = messageDAO;
 
         if (this.viewModel != null) {
             this.viewModel.addPropertyChangeListener(this);
@@ -49,6 +59,7 @@ public class MessagingView extends JPanel implements PropertyChangeListener {
         setupUI();
         setupChatClient();
         loadConversationHistory();
+        markMessagesAsRead();  // Mark messages as read when opening conversation
     }
 
     private void setupUI() {
@@ -58,7 +69,7 @@ public class MessagingView extends JPanel implements PropertyChangeListener {
         // Top panel: Back button and recipient name
         JPanel topPanel = new JPanel(new BorderLayout());
 
-        backButton = new JButton("← Back to Conversations");
+        backButton = new JButton("Back to Conversations");
         JLabel recipientLabel = new JLabel("Conversation with: " + recipientUsername);
         recipientLabel.setFont(new Font("Arial", Font.BOLD, 16));
 
@@ -128,6 +139,11 @@ public class MessagingView extends JPanel implements PropertyChangeListener {
                             @Override
                             public void run() {
                                 displayMessage(message);
+                                // Mark as read if it's from the recipient
+                                if (message.getFromUsername().equals(recipientUsername) &&
+                                        messageDAO != null) {
+                                    messageDAO.markAsRead(message.getId());
+                                }
                             }
                         });
                     }
@@ -137,9 +153,33 @@ public class MessagingView extends JPanel implements PropertyChangeListener {
     }
 
     private void loadConversationHistory() {
-        // This would load from MongoDB through the DAO
-        // For now, we'll implement this when integrating with the data access
         conversationArea.append("=== Conversation History ===\n\n");
+
+        if (messageDAO != null) {
+            ArrayList<Message> conversation = messageDAO.getConversation(currentUsername, recipientUsername);
+
+            for (Message msg : conversation) {
+                displayMessage(msg);
+            }
+        }
+    }
+
+    /**
+     * Mark all unread messages from recipient as read when opening conversation
+     */
+    private void markMessagesAsRead() {
+        if (messageDAO != null) {
+            ArrayList<Message> conversation = messageDAO.getConversation(currentUsername, recipientUsername);
+
+            for (Message msg : conversation) {
+                // Mark as read if it's from the recipient to current user and not yet read
+                if (msg.getFromUsername().equals(recipientUsername) &&
+                        msg.getToUsername().equals(currentUsername) &&
+                        !msg.isRead()) {
+                    messageDAO.markAsRead(msg.getId());
+                }
+            }
+        }
     }
 
     private void sendMessage() {
@@ -158,8 +198,8 @@ public class MessagingView extends JPanel implements PropertyChangeListener {
             chatClient.sendMessage(currentUsername, recipientUsername, null, content);
         }
 
-        // Display in conversation
-        conversationArea.append("[You] " + content + "\n");
+        // Display in conversation immediately (for the sender)
+        conversationArea.append("[" + TIME_FORMATTER.format(java.time.Instant.now()) + "] You: " + content + "\n");
 
         // Auto-scroll to bottom
         conversationArea.setCaretPosition(conversationArea.getDocument().getLength());
@@ -172,7 +212,10 @@ public class MessagingView extends JPanel implements PropertyChangeListener {
         String fromDisplay = message.getFromUsername().equals(currentUsername) ?
                 "You" : message.getFromUsername();
 
-        String display = String.format("[%s] %s\n", fromDisplay, message.getContent());
+        // Format timestamp as HH:mm
+        String timestamp = TIME_FORMATTER.format(message.getTimestamp());
+
+        String display = String.format("[%s] %s: %s\n", timestamp, fromDisplay, message.getContent());
         conversationArea.append(display);
 
         // Auto-scroll to bottom

@@ -10,6 +10,7 @@ import java.beans.PropertyChangeListener;
 /**
  * The View Manager for the program. It listens for property change events
  * in the ViewManagerModel and updates which View should be visible.
+ * Updated with Conversations view support.
  */
 public class ViewManager implements PropertyChangeListener {
     private final CardLayout cardLayout;
@@ -27,6 +28,25 @@ public class ViewManager implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("state")) {
             final String viewModelName = (String) evt.getNewValue();
+
+            // Special handling for conversations view - check if it exists
+            if ("conversations".equals(viewModelName)) {
+                boolean conversationsViewExists = false;
+                for (Component comp : views.getComponents()) {
+                    if (comp instanceof ConversationsView) {
+                        conversationsViewExists = true;
+                        ((ConversationsView) comp).refreshConversations();
+                        break;
+                    }
+                }
+
+                if (!conversationsViewExists) {
+                    System.err.println("⚠️  Conversations view not found. Make sure user is logged in.");
+                    // Don't try to show the view if it doesn't exist
+                    return;
+                }
+            }
+
             cardLayout.show(views, viewModelName);
 
             // Refresh views as needed

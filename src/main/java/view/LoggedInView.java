@@ -19,7 +19,7 @@ import java.util.ArrayList;
 /**
  * The View for when the user is logged into the program.
  * Displays all available listings by default, with search, filter, and favorite capabilities.
- * Updated by Jonathan (Use Case 9 & 14)
+ * Updated with Conversations button
  */
 public class LoggedInView extends JPanel implements PropertyChangeListener {
 
@@ -34,6 +34,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
     private final JTextField keywordField;
     private final JButton searchButton;
+    private final JButton conversationsButton;
     private final JButton viewFavoritesButton;
     private final JButton myProfileButton;
     private final JPanel resultsPanel;
@@ -71,17 +72,22 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         searchPanel.add(keywordField);
         searchPanel.add(searchButton);
 
-        // Add "View My Favorites" button and Profile button
-        JPanel favoritesPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        // Add buttons panel
+        JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         myProfileButton = new JButton("My Profile");
         myProfileButton.setFont(new Font("Arial", Font.BOLD, 12));
-        favoritesPanel.add(myProfileButton);
+        buttonsPanel.add(myProfileButton);
+
+        conversationsButton = new JButton("💬 Conversations");
+        conversationsButton.setFont(new Font("Arial", Font.BOLD, 12));
+        buttonsPanel.add(conversationsButton);
+
         viewFavoritesButton = new JButton("❤ View My Favorites");
         viewFavoritesButton.setFont(new Font("Arial", Font.BOLD, 12));
-        favoritesPanel.add(viewFavoritesButton);
+        buttonsPanel.add(viewFavoritesButton);
 
         topPanel.add(searchPanel, BorderLayout.WEST);
-        topPanel.add(favoritesPanel, BorderLayout.EAST);
+        topPanel.add(buttonsPanel, BorderLayout.EAST);
 
         // Center: Results display panel
         resultsPanel = new JPanel();
@@ -128,6 +134,15 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
                             JOptionPane.WARNING_MESSAGE
                     );
                 }
+            }
+        });
+
+        // Conversations button action
+        conversationsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                viewManagerModel.setState("conversations");
+                viewManagerModel.firePropertyChange();
             }
         });
 

@@ -1,15 +1,16 @@
 package interface_adapter.login;
 
+import app.AppBuilder;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.signup.SignupViewModel;
 import use_case.login.LoginOutputBoundary;
 import use_case.login.LoginOutputData;
-import view.LoggedInView;
 
 /**
  * The Presenter for the Login Use Case.
+ * Initializes conversations after successful login.
  */
 public class LoginPresenter implements LoginOutputBoundary {
 
@@ -38,6 +39,20 @@ public class LoginPresenter implements LoginOutputBoundary {
 
         // Clear everything from the LoginViewModel's state
         loginViewModel.setState(new LoginState());
+
+        // Initialize conversations view for this user
+        try {
+            AppBuilder appBuilder = AppBuilder.getInstance();
+            if (appBuilder != null) {
+                appBuilder.initializeConversationsForUser(response.getUsername());
+                System.out.println("✅ Conversations initialized after login for: " + response.getUsername());
+            } else {
+                System.err.println("⚠️  AppBuilder instance is null");
+            }
+        } catch (Exception e) {
+            System.err.println("⚠️  Could not initialize conversations: " + e.getMessage());
+            e.printStackTrace();
+        }
 
         // Switch to the logged in view
         this.viewManagerModel.setState(loggedInViewModel.getViewName());
