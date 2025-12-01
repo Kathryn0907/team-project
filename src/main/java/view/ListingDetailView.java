@@ -8,6 +8,7 @@ import interface_adapter.comment.CommentViewModel;
 import interface_adapter.listing_detail.ListingDetailState;
 import interface_adapter.listing_detail.ListingDetailViewModel;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.logged_in.LoggedInState;
 
 import javax.swing.*;
 import java.awt.*;
@@ -55,8 +56,11 @@ public class ListingDetailView extends JPanel implements PropertyChangeListener 
         JButton backButton = new JButton("← Back");
         backButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         backButton.addActionListener(e -> {
-            viewManagerModel.setState("search");
+            LoggedInState loggedInState = new LoggedInState();
+            loggedInState.setUser(viewModel.getState().getCurrentUser());
+            viewManagerModel.setState("logged in");
             viewManagerModel.firePropertyChange();
+
         });
         headerPanel.add(backButton, BorderLayout.WEST);
 
