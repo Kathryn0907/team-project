@@ -19,6 +19,7 @@ public class ProfileView extends JPanel implements PropertyChangeListener {
     private DeleteListingController deleteListingController;
     private EditListingController editListingController;
     private CreateListingView createListingView;
+    private EditListingView editListingView;
 
 
     private final JPanel listingsPanel = new JPanel();
@@ -92,9 +93,9 @@ public class ProfileView extends JPanel implements PropertyChangeListener {
             editButton.setPreferredSize(new Dimension(100, 40));
 
             editButton.addActionListener(e -> {
-                viewManagerModel.setState("create listing");
+                viewManagerModel.setState("edit listing");
                 viewManagerModel.firePropertyChange();
-                createListingView.enterEditMode(listing);
+                editListingView.loadListing(listing);
             });
 
             JButton deleteButton = new JButton("Delete");
@@ -147,5 +148,9 @@ public class ProfileView extends JPanel implements PropertyChangeListener {
 
     public void setCreateListingView(CreateListingView createListingView) {
         this.createListingView = createListingView;
+    }
+
+    public void setEditListingView(EditListingView editListingView) {
+        this.editListingView = editListingView;
     }
 }

@@ -130,6 +130,7 @@ public class AppBuilder {
     private CommentViewModel commentViewModel;
     private ListingDetailView listingDetailView;
     private ConversationsView conversationsView;
+    private EditListingView editListingView;
 
     // Controllers that will be created in use case methods
     private SearchListingController searchController;
@@ -231,6 +232,22 @@ public class AppBuilder {
         if (profileView != null) {
             profileView.setCreateListingView(createListingView);
         }
+        return this;
+    }
+
+    public AppBuilder addEditListingView() {
+        editListingView = new EditListingView(createListingViewModel);
+
+        JScrollPane scroll = new JScrollPane(editListingView,
+                JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
+        cardPanel.add(scroll, editListingView.getViewName());
+
+        if (profileView != null) {
+            profileView.setEditListingView(editListingView);
+        }
+
         return this;
     }
 
@@ -371,10 +388,13 @@ public class AppBuilder {
     }
 
     public AppBuilder addEditListingUseCase() {
+        if (editListingView == null) {
+            addEditListingView();
+        }
         EditListingOutputBoundary presenter = new EditListingPresenter(profileViewModel, viewManagerModel);
         EditListingInputBoundary interactor = new EditListingInteractor(mongoListingDAO, presenter);
         EditListingController controller = new EditListingController(interactor);
-        createListingView.setEditListingController(controller);
+        editListingView.setEditListingController(controller);
         return this;
     }
 
