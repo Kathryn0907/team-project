@@ -60,6 +60,7 @@ public class ListingDetailView extends JPanel implements PropertyChangeListener 
             loggedInState.setUser(viewModel.getState().getCurrentUser());
             viewManagerModel.setState("logged in");
             viewManagerModel.firePropertyChange();
+
         });
         headerPanel.add(backButton, BorderLayout.WEST);
 
