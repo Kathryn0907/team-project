@@ -56,7 +56,7 @@ public class ListingDetailView extends JPanel implements PropertyChangeListener 
         JButton backButton = new JButton("← Back");
         backButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         backButton.addActionListener(e -> {
-            viewManagerModel.setState("search");
+            viewManagerModel.setState("logged in");
             viewManagerModel.firePropertyChange();
 
         });

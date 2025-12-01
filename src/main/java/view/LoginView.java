@@ -146,6 +146,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
 
         if (state.getCancelAccountSuccessMsg() != null) {
             JOptionPane.showMessageDialog(this, state.getCancelAccountSuccessMsg());
+            state.setCancelAccountSuccessMsg(null);
         }
 
     }
