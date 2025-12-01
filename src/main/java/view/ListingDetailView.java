@@ -33,8 +33,8 @@ public class ListingDetailView extends JPanel implements PropertyChangeListener 
     private JLabel descriptionLabel;
     private JLabel photoLabel;
 
-    private static final int PHOTO_WIDTH = 400;
-    private static final int PHOTO_HEIGHT = 230;
+    private static final int PHOTO_WIDTH = 600;
+    private static final int PHOTO_HEIGHT = 400;
 
     public ListingDetailView(ListingDetailViewModel viewModel,
                              CommentController commentController,
