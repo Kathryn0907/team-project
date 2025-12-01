@@ -2,6 +2,9 @@ package interface_adapter.create_listing;
 
 import Entities.Listing;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * The state for the Create Listing View Model.
  */
@@ -15,6 +18,7 @@ public class CreateListingState {
     private String bedrooms = "";
     private String bathrooms = "";
     private Listing.BuildingType buildingType = Listing.BuildingType.OTHER;
+    private List<String> tags = new ArrayList<>();
     private String photoBase64 = "";
 
     private String nameError;
@@ -36,7 +40,7 @@ public class CreateListingState {
     public String getPriceError() { return priceError; }
     public String getAddressError() { return addressError; }
     public String getPhotoError() { return photoError; }
-
+    public List<String> getTags() { return tags; }
 
     public void setName(String name) { this.name = name; }
     public void setDescription(String description) { this.description = description; }
@@ -51,6 +55,7 @@ public class CreateListingState {
     public void setPriceError(String priceError) { this.priceError = priceError; }
     public void setAddressError(String addressError) { this.addressError = addressError; }
     public void setPhotoError(String photoError) { this.photoError = photoError; }
+    public void setTags(List<String> tags) { this.tags = tags; }
 
     @Override
     public String toString() {

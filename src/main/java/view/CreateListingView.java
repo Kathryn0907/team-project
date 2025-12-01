@@ -43,6 +43,10 @@ public class CreateListingView extends JPanel implements PropertyChangeListener 
     private final JTextField areaField = new JTextField(15);
     private final JTextField bedroomsField = new JTextField(15);
     private final JTextField bathroomsField = new JTextField(15);
+    private final JTextField tagInputField = new JTextField(15);
+    private final DefaultListModel<String> tagListModel = new DefaultListModel<>();
+    private final JList<String> tagList = new JList<>(tagListModel);
+    private final JButton addTagButton = new JButton("Add Tag");
 
     private final JComboBox<Listing.BuildingType> buildingTypeDropdown =
             new JComboBox<>(Listing.BuildingType.values());
@@ -105,6 +109,17 @@ public class CreateListingView extends JPanel implements PropertyChangeListener 
         view.add(new JLabel(CreateListingViewModel.BUILDING_TYPE_LABEL));
         view.add(buildingTypeDropdown);
 
+        view.add(new JLabel("Tags"));
+        JPanel tagPanel = new JPanel(new BorderLayout(3,3));
+        addTagButton.setPreferredSize(new Dimension(80, 25));
+        tagPanel.add(tagInputField, BorderLayout.NORTH);
+        tagPanel.add(addTagButton, BorderLayout.CENTER);
+        tagList.setVisibleRowCount(4);
+        tagList.setFixedCellWidth(100);
+        tagPanel.add(new JScrollPane(tagList), BorderLayout.SOUTH);
+
+        view.add(tagPanel);
+
 
         view.add(new JLabel(CreateListingViewModel.PHOTO_LABEL));
 
@@ -162,7 +177,14 @@ public class CreateListingView extends JPanel implements PropertyChangeListener 
         bathroomsField.setText(String.valueOf(listing.getBathrooms()));
         buildingTypeDropdown.setSelectedItem(listing.getBuildingType());
 
+        tagListModel.clear();
+        for (String tag : listing.getTags()) {
+            tagListModel.addElement(tag);
+        }
+
         CreateListingState state = createListingViewModel.getState();
+        state.setTags(java.util.Collections.list(tagListModel.elements()));
+
         state.setPhotoBase64(listing.getPhotoBase64());
         createListingViewModel.setState(state);
         photoPathLabel.setText("No photo selected");
@@ -177,6 +199,8 @@ public class CreateListingView extends JPanel implements PropertyChangeListener 
                 photoPreviewLabel.setIcon(null);
             }
         }
+        createButton.setVisible(false);
+        updateButton.setVisible(true);
     }
 
     public void resetToCreateMode() {
@@ -423,9 +447,24 @@ public class CreateListingView extends JPanel implements PropertyChangeListener 
             editingTarget.setBathrooms(bathrooms);
             editingTarget.setBuildingType(
                     buildingTypeDropdown.getItemAt(buildingTypeDropdown.getSelectedIndex()));
+
             CreateListingState state = createListingViewModel.getState();
             editingTarget.setPhotoBase64(state.getPhotoBase64());
+            editingTarget.setTags(state.getTags());
             editListingController.saveEdits(editingTarget);
+        });
+
+        addTagButton.addActionListener(e -> {
+            String tag = tagInputField.getText().trim();
+            if (!tag.isEmpty() && !tagListModel.contains(tag)) {
+                tagListModel.addElement(tag);
+
+                CreateListingState state = createListingViewModel.getState();
+                state.setTags(java.util.Collections.list(tagListModel.elements()));
+                createListingViewModel.setState(state);
+
+                tagInputField.setText("");
+            }
         });
     }
 
