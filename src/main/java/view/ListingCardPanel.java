@@ -66,19 +66,21 @@ public class ListingCardPanel extends JPanel {
         JLabel pictureLabel = new JLabel("Picture", SwingConstants.CENTER);
         pictureLabel.setFont(new Font("Arial", Font.ITALIC, 12));
         pictureLabel.setForeground(Color.GRAY);
+        String base64 = listing.getPhotoBase64();
 
-        // NEW: load thumbnail from listing photoPath
-        String path = listing.getPhotoPath();
-        if (path != null && !path.isEmpty()) {
+        if (base64 != null && !base64.isEmpty()) {
             try {
-                ImageIcon icon = new ImageIcon(path);
+                byte[] bytes = java.util.Base64.getDecoder().decode(base64);
+                ImageIcon icon = new ImageIcon(bytes);
+
                 Image scaled = icon.getImage().getScaledInstance(
                         150, 120, Image.SCALE_SMOOTH);
                 pictureLabel.setIcon(new ImageIcon(scaled));
                 pictureLabel.setText("");
-            } catch (Exception e) {
-                pictureLabel.setIcon(null);
+
+            } catch (IllegalArgumentException e) {
                 pictureLabel.setText("Photo not available");
+                pictureLabel.setIcon(null);
             }
         }
 

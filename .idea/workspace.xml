@@ -4,21 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4233ef43-aa86-4f3e-a990-e26817d04b73" name="Changes" comment="Merging initial integration code for messaging system, deleting Extract Tags functionality for App builder, and a stepping stone for complete messaging system">
-      <change afterPath="$PROJECT_DIR$/src/main/java/view/ConversationsView.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/TestMongoConnection.java" afterDir="false" />
+    <list default="true" id="4233ef43-aa86-4f3e-a990-e26817d04b73" name="Changes" comment="google api working">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/AppBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/AppBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/ExtractTagsUseCaseFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/ExtractTagsUseCaseFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/data_access/MongoDBMessageDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/data_access/MongoDBMessageDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/ListingDetailView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/ListingDetailView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/MessagingView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/MessagingView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/SearchView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/SearchView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/ViewManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/ViewManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/ExtractTagsUITest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ExtractTagsUITest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/MessagingSystemTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/MessagingSystemTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/TestAppBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/TestAppBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/FilterSidebarPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/FilterSidebarPanel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,8 +32,8 @@
 }</component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/Kathryn0907/team-project&quot;,
-    &quot;accountId&quot;: &quot;e8b53e13-ce07-42ff-bd89-a5bae6863ac6&quot;
+    &quot;url&quot;: &quot;https://github.com/Kathryn0907/team-project.git&quot;,
+    &quot;accountId&quot;: &quot;6f404bc1-a14f-41e9-b538-da00e32c3acd&quot;
   }
 }</component>
   <component name="ProjectColorInfo">{
@@ -55,30 +44,38 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.MessagingSystemTest.executor": "Run",
-    "Application.SearchViewTest.executor": "Run",
-    "Application.TestAppBuilder.executor": "Run",
-    "Application.TestMongoConnection.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "Complete__messaging__system",
-    "kotlin-language-version-configured": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.MessagingSystemTest.executor&quot;: &quot;Run&quot;,
+    &quot;Application.SearchViewTest.executor&quot;: &quot;Run&quot;,
+    &quot;Application.TestAppBuilder.executor&quot;: &quot;Run&quot;,
+    &quot;Application.TestMongoConnection.executor&quot;: &quot;Run&quot;,
+    &quot;Application.app.Main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;samantha-edit&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="view" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.TestAppBuilder">
+  <component name="RunManager" selected="Application.app.Main">
+    <configuration name="Main" type="Application" factoryName="Application">
+      <module name="TeamProject" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="MessagingSystemTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="MessagingSystemTest" />
       <module name="TeamProject" />
@@ -111,7 +108,26 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="app.Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <envs>
+        <env name="MONGODB_URI" value="mongodb+srv://samanthalxttt:samanthalxttt123@cluster0.6tcmlgq.mongodb.net/?appName=Cluster0" />
+        <env name="GOOGLE_API_KEY" value="AIzaSyBXp5N97WR6RPh5H4yJIq4n0tPdRf6RBQQ " />
+      </envs>
+      <option name="MAIN_CLASS_NAME" value="app.Main" />
+      <module name="TeamProject" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="app.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
+      <item itemvalue="Application.Main" />
+      <item itemvalue="Application.app.Main" />
       <item itemvalue="Application.TestMongoConnection" />
       <item itemvalue="Application.MessagingSystemTest" />
       <item itemvalue="Application.SearchViewTest" />
@@ -119,6 +135,7 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.app.Main" />
         <item itemvalue="Application.TestAppBuilder" />
         <item itemvalue="Application.TestMongoConnection" />
         <item itemvalue="Application.MessagingSystemTest" />
@@ -130,7 +147,6 @@
     <attachedChunks>
       <set>
         <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.25557.131" />
-        <option value="bundled-js-predefined-d6986cc7102b-b598e85cdad2-JavaScript-IU-252.25557.131" />
       </set>
     </attachedChunks>
   </component>
@@ -161,5 +177,13 @@
     <MESSAGE value="pull main" />
     <MESSAGE value="Merging initial integration code for messaging system, deleting Extract Tags functionality for App builder, and a stepping stone for complete messaging system" />
     <option name="LAST_COMMIT_MESSAGE" value="Merging initial integration code for messaging system, deleting Extract Tags functionality for App builder, and a stepping stone for complete messaging system" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/team_project1$DistanceCalculatorTest.ic" NAME="DistanceCalculatorTest Coverage Results" MODIFIED="1763757075577" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/team_project1$TestWithRealAddresses.ic" NAME="TestWithRealAddresses Coverage Results" MODIFIED="1763757100194" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>.*</FILTER>
+    </SUITE>
   </component>
 </project>

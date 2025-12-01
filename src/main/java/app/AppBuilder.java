@@ -173,7 +173,7 @@ public class AppBuilder {
     }
 
     public AppBuilder addLoggedInView() {
-        loggedInViewModel = new LoggedInViewModel();
+        loggedInViewModel = LoggedInViewModel.getInstance();
         searchListingViewModel = new SearchListingViewModel();
         saveFavoriteViewModel = new SaveFavoriteViewModel();
         checkFavoriteViewModel = new CheckFavoriteViewModel();

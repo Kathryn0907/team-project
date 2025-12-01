@@ -70,7 +70,7 @@ public class Main {
         System.out.println("  2. Browse listings");
         System.out.println("  3. Click ✉️ Messages to chat");
         System.out.println("  4. Click ❤ to save favorites");
-        System.out.println("  5. View listing details and click 🏷️ Get Tags");
+        System.out.println("  5. View listing details");
         System.out.println("\n========================================\n");
     }
 }

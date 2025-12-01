@@ -33,8 +33,8 @@ public class ListingDetailView extends JPanel implements PropertyChangeListener 
     private JLabel descriptionLabel;
     private JLabel photoLabel;
 
-    private static final int PHOTO_WIDTH = 400;
-    private static final int PHOTO_HEIGHT = 230;
+    private static final int PHOTO_WIDTH = 600;
+    private static final int PHOTO_HEIGHT = 400;
 
     public ListingDetailView(ListingDetailViewModel viewModel,
                              CommentController commentController,
@@ -133,9 +133,12 @@ public class ListingDetailView extends JPanel implements PropertyChangeListener 
 
         descriptionLabel.setText("Description: " + l.getDescription());
 
-        if (l.getPhotoPath() != null && !l.getPhotoPath().isEmpty()) {
+        String base64 = l.getPhotoBase64();
+
+        if (base64 != null && !base64.isEmpty()) {
             try {
-                ImageIcon icon = new ImageIcon(l.getPhotoPath());
+                byte[] bytes = java.util.Base64.getDecoder().decode(base64);
+                ImageIcon icon = new ImageIcon(bytes);
                 Image img = icon.getImage();
 
                 int imgW = img.getWidth(null);
@@ -156,7 +159,7 @@ public class ListingDetailView extends JPanel implements PropertyChangeListener 
                     photoLabel.setIcon(null);
                     photoLabel.setText("Photo not available");
                 }
-            } catch (Exception e) {
+            } catch (IllegalArgumentException ex) {
                 photoLabel.setIcon(null);
                 photoLabel.setText("Photo not available");
             }
