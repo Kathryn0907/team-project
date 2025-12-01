@@ -14,16 +14,9 @@ import use_case.filter.*;
 
 import javax.swing.*;
 
-import app.FilterListingsUseCaseFactory;
-import app.SearchListingUseCaseFactory;
-import data_access.InMemoryListingDAO;
 import data_access.GoogleDistanceService;
 import Entities.*;
-import interface_adapter.ViewManagerModel;
-import interface_adapter.filter.FilterListingsController;
-import interface_adapter.listing_detail.ListingDetailViewModel;
 import interface_adapter.search_listings.*;
-import view.SearchView;
 import use_case.filter.*;
 
 import javax.swing.*;
@@ -34,8 +27,23 @@ import interface_adapter.comment.CommentController;
 import view.ListingDetailView;
 import view.ViewManager;
 import java.awt.CardLayout;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Base64;
+import java.awt.BorderLayout;
 
 public class SearchViewTest {
+
+    //Helper: Convert local image file to Base64 string
+    private static String encodeFileToBase64(String path) {
+        try {
+            byte[] bytes = Files.readAllBytes(Paths.get(path));
+            return Base64.getEncoder().encodeToString(bytes);
+        } catch (Exception e) {
+            System.err.println("Failed to read image file: " + path + " -> " + e.getMessage());
+            return null;
+        }
+    }
 
     public static void main(String[] args) {
         System.out.println("========================================");
@@ -54,11 +62,17 @@ public class SearchViewTest {
         String imageBasePath = System.getProperty("user.dir")
                 + "/src/test/resources/images/";
 
+        // Convert each image to Base64
+        String aptBase64 = encodeFileToBase64(imageBasePath + "Modern Downtown Apartment.jpeg");
+        String villaBase64 = encodeFileToBase64(imageBasePath + "Lakeside Villa with Pool.jpeg");
+        String condoBase64 = encodeFileToBase64(imageBasePath + "Modern Condo in Entertainment District.jpeg");
+        String cottageBase64 = encodeFileToBase64(imageBasePath + "Rustic Cottage in the Woods.jpeg");
+
         // Create test listings with proper constructor
         Listing listing1 = new Listing(
                 "Modern Downtown Apartment",
                 user1,
-                imageBasePath + "Modern Downtown Apartment.jpeg",
+                aptBase64,
                 null,  // tags (will add separately)
                 null,  // mainCategories
                 "Beautiful modern apartment in downtown Toronto with subway access",
@@ -78,7 +92,7 @@ public class SearchViewTest {
         Listing listing2 = new Listing(
                 "Lakeside Villa with Pool",
                 user2,
-                imageBasePath + "Lakeside Villa with Pool.jpeg",
+                villaBase64,
                 null,
                 null,
                 "Stunning luxury villa on Muskoka Lake with private pool",
@@ -99,7 +113,7 @@ public class SearchViewTest {
         Listing listing3 = new Listing(
                 "Modern Condo in Entertainment District",
                 user1,
-                imageBasePath + "Modern Condo in Entertainment District.jpeg",
+                condoBase64,
                 null,
                 null,
                 "Stylish condo in the heart of entertainment district",
@@ -119,7 +133,7 @@ public class SearchViewTest {
         Listing listing4 = new Listing(
                 "Rustic Cottage in the Woods",
                 user2,
-                imageBasePath + "Rustic Cottage in the Woods.jpeg",
+                cottageBase64,
                 null,
                 null,
                 "Peaceful cottage surrounded by nature",
@@ -204,20 +218,27 @@ public class SearchViewTest {
                 commentViewModel
         );
 
+        // NEW: Wrap SearchView inside a "logged in" container,
+        //    so that switching to "logged in" shows the SearchView.
+        JPanel loggedInWrapper = new JPanel(new BorderLayout());
+        loggedInWrapper.add(searchView, BorderLayout.CENTER);
+
         // 3. CardLayout + ViewManager: manages SearchView and ListingDetailView screens
         JPanel cardPanel = new JPanel();
         CardLayout cardLayout = new CardLayout();
         cardPanel.setLayout(cardLayout);
 
+        // Register the wrapper as the "logged in" view
         // Add both views to cardPanel
-        cardPanel.add(searchView, searchView.getViewName());
+        // Register the listing detail view
+        cardPanel.add(loggedInWrapper, loggedInViewModel.getViewName());
         cardPanel.add(listingDetailView, ListingDetailViewModel.VIEW_NAME);
 
         // ViewManager listens to ViewManagerModel state changes and switches screens
         ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
 
         // Initial screen is SearchView
-        viewManagerModel.setState(searchView.getViewName());
+        viewManagerModel.setState(loggedInViewModel.getViewName());
         viewManagerModel.firePropertyChange();
 
 
