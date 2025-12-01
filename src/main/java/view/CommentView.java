@@ -12,6 +12,8 @@ import java.beans.PropertyChangeListener;
 import Entities.Listing;
 import Entities.User;
 
+import java.util.List;
+
 public class CommentView extends JPanel implements PropertyChangeListener {
 
     private final CommentController controller;
@@ -42,7 +44,7 @@ public class CommentView extends JPanel implements PropertyChangeListener {
 
         // --- New: comments panel setup ---
         commentsPanel.setLayout(new BoxLayout(commentsPanel, BoxLayout.Y_AXIS));
-        commentsScrollPane.setPreferredSize(new Dimension(100, 250));
+        commentsScrollPane.setPreferredSize(new Dimension(100, 180));
         add(commentsScrollPane, BorderLayout.CENTER);
 
         // input panel
@@ -76,6 +78,7 @@ public class CommentView extends JPanel implements PropertyChangeListener {
 
     public void setListing(Listing listing) {
         this.currentListing = listing;
+        refreshCommentsFromListing();
     }
 
     public void setUser(User user) {
@@ -89,17 +92,22 @@ public class CommentView extends JPanel implements PropertyChangeListener {
         } else if (viewModel.getState().getSuccessMessage() != null) {
             messageLabel.setText(viewModel.getState().getSuccessMessage());
             commentBox.setText("");
+            refreshCommentsFromListing();
         }
+    }
 
-        // === New: refresh comments list ===
-        java.util.List<Comment> comments = viewModel.getState().getComments();
-
+    private void refreshCommentsFromListing() {
         commentsPanel.removeAll();
 
-        if (comments == null || comments.isEmpty()) {
+        List<Comment> commentsToShow = null;
+        if (currentListing != null) {
+            commentsToShow = currentListing.getComments();
+        }
+
+        if (commentsToShow == null || commentsToShow.isEmpty()) {
             commentsPanel.add(new JLabel("No comments yet."));
         } else {
-            for (Comment c : comments) {
+            for (Comment c : commentsToShow) {
                 String author = (c.getUser() != null) ? c.getUser().getUsername() : "Anonymous";
                 String text = "• " + author + ": " + c.getContent();
 
@@ -109,6 +117,7 @@ public class CommentView extends JPanel implements PropertyChangeListener {
                 commentsPanel.add(Box.createVerticalStrut(5));
             }
         }
+
         commentsPanel.revalidate();
         commentsPanel.repaint();
     }

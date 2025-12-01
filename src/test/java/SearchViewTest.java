@@ -51,11 +51,14 @@ public class SearchViewTest {
         dataAccess.addUser(user1);
         dataAccess.addUser(user2);
 
+        String imageBasePath = System.getProperty("user.dir")
+                + "/src/test/resources/images/";
+
         // Create test listings with proper constructor
         Listing listing1 = new Listing(
                 "Modern Downtown Apartment",
                 user1,
-                null,
+                imageBasePath + "Modern Downtown Apartment.jpeg",
                 null,  // tags (will add separately)
                 null,  // mainCategories
                 "Beautiful modern apartment in downtown Toronto with subway access",
@@ -75,7 +78,7 @@ public class SearchViewTest {
         Listing listing2 = new Listing(
                 "Lakeside Villa with Pool",
                 user2,
-                null,
+                imageBasePath + "Lakeside Villa with Pool.jpeg",
                 null,
                 null,
                 "Stunning luxury villa on Muskoka Lake with private pool",
@@ -96,7 +99,7 @@ public class SearchViewTest {
         Listing listing3 = new Listing(
                 "Modern Condo in Entertainment District",
                 user1,
-                null,
+                imageBasePath + "Modern Condo in Entertainment District.jpeg",
                 null,
                 null,
                 "Stylish condo in the heart of entertainment district",
@@ -116,7 +119,7 @@ public class SearchViewTest {
         Listing listing4 = new Listing(
                 "Rustic Cottage in the Woods",
                 user2,
-                null,
+                imageBasePath + "Rustic Cottage in the Woods.jpeg",
                 null,
                 null,
                 "Peaceful cottage surrounded by nature",

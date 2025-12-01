@@ -67,6 +67,21 @@ public class ListingCardPanel extends JPanel {
         pictureLabel.setFont(new Font("Arial", Font.ITALIC, 12));
         pictureLabel.setForeground(Color.GRAY);
 
+        // NEW: load thumbnail from listing photoPath
+        String path = listing.getPhotoPath();
+        if (path != null && !path.isEmpty()) {
+            try {
+                ImageIcon icon = new ImageIcon(path);
+                Image scaled = icon.getImage().getScaledInstance(
+                        150, 120, Image.SCALE_SMOOTH);
+                pictureLabel.setIcon(new ImageIcon(scaled));
+                pictureLabel.setText("");
+            } catch (Exception e) {
+                pictureLabel.setIcon(null);
+                pictureLabel.setText("Photo not available");
+            }
+        }
+
         picturePanel.add(pictureLabel, BorderLayout.CENTER);
         return picturePanel;
     }
