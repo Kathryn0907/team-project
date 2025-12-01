@@ -1,7 +1,6 @@
 package use_case.create_listing;
 
 import Entities.Listing;
-import Entities.User;
 
 /**
  * The Create Listing Interactor.
@@ -19,7 +18,7 @@ public class CreateListingInteractor implements CreateListingInputBoundary {
     public void execute(CreateListingInputData createListingInputData) {
 
         if (createListingInputData.getName() == null || createListingInputData.getName().trim().isEmpty()) {
-            listingPresenter.prepareFailView("Listing Name cannot be empty");
+            listingPresenter.prepareFailView("Listing name cannot be empty");
             return;
         }
         if (createListingInputData.getDescription() == null || createListingInputData.getDescription().trim().isEmpty()) {
@@ -27,22 +26,26 @@ public class CreateListingInteractor implements CreateListingInputBoundary {
             return;
         }
         if (createListingInputData.getPrice() < 0) {
-            listingPresenter.prepareFailView("Price cannot be negative");
+            listingPresenter.prepareFailView("Price must be a positive number");
             return;
         }
         if (createListingInputData.getArea() < 0) {
-            listingPresenter.prepareFailView("Area cannot be negative");
+            listingPresenter.prepareFailView("Area must be a positive number");
             return;
         }
         if (createListingInputData.getBedrooms() < 0 || createListingInputData.getBathrooms() < 0) {
-            listingPresenter.prepareFailView("Bedroom and bathroom counts cannot be negative");
+            listingPresenter.prepareFailView("Bedroom and bathroom counts must be a positive number");
+            return;
+        }
+        if (createListingInputData.getPhotoBase64() == null || createListingInputData.getPhotoBase64().isEmpty()) {
+            listingPresenter.prepareFailView("Please upload a photo.");
             return;
         }
 
         Listing listing = new Listing(
                 createListingInputData.getName(),
                 createListingInputData.getOwner(),
-                createListingInputData.getPhotoPath(),
+                createListingInputData.getPhotoBase64(),
                 createListingInputData.getTags(),
                 createListingInputData.getMainCategories(),
                 createListingInputData.getDescription(),

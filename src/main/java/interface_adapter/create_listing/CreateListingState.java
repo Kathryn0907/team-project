@@ -15,7 +15,7 @@ public class CreateListingState {
     private String bedrooms = "";
     private String bathrooms = "";
     private Listing.BuildingType buildingType = Listing.BuildingType.OTHER;
-    private String photoPath = "";
+    private String photoBase64 = "";
 
     private String nameError;
     private String priceError;
@@ -31,7 +31,7 @@ public class CreateListingState {
     public String getBedrooms() { return bedrooms; }
     public String getBathrooms() { return bathrooms; }
     public Listing.BuildingType getBuildingType() { return buildingType; }
-    public String getPhotoPath() { return photoPath; }
+    public String getPhotoBase64() { return photoBase64; }
     public String getNameError() { return nameError; }
     public String getPriceError() { return priceError; }
     public String getAddressError() { return addressError; }
@@ -46,7 +46,7 @@ public class CreateListingState {
     public void setBedrooms(String bedrooms) { this.bedrooms = bedrooms; }
     public void setBathrooms(String bathrooms) { this.bathrooms = bathrooms; }
     public void setBuildingType(Listing.BuildingType type) { this.buildingType = type; }
-    public void setPhotoPath(String photoPath) { this.photoPath = photoPath; }
+    public void setPhotoBase64(String photoBase64) { this.photoBase64 = photoBase64; }
     public void setNameError(String nameError) { this.nameError = nameError; }
     public void setPriceError(String priceError) { this.priceError = priceError; }
     public void setAddressError(String addressError) { this.addressError = addressError; }
@@ -63,7 +63,7 @@ public class CreateListingState {
                 ", bedrooms='" + bedrooms + '\'' +
                 ", bathrooms='" + bathrooms + '\'' +
                 ", buildingType=" + buildingType +
-                ", photoPath='" + photoPath + '\'' +
+                ", photoBase64='" + photoBase64 + '\'' +
                 '}';
     }
 }
