@@ -55,9 +55,16 @@ public class ProfileView extends JPanel implements PropertyChangeListener {
             viewManagerModel.firePropertyChange();
         });
 
+        JButton cancelAccountButton = new JButton("Cancel Account");
+        cancelAccountButton.addActionListener(e -> {
+            viewManagerModel.setState("cancel account");
+            viewManagerModel.firePropertyChange();
+        });
+
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 10));
         buttonPanel.add(backToSearchButton);
         buttonPanel.add(createListingButton);
+        buttonPanel.add(cancelAccountButton);
 
         header.add(title, BorderLayout.WEST);
         header.add(buttonPanel, BorderLayout.EAST);

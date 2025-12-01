@@ -25,6 +25,7 @@ public class Main {
                 .addSignupView()
                 .addLoginView()
                 .addLoggedInView()
+                .addCancelAccountView()
 
                 // 2. Use cases that create controllers the views need
                 .addSearchListingUseCase()
@@ -40,6 +41,7 @@ public class Main {
                 .addDeleteListingUseCase()
                 .addEditListingUseCase()
                 .addMessagingUseCase()
+                .addCancelAccountUseCase()
 
                 // 4. Hook up login/signup use cases (they just need the viewmodels)
                 .addSignupUseCase()

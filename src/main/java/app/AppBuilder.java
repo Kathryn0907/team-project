@@ -11,6 +11,9 @@ import data_access.GoogleDistanceService;
 import data_access.MongoDBListingDAO;
 import interface_adapter.ProfileViewModel;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.cancel_account.CancelAccountController;
+import interface_adapter.cancel_account.CancelAccountPresenter;
+import interface_adapter.cancel_account.CancelAccountViewModel;
 import interface_adapter.create_listing.CreateListingController;
 import interface_adapter.create_listing.CreateListingPresenter;
 import interface_adapter.create_listing.CreateListingViewModel;
@@ -40,6 +43,9 @@ import interface_adapter.messaging.MessageViewModel;
 import interface_adapter.messaging.MessagePresenter;
 import interface_adapter.extract_tags.ExtractTagsController;
 
+import use_case.cancel_account.CancelAccountInputBoundary;
+import use_case.cancel_account.CancelAccountInteractor;
+import use_case.cancel_account.CancelAccountOutputBoundary;
 import use_case.create_listing.CreateListingInputBoundary;
 import use_case.create_listing.CreateListingInteractor;
 import use_case.create_listing.CreateListingOutputBoundary;
@@ -130,6 +136,8 @@ public class AppBuilder {
     private CommentViewModel commentViewModel;
     private ListingDetailView listingDetailView;
     private ConversationsView conversationsView;
+    private CancelAccountViewModel cancelAccountViewModel;
+    private CancelAccountView cancelAccountView;
 
     // Controllers that will be created in use case methods
     private SearchListingController searchController;
@@ -252,6 +260,13 @@ public class AppBuilder {
         return this;
     }
 
+    public AppBuilder addCancelAccountView() {
+        cancelAccountViewModel = new CancelAccountViewModel();
+        cancelAccountView = new CancelAccountView(cancelAccountViewModel);
+        cardPanel.add(cancelAccountView, cancelAccountView.getViewName());
+        return this;
+    }
+
     public AppBuilder addSignupUseCase() {
         final SignupOutputBoundary signupOutputBoundary = new SignupPresenter(viewManagerModel,
                 signupViewModel, loginViewModel);
@@ -271,6 +286,17 @@ public class AppBuilder {
 
         LoginController loginController = new LoginController(loginInteractor);
         loginView.setLoginController(loginController);
+        return this;
+    }
+
+    public AppBuilder addCancelAccountUseCase() {
+        final CancelAccountOutputBoundary cancelAccountOutputBoundary = new CancelAccountPresenter(cancelAccountViewModel,
+                loginViewModel,viewManagerModel,profileViewModel);
+        final CancelAccountInputBoundary cancelAccountInteractor = new CancelAccountInteractor(
+                mongoUserDAO,cancelAccountOutputBoundary);
+
+        CancelAccountController cancelAccountController = new CancelAccountController(cancelAccountInteractor);
+        cancelAccountView.setCancelAccountController(cancelAccountController);
         return this;
     }
 
@@ -378,7 +404,6 @@ public class AppBuilder {
         return this;
     }
 
-
     public AppBuilder startWebSocketServer() {
         if (mongoMessageDAO == null) {
             System.err.println("❌ Cannot start WebSocket server: MongoDB not initialized");
@@ -465,7 +490,7 @@ public class AppBuilder {
 
         application.add(cardPanel);
 
-        viewManagerModel.setState(signupView.getViewName());
+        viewManagerModel.setState(loginView.getViewName());
         viewManagerModel.firePropertyChange();
 
         return application;

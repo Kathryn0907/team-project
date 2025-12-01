@@ -139,6 +139,10 @@ public class MongoDBExtractToCache {
                 for  (ObjectId listingId : listingsIds) {
                     Listing listing = findListingById(listingId);
                     if (listing != null){user.addFavourite(listing);}
+                    else {
+                        MongoDBUserDAO userDAO = new MongoDBUserDAO();
+                        userDAO.removeFavorite(user.getId(),listingId);
+                    }
                 }
             }
 
