@@ -58,6 +58,7 @@ public class ListingDetailView extends JPanel implements PropertyChangeListener 
         backButton.addActionListener(e -> {
             viewManagerModel.setState("search");
             viewManagerModel.firePropertyChange();
+
         });
         headerPanel.add(backButton, BorderLayout.WEST);
 
