@@ -34,7 +34,7 @@ public class CreateListingView extends JPanel implements PropertyChangeListener 
     private EditListingController editListingController = null;
     private Listing editingTarget = null;
 
-    private final JButton updateButton = new JButton("Update Listing");
+    private final JButton updateButton = new JButton(CreateListingViewModel.UPDATE_LISTING_BUTTON_LABEL);
 
     private final JTextField nameInputField = new JTextField(15);
     private final JTextArea descriptionInputArea = new JTextArea(4, 15);
@@ -46,13 +46,13 @@ public class CreateListingView extends JPanel implements PropertyChangeListener 
     private final JTextField tagInputField = new JTextField(15);
     private final DefaultListModel<String> tagListModel = new DefaultListModel<>();
     private final JList<String> tagList = new JList<>(tagListModel);
-    private final JButton addTagButton = new JButton("Add Tag");
+    private final JButton addTagButton = new JButton(CreateListingViewModel.TAG_BUTTON_LABEL);
 
     private final JComboBox<Listing.BuildingType> buildingTypeDropdown =
             new JComboBox<>(Listing.BuildingType.values());
 
-    private final JButton uploadButton = new JButton("Upload Photo");
-    private final JLabel photoPathLabel = new JLabel("No photo selected");
+    private final JButton uploadButton = new JButton(CreateListingViewModel.PHOTO_LABEL);
+    private final JLabel photoPathLabel = new JLabel(CreateListingViewModel.NO_PHOTO_LABEL);
 
 
     private final JLabel photoPreviewLabel = new JLabel();
@@ -109,7 +109,7 @@ public class CreateListingView extends JPanel implements PropertyChangeListener 
         view.add(new JLabel(CreateListingViewModel.BUILDING_TYPE_LABEL));
         view.add(buildingTypeDropdown);
 
-        view.add(new JLabel("Tags"));
+        view.add(new JLabel(CreateListingViewModel.TAGS_LABEL));
         JPanel tagPanel = new JPanel(new BorderLayout(3,3));
         addTagButton.setPreferredSize(new Dimension(80, 25));
         tagPanel.add(tagInputField, BorderLayout.NORTH);
@@ -187,7 +187,7 @@ public class CreateListingView extends JPanel implements PropertyChangeListener 
 
         state.setPhotoBase64(listing.getPhotoBase64());
         createListingViewModel.setState(state);
-        photoPathLabel.setText("No photo selected");
+        photoPathLabel.setText(CreateListingViewModel.NO_PHOTO_LABEL);
 
         if (listing.getPhotoBase64() != null && !listing.getPhotoBase64().isEmpty()) {
             try {
@@ -203,28 +203,28 @@ public class CreateListingView extends JPanel implements PropertyChangeListener 
         updateButton.setVisible(true);
     }
 
-    public void resetToCreateMode() {
-        isEditMode = false;
-        editingTarget = null;
-
-        nameInputField.setText("");
-        descriptionInputArea.setText("");
-        priceField.setText("");
-        addressField.setText("");
-        areaField.setText("");
-        bedroomsField.setText("");
-        bathroomsField.setText("");
-        buildingTypeDropdown.setSelectedIndex(0);
-        photoPathLabel.setText("No photo selected");
-        photoPreviewLabel.setIcon(null);
-
-        CreateListingState state = createListingViewModel.getState();
-        state.setPhotoBase64("");
-        createListingViewModel.setState(state);
-
-        createButton.setVisible(true);
-        updateButton.setVisible(false);
-    }
+//    public void resetToCreateMode() {
+//        isEditMode = false;
+//        editingTarget = null;
+//
+//        nameInputField.setText("");
+//        descriptionInputArea.setText("");
+//        priceField.setText("");
+//        addressField.setText("");
+//        areaField.setText("");
+//        bedroomsField.setText("");
+//        bathroomsField.setText("");
+//        buildingTypeDropdown.setSelectedIndex(0);
+//        photoPathLabel.setText(CreateListingViewModel.NO_PHOTO_LABEL);
+//        photoPreviewLabel.setIcon(null);
+//
+//        CreateListingState state = createListingViewModel.getState();
+//        state.setPhotoBase64("");
+//        createListingViewModel.setState(state);
+//
+//        createButton.setVisible(true);
+//        updateButton.setVisible(false);
+//    }
 
     private String encodeFileToBase64(File file) {
         try {
@@ -328,61 +328,84 @@ public class CreateListingView extends JPanel implements PropertyChangeListener 
     }
 
     private void setupButtonListeners() {
-        createButton.addActionListener(e -> {
+        createButtonAction();
 
-            double price;
-            try {
-                price = Double.parseDouble(priceField.getText());
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this, "Price must be a positive number.");
-                return;
-            }
+        uploadButtonAction();
 
-            double area;
-            try {
-                area = Double.parseDouble(areaField.getText());
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this, "Area must be a positive number.");
-                return;
-            }
+        updateButtonAction();
 
-            int bedrooms = 0;
-            try {
-                bedrooms = Integer.parseInt(bedroomsField.getText());
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this, "Bedrooms must be a whole positive number.");
-                return;
-            }
+        tagButtonAction();
+    }
 
-            int bathrooms = 0;
-            try {
-                bathrooms = Integer.parseInt(bathroomsField.getText());
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this, "Bathrooms must be a whole positive number.");
-                return;
-            }
+    private void tagButtonAction() {
+        addTagButton.addActionListener(e -> {
+            String tag = tagInputField.getText().trim();
+            if (!tag.isEmpty() && !tagListModel.contains(tag)) {
+                tagListModel.addElement(tag);
 
-            if (createListingController != null) {
                 CreateListingState state = createListingViewModel.getState();
+                state.setTags(java.util.Collections.list(tagListModel.elements()));
+                createListingViewModel.setState(state);
 
-                createListingController.execute(
-                        nameInputField.getText(),
-                        state.getPhotoBase64(),
-                        null,
-                        null,
-                        descriptionInputArea.getText(),
-                        price,
-                        addressField.getText(),
-                        1.0,
-                        area,
-                        bedrooms,
-                        bathrooms,
-                        buildingTypeDropdown.getItemAt(buildingTypeDropdown.getSelectedIndex()),
-                        true
-                );
+                tagInputField.setText("");
             }
         });
+    }
 
+    private void updateButtonAction() {
+        updateButton.addActionListener(e -> {
+
+            if (editListingController == null || editingTarget == null) {
+                return;
+            }
+
+            double price;
+            double area;
+            int bedrooms;
+            int bathrooms;
+
+            try { price = Double.parseDouble(priceField.getText()); }
+            catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Price must be positive number.");
+                return;
+            }
+
+            try { area = Double.parseDouble(areaField.getText()); }
+            catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Area must be a positive numbert.");
+                return;
+            }
+
+            try { bedrooms = Integer.parseInt(bedroomsField.getText()); }
+            catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Bedrooms must be a positive whole number.");
+                return;
+            }
+
+            try { bathrooms = Integer.parseInt(bathroomsField.getText()); }
+            catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Bathrooms must be a positive whole number.");
+                return;
+            }
+
+            editingTarget.setName(nameInputField.getText());
+            editingTarget.setDescription(descriptionInputArea.getText());
+            editingTarget.setPrice(price);
+            editingTarget.setAddress(addressField.getText());
+            editingTarget.setArea(area);
+            editingTarget.setBedrooms(bedrooms);
+            editingTarget.setBathrooms(bathrooms);
+            editingTarget.setBuildingType(
+                    buildingTypeDropdown.getItemAt(buildingTypeDropdown.getSelectedIndex()));
+
+            CreateListingState state = createListingViewModel.getState();
+            editingTarget.setPhotoBase64(state.getPhotoBase64());
+            editingTarget.setTags(state.getTags());
+            editListingController.saveEdits(editingTarget);
+        });
+    }
+
+    private void uploadButtonAction() {
         uploadButton.addActionListener(e -> {
             JFileChooser chooser = new JFileChooser();
             int result = chooser.showOpenDialog(this);
@@ -404,66 +427,62 @@ public class CreateListingView extends JPanel implements PropertyChangeListener 
                 }
             }
         });
+    }
 
-        updateButton.addActionListener(e -> {
+    private void createButtonAction() {
+        createButton.addActionListener(e -> {
 
-            if (editListingController == null || editingTarget == null) {
+            double price;
+            try {
+                price = Double.parseDouble(priceField.getText());
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Price must be a positive number.");
                 return;
             }
 
-            double price, area;
-            int bedrooms, bathrooms;
-
-            try { price = Double.parseDouble(priceField.getText()); }
-            catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this, "Price must be positive number.");
+            double area;
+            try {
+                area = Double.parseDouble(areaField.getText());
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Area must be a positive number.");
                 return;
             }
 
-            try { area = Double.parseDouble(areaField.getText()); }
-            catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this, "Area must be a positive numbert.");
+            int bedrooms;
+            try {
+                bedrooms = Integer.parseInt(bedroomsField.getText());
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Bedrooms must be a whole positive number.");
                 return;
             }
 
-            try { bedrooms = Integer.parseInt(bedroomsField.getText()); }
-            catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this, "Bedrooms must be a whole number.");
+            int bathrooms;
+            try {
+                bathrooms = Integer.parseInt(bathroomsField.getText());
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this,
+                        "Bathrooms must be a whole positive number.");
                 return;
             }
 
-            try { bathrooms = Integer.parseInt(bathroomsField.getText()); }
-            catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this, "Bathrooms must be a whole number.");
-                return;
-            }
-
-            editingTarget.setName(nameInputField.getText());
-            editingTarget.setDescription(descriptionInputArea.getText());
-            editingTarget.setPrice(price);
-            editingTarget.setAddress(addressField.getText());
-            editingTarget.setArea(area);
-            editingTarget.setBedrooms(bedrooms);
-            editingTarget.setBathrooms(bathrooms);
-            editingTarget.setBuildingType(
-                    buildingTypeDropdown.getItemAt(buildingTypeDropdown.getSelectedIndex()));
-
-            CreateListingState state = createListingViewModel.getState();
-            editingTarget.setPhotoBase64(state.getPhotoBase64());
-            editingTarget.setTags(state.getTags());
-            editListingController.saveEdits(editingTarget);
-        });
-
-        addTagButton.addActionListener(e -> {
-            String tag = tagInputField.getText().trim();
-            if (!tag.isEmpty() && !tagListModel.contains(tag)) {
-                tagListModel.addElement(tag);
-
+            if (createListingController != null) {
                 CreateListingState state = createListingViewModel.getState();
-                state.setTags(java.util.Collections.list(tagListModel.elements()));
-                createListingViewModel.setState(state);
 
-                tagInputField.setText("");
+                createListingController.execute(
+                        nameInputField.getText(),
+                        state.getPhotoBase64(),
+                        null,
+                        null,
+                        descriptionInputArea.getText(),
+                        price,
+                        addressField.getText(),
+                        1.0,
+                        area,
+                        bedrooms,
+                        bathrooms,
+                        buildingTypeDropdown.getItemAt(buildingTypeDropdown.getSelectedIndex()),
+                        true
+                );
             }
         });
     }
