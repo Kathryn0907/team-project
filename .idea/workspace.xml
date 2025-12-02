@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4233ef43-aa86-4f3e-a990-e26817d04b73" name="Changes" comment="google api working">
+    <list default="true" id="4233ef43-aa86-4f3e-a990-e26817d04b73" name="Changes" comment="change the unit for filter">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/use_case/filter/FilterListingsInteractor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/use_case/filter/FilterListingsInteractor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/use_case/filter/FilterListingsInteractorTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/use_case/filter/FilterListingsInteractorTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,12 +29,22 @@
     &quot;assignee&quot;: &quot;monashat77&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/Kathryn0907/team-project.git&quot;,
-    &quot;accountId&quot;: &quot;6f404bc1-a14f-41e9-b538-da00e32c3acd&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/Kathryn0907/team-project.git",
+    "accountId": "6f404bc1-a14f-41e9-b538-da00e32c3acd"
+  },
+  "recentNewPullRequestHead": {
+    "server": {
+      "useHttp": false,
+      "host": "github.com",
+      "port": null,
+      "suffix": null
+    },
+    "owner": "Kathryn0907",
+    "repository": "team-project"
   }
-}</component>
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
 }</component>
@@ -51,10 +61,11 @@
     "Application.TestAppBuilder.executor": "Run",
     "Application.TestMongoConnection.executor": "Run",
     "Application.app.Main.executor": "Run",
+    "JUnit.FilterListingsInteractorTest.executor": "Coverage",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "samantha-edit",
+    "git-widget-placeholder": "#88 on samantha-edit",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -69,7 +80,7 @@
       <recent name="view" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.app.Main">
+  <component name="RunManager" selected="JUnit.FilterListingsInteractorTest">
     <configuration name="Main" type="Application" factoryName="Application">
       <module name="TeamProject" />
       <method v="2">
@@ -78,13 +89,6 @@
     </configuration>
     <configuration name="MessagingSystemTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="MessagingSystemTest" />
-      <module name="TeamProject" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="SearchViewTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="SearchViewTest" />
       <module name="TeamProject" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -125,21 +129,36 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="FilterListingsInteractorTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="TeamProject" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="use_case.filter.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="use_case.filter" />
+      <option name="MAIN_CLASS_NAME" value="use_case.filter.FilterListingsInteractorTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
       <item itemvalue="Application.Main" />
       <item itemvalue="Application.app.Main" />
       <item itemvalue="Application.TestMongoConnection" />
       <item itemvalue="Application.MessagingSystemTest" />
-      <item itemvalue="Application.SearchViewTest" />
       <item itemvalue="Application.TestAppBuilder" />
+      <item itemvalue="JUnit.FilterListingsInteractorTest" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.FilterListingsInteractorTest" />
         <item itemvalue="Application.app.Main" />
         <item itemvalue="Application.TestAppBuilder" />
         <item itemvalue="Application.TestMongoConnection" />
         <item itemvalue="Application.MessagingSystemTest" />
-        <item itemvalue="Application.SearchViewTest" />
       </list>
     </recent_temporary>
   </component>
@@ -168,7 +187,15 @@
       <updated>1764021885048</updated>
       <workItem from="1764021886138" duration="3927000" />
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="change the unit for filter">
+      <option name="closed" value="true" />
+      <created>1764665668006</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1764665668006</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -177,13 +204,17 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="pull main" />
     <MESSAGE value="Merging initial integration code for messaging system, deleting Extract Tags functionality for App builder, and a stepping stone for complete messaging system" />
-    <option name="LAST_COMMIT_MESSAGE" value="Merging initial integration code for messaging system, deleting Extract Tags functionality for App builder, and a stepping stone for complete messaging system" />
+    <MESSAGE value="change the unit for filter" />
+    <option name="LAST_COMMIT_MESSAGE" value="change the unit for filter" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
     <select />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/team_project1$FilterListingsInteractorTest.ic" NAME="FilterListingsInteractorTest Coverage Results" MODIFIED="1764676996119" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>use_case.filter.*</FILTER>
+    </SUITE>
     <SUITE FILE_PATH="coverage/team_project1$DistanceCalculatorTest.ic" NAME="DistanceCalculatorTest Coverage Results" MODIFIED="1763757075577" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
       <FILTER>.*</FILTER>
     </SUITE>

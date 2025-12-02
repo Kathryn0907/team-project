@@ -5,9 +5,7 @@ import Entities.Listing;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Implements the Filter Listings use case.
- */
+
 public class FilterListingsInteractor implements FilterListingsInputBoundary {
 
     private final FilterListingsDataAccessInterface listingDataAccess;
