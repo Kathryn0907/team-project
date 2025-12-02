@@ -10,7 +10,7 @@ import java.beans.PropertyChangeListener;
 /**
  * The View Manager for the program. It listens for property change events
  * in the ViewManagerModel and updates which View should be visible.
- * Updated with Conversations view support.
+ * Updated with Conversations view support and ProfileView auto-refresh.
  */
 public class ViewManager implements PropertyChangeListener {
     private final CardLayout cardLayout;
@@ -29,7 +29,7 @@ public class ViewManager implements PropertyChangeListener {
         if (evt.getPropertyName().equals("state")) {
             final String viewModelName = (String) evt.getNewValue();
 
-            // Special handling for conversations view - check if it exists
+            // Special handling for conversations view
             if ("conversations".equals(viewModelName)) {
                 boolean conversationsViewExists = false;
                 for (Component comp : views.getComponents()) {
@@ -42,7 +42,6 @@ public class ViewManager implements PropertyChangeListener {
 
                 if (!conversationsViewExists) {
                     System.err.println("⚠️  Conversations view not found. Make sure user is logged in.");
-                    // Don't try to show the view if it doesn't exist
                     return;
                 }
             }
@@ -61,6 +60,15 @@ public class ViewManager implements PropertyChangeListener {
                 for (Component comp : views.getComponents()) {
                     if (comp instanceof ConversationsView) {
                         ((ConversationsView) comp).refreshConversations();
+                        break;
+                    }
+                }
+            } else if ("profile".equals(viewModelName)) {
+                // NEW: Auto-load user's listings from MongoDB when switching to profile
+                for (Component comp : views.getComponents()) {
+                    if (comp instanceof ProfileView) {
+                        ((ProfileView) comp).onViewShown();
+                        System.out.println("✅ Auto-loading profile listings from MongoDB");
                         break;
                     }
                 }
