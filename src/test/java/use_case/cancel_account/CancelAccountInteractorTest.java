@@ -55,6 +55,83 @@ public class CancelAccountInteractorTest {
         CancelAccountInputBoundary cancelAccountInteractor = new CancelAccountInteractor(userRepository, successPresenter);
         cancelAccountInteractor.execute(inputData);
 
+    }
 
+    @Test
+    public void testWrongPasswordCancelAccount() {
+        CancelAccountInputData inputData = new CancelAccountInputData("Jason", "pass");
+        CancelAccountDataAccessInterface userRepository = new InMemoryListingDataAccessObject();
+
+        User user1 = new User("Jason", "password");
+        userRepository.addUser(user1);
+        User user2 = new User("Paul", "password");
+        userRepository.addUser(user2);
+
+        Listing listing1 = new Listing();
+        listing1.setOwner(user1);
+        Listing listing2 = new Listing();
+        listing2.setOwner(user2);
+
+        userRepository.addListing(listing1);
+        userRepository.addListing(listing2);
+
+        CancelAccountOutputBoundary wrongPasswordPresenter = new CancelAccountOutputBoundary() {
+            @Override
+            public void prepareSuccess(CancelAccountOutputData cancelAccountOutputData) {
+                fail("Use case failure is unexpected.");
+            }
+
+            @Override
+            public void prepareFailure(String message) {
+                assertEquals("Wrong password", message);
+            }
+
+            @Override
+            public void back() {
+                fail("Use case failure is unexpected.");
+            }
+        };
+
+        CancelAccountInputBoundary cancelAccountInteractor = new CancelAccountInteractor(userRepository, wrongPasswordPresenter);
+        cancelAccountInteractor.execute(inputData);
+    }
+
+    @Test
+    public void testUserNotExistCancelAccount() {
+        CancelAccountInputData inputData = new CancelAccountInputData("Jack", "password");
+        CancelAccountDataAccessInterface userRepository = new InMemoryListingDataAccessObject();
+
+        User user1 = new User("Jason", "password");
+        userRepository.addUser(user1);
+        User user2 = new User("Paul", "password");
+        userRepository.addUser(user2);
+
+        Listing listing1 = new Listing();
+        listing1.setOwner(user1);
+        Listing listing2 = new Listing();
+        listing2.setOwner(user2);
+
+        userRepository.addListing(listing1);
+        userRepository.addListing(listing2);
+
+        CancelAccountOutputBoundary userNotExistPresenter = new CancelAccountOutputBoundary() {
+            @Override
+            public void prepareSuccess(CancelAccountOutputData cancelAccountOutputData) {
+                fail("Use case failure is unexpected.");
+            }
+
+            @Override
+            public void prepareFailure(String message) {
+                assertEquals("User not found", message);
+            }
+
+            @Override
+            public void back() {
+                fail("Use case failure is unexpected.");
+            }
+        };
+
+        CancelAccountInputBoundary cancelAccountInteractor = new CancelAccountInteractor(userRepository, userNotExistPresenter);
+        cancelAccountInteractor.execute(inputData);
     }
 }
