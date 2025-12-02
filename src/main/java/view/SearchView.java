@@ -14,10 +14,9 @@ import java.util.ArrayList;
 
 import interface_adapter.ViewManagerModel;
 import interface_adapter.listing_detail.ListingDetailViewModel;
-
 /**
  * Search View - Keyword search interface with results display
- * Updated with Messages button
+ * Updated with Conversations button
  */
 public class SearchView extends JPanel implements PropertyChangeListener {
 
@@ -30,7 +29,7 @@ public class SearchView extends JPanel implements PropertyChangeListener {
 
     private final JTextField keywordField;
     private final JButton searchButton;
-    private final JButton messagesButton;
+    private final JButton conversationsButton;
     private final JButton viewFavoritesButton;
     private final JPanel resultsPanel;
     private final JScrollPane resultsScrollPane;
@@ -65,12 +64,12 @@ public class SearchView extends JPanel implements PropertyChangeListener {
 
         // Right side: Action buttons
         JPanel actionPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        messagesButton = new JButton("✉️ Messages");
-        messagesButton.setFont(new Font("Arial", Font.BOLD, 12));
+        conversationsButton = new JButton("💬 Conversations");
+        conversationsButton.setFont(new Font("Arial", Font.BOLD, 12));
         viewFavoritesButton = new JButton("❤ View My Favorites");
         viewFavoritesButton.setFont(new Font("Arial", Font.BOLD, 12));
 
-        actionPanel.add(messagesButton);
+        actionPanel.add(conversationsButton);
         actionPanel.add(viewFavoritesButton);
 
         topPanel.add(searchPanel, BorderLayout.WEST);
@@ -91,7 +90,6 @@ public class SearchView extends JPanel implements PropertyChangeListener {
         this.add(topPanel, BorderLayout.NORTH);
         this.add(resultsScrollPane, BorderLayout.CENTER);
 
-        // Search button action
         searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -99,7 +97,6 @@ public class SearchView extends JPanel implements PropertyChangeListener {
             }
         });
 
-        // Enter key triggers search
         keywordField.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -107,8 +104,7 @@ public class SearchView extends JPanel implements PropertyChangeListener {
             }
         });
 
-        // Messages button action
-        messagesButton.addActionListener(new ActionListener() {
+        conversationsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (viewManagerModel != null) {
@@ -118,7 +114,6 @@ public class SearchView extends JPanel implements PropertyChangeListener {
             }
         });
 
-        // View Favorites button action
         viewFavoritesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

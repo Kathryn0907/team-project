@@ -5,10 +5,6 @@ import java.awt.*;
 import java.net.URI;
 
 import data_access.*;
-import data_access.InMemoryListingDataAccessObject;
-import data_access.InMemoryUserDataAccessObject;
-import data_access.GoogleDistanceService;
-import data_access.MongoDBListingDAO;
 import interface_adapter.ProfileViewModel;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.cancel_account.CancelAccountController;
@@ -41,7 +37,6 @@ import interface_adapter.check_favorite.CheckFavoriteViewModel;
 import interface_adapter.messaging.MessageController;
 import interface_adapter.messaging.MessageViewModel;
 import interface_adapter.messaging.MessagePresenter;
-import interface_adapter.extract_tags.ExtractTagsController;
 
 import use_case.cancel_account.CancelAccountInputBoundary;
 import use_case.cancel_account.CancelAccountInteractor;
@@ -90,11 +85,9 @@ import view.ViewManager;
 import interface_adapter.listing_detail.ListingDetailViewModel;
 import interface_adapter.comment.CommentViewModel;
 import interface_adapter.comment.CommentController;
-import view.ListingDetailView;
 
 /**
- * AppBuilder with Favorites functionality integrated
- * Updated by Jonathan (Use Case 9 & 14)
+ * AppBuilder with complete Conversations + WebSocket integration
  */
 public class AppBuilder {
     private final JPanel cardPanel = new JPanel();
@@ -102,6 +95,9 @@ public class AppBuilder {
 
     final ViewManagerModel viewManagerModel = ViewManagerModel.getInstance();
     ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
+
+    // Singleton instance for accessing from presenters
+    private static AppBuilder instance;
 
     // Data access objects
     public final InMemoryUserDataAccessObject userDataAccessObject = new InMemoryUserDataAccessObject();
@@ -145,13 +141,15 @@ public class AppBuilder {
     private SaveFavoriteController saveController;
     private CheckFavoriteController checkController;
     private MessageController messageController;
-    private ExtractTagsController extractTagsController;
 
     private String currentUsername;
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
         userDataAccessObject.setListingDataAccessObject(listingDataAccessObject);
+
+        // Set singleton instance
+        instance = this;
 
         // Initialize MongoDB DAOs
         try {
@@ -164,6 +162,13 @@ public class AppBuilder {
             System.err.println("❌ Failed to initialize MongoDB: " + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Get the singleton instance of AppBuilder
+     */
+    public static AppBuilder getInstance() {
+        return instance;
     }
 
     public AppBuilder addSignupView() {
@@ -245,7 +250,21 @@ public class AppBuilder {
     public AppBuilder addConversationsView(String username) {
         this.currentUsername = username;
 
-        if (mongoMessageDAO != null && mongoUserDAO != null && chatClient != null) {
+        if (mongoMessageDAO != null && mongoUserDAO != null) {
+            // Create WebSocket client for this user
+            try {
+                URI serverUri = new URI("ws://localhost:" + Config.getWebSocketPort());
+                chatClient = new ChatClient(serverUri, username);
+                chatClient.connect();
+
+                // Wait for connection
+                Thread.sleep(500);
+
+                System.out.println("✅ WebSocket client connected for user: " + username);
+            } catch (Exception e) {
+                System.err.println("❌ Failed to connect WebSocket client: " + e.getMessage());
+            }
+
             conversationsView = new ConversationsView(
                     username,
                     viewManagerModel,
@@ -255,6 +274,9 @@ public class AppBuilder {
                     chatClient
             );
             cardPanel.add(conversationsView, "conversations");
+            System.out.println("✅ Conversations view added for user: " + username);
+        } else {
+            System.err.println("❌ Cannot add conversations view - MongoDB DAOs not initialized");
         }
 
         return this;
@@ -375,6 +397,7 @@ public class AppBuilder {
 
         return this;
     }
+
     public AppBuilder addMessagingUseCase() {
         if (mongoMessageDAO != null) {
             messageViewModel = new MessageViewModel();
@@ -447,25 +470,6 @@ public class AppBuilder {
         return this;
     }
 
-    public AppBuilder connectWebSocketClient(String username) {
-        try {
-            URI serverUri = new URI("ws://localhost:" + Config.getWebSocketPort());
-            chatClient = new ChatClient(serverUri, username);
-            chatClient.connect();
-
-            // Wait for connection
-            Thread.sleep(500);
-
-            System.out.println("✅ WebSocket client connected for user: " + username);
-
-        } catch (Exception e) {
-            System.err.println("❌ Failed to connect WebSocket client: " + e.getMessage());
-            e.printStackTrace();
-        }
-
-        return this;
-    }
-
     public AppBuilder rebuildLoggedInView() {
         // Now recreate LoggedInView with all the controllers
         cardPanel.remove(loggedInView);
@@ -481,6 +485,30 @@ public class AppBuilder {
         cardPanel.add(loggedInView, loggedInView.getViewName());
 
         return this;
+    }
+
+    /**
+     * Adds conversations view dynamically after user logs in.
+     * Call this method after successful login to initialize WebSocket client.
+     */
+    public void initializeConversationsForUser(String username) {
+        // Remove existing conversations view if any
+        for (Component comp : cardPanel.getComponents()) {
+            if (comp instanceof ConversationsView) {
+                cardPanel.remove(comp);
+                break;
+            }
+        }
+
+        // Close existing chat client if any
+        if (chatClient != null && chatClient.isOpen()) {
+            chatClient.close();
+        }
+
+        // Add new conversations view with WebSocket client
+        addConversationsView(username);
+
+        System.out.println("✅ Conversations initialized for user: " + username);
     }
 
 

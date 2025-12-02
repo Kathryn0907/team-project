@@ -272,6 +272,7 @@ public class TestAppBuilder {
 
                         // 3. Views that need those controllers
                         .addCheckFavoriteView()
+                        .addProfileView()
                         .addMessagingUseCase()
 
                         // 4. Hook up auth use cases (these just need VMs)
