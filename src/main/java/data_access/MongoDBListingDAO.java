@@ -2,21 +2,23 @@ package data_access;
 
 import Entities.Comment;
 import Entities.Listing;
+import Entities.User;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import use_case.create_listing.CreateListingDataAccessInterface;
+import use_case.delete_listing.DeleteListingDataAccessInterface;
+import use_case.edit_listing.EditListingDataAccessInterface;
 import use_case.filter.FilterListingsDataAccessInterface;
 import use_case.search_listings.SearchListingDataAccessInterface;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class MongoDBListingDAO implements CreateListingDataAccessInterface,
         FilterListingsDataAccessInterface,
-        SearchListingDataAccessInterface {
+        SearchListingDataAccessInterface, DeleteListingDataAccessInterface, EditListingDataAccessInterface {
 
     private final MongoCollection<Document> listingsCollection;
     private MongoDBExtractToCache data;
@@ -50,7 +52,7 @@ public class MongoDBListingDAO implements CreateListingDataAccessInterface,
                 .append("id", listing.getId())
                 .append("name", listing.getName())
                 .append("owner_id", listing.getOwner().getId())
-                .append("photoPath", listing.getPhotoPath())
+                .append("photoBase64", listing.getPhotoBase64())
                 .append("tags", listing.getTags())
                 .append("mainCategories", listing.getMainCategories())
                 .append("description", listing.getDescription())
@@ -69,13 +71,10 @@ public class MongoDBListingDAO implements CreateListingDataAccessInterface,
     }
 
     /**
+     * Delete the listing from Database.
+     * @param listing The listing.
+     */
     @Override
-    // this is temporary to satisfy the interface requirement, will move to saveListing later after verifying everything works
-    public void save(Listing listing) {
-        saveListing(listing);
-    }
-    **/
-
     public void deleteListing(Listing listing) {
         ObjectId listingId = listing.getId();
         if (listingsCollection.find(Filters.eq("id", listingId)).first() != null) {
@@ -84,6 +83,7 @@ public class MongoDBListingDAO implements CreateListingDataAccessInterface,
             System.out.println("Listing with id: " + listingId + " and name: "
                     + listing.getName() + " not found in Database");
         }
+        refreshData();
     }
 
     /**
@@ -129,5 +129,51 @@ public class MongoDBListingDAO implements CreateListingDataAccessInterface,
             }
         }
         return listings;
+    }
+
+    public void addListingToUser(User user, Listing listing) {
+        user.addMyListing(listing);
+        MongoDBUserDAO userDAO = new MongoDBUserDAO();
+        userDAO.saveUser(user);
+    }
+
+    @Override
+    public void removeListingFromUser(ObjectId ownerId, Listing listing) {
+        MongoDBUserDAO userDAO = new MongoDBUserDAO();
+        User owner = userDAO.findUserById(ownerId);
+
+        if (owner != null) {
+            owner.removeMyListing(listing);
+            userDAO.saveUser(owner);
+        }
+    }
+    @Override
+    public void update(Listing listing) {
+        Document doc = new Document()
+                .append("id", listing.getId())
+                .append("name", listing.getName())
+                .append("owner_id", listing.getOwner().getId())
+                .append("photoBase64", listing.getPhotoBase64())
+                .append("tags", listing.getTags())
+                .append("mainCategories", listing.getMainCategories())
+                .append("description", listing.getDescription())
+                .append("price", listing.getPrice())
+                .append("address", listing.getAddress())
+                .append("distance", listing.getDistance())
+                .append("area", listing.getArea())
+                .append("bedrooms", listing.getBedrooms())
+                .append("bathrooms", listing.getBathrooms())
+                .append("buildingType", listing.getBuildingType().name())
+                .append("active", listing.isActive())
+                .append("comments", listing.getComments()
+                        .stream().map(c -> c.getIdForDB()).collect(java.util.stream.Collectors.toList())
+
+                );
+        listingsCollection.replaceOne(
+                Filters.eq("id", listing.getId()),
+                doc
+        );
+
+        refreshData();
     }
 }

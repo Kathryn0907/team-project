@@ -20,15 +20,16 @@ public class SaveFavoritePresenter implements SaveFavoriteOutputBoundary {
 
         if (outputData.isAlreadyInFavourites()) {
             state.setMessage("Listing \"" + outputData.getListingName()
-                    + "\" is already in your favourites.");
+                    + "\" was removed from favourites.");
         } else {
             state.setMessage("Listing \"" + outputData.getListingName()
                     + "\" was added to favourites.");
         }
-        state.setError(null);
 
+        state.setError(null);
         saveFavoriteViewModel.firePropertyChange();
     }
+
 
     @Override
     public void prepareFailView(String error) {

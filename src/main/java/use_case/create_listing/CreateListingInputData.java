@@ -14,7 +14,7 @@ public class CreateListingInputData {
 
     private String name;
     private User owner;
-    private String photoPath;
+    private String photoBase64;
 
     private List<String> tags;
     private List<String> mainCategories;
@@ -36,7 +36,7 @@ public class CreateListingInputData {
 
     public CreateListingInputData(String name,
                                   User owner,
-                                  String photoPath,
+                                  String photoBase64,
                                   List<String> tags,
                                   List<String> mainCategories,
                                   String description,
@@ -46,11 +46,11 @@ public class CreateListingInputData {
                                   double area,
                                   int bedrooms,
                                   int bathrooms,
-                                  Listing.BuildingType buildingType,  // NEW
+                                  Listing.BuildingType buildingType,
                                   boolean active) {
         this.name = name;
         this.owner = owner;
-        this.photoPath = photoPath;
+        this.photoBase64 = photoBase64;
         this.tags = tags;
         this.mainCategories = mainCategories;
         this.description = description;
@@ -66,7 +66,7 @@ public class CreateListingInputData {
 
     String getName() { return name; }
     User getOwner() { return owner; }
-    String getPhotoPath() { return photoPath; }
+    String getPhotoBase64() { return photoBase64; }
     List<String> getTags() { return tags; }
     List<String> getMainCategories() { return mainCategories; }
     String getDescription() { return description; }

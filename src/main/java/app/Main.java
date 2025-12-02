@@ -21,22 +21,38 @@ public class Main {
 
         // Build the application
         JFrame application = appBuilder
-                .addLoginView()
+                // 1. Basic views
                 .addSignupView()
+                .addLoginView()
                 .addLoggedInView()
+                .addCancelAccountView()
+
+                // 2. Use cases that create controllers the views need
+                .addSearchListingUseCase()
+                .addSaveFavoriteUseCase()      // sets saveController
+                .addCheckFavoriteUseCase()     // sets checkController
+
+                // 3. Views that depend on those controllers / viewmodels
                 .addCheckFavoriteView()
                 .addProfileView()
                 .addCreateListingView()
+                .addCreateListingUseCase()
+                .addListingDetailViewAndCommentUseCase()
+                .addDeleteListingUseCase()
+                .addEditListingUseCase()
+                .addMessagingUseCase()
+                .addCancelAccountUseCase()
+
+                // 4. Hook up login/signup use cases (they just need the viewmodels)
                 .addSignupUseCase()
                 .addLoginUseCase()
-                .addSearchListingUseCase()
-                .addListingDetailViewAndCommentUseCase()
-                .addSaveFavoriteUseCase()      // Add save favorite use case
-                .rebuildLoggedInView()         // Rebuild with all controllers
-                .addCreateListingUseCase()
-                .addCheckFavoriteUseCase()
-                .addMessagingUseCase()
+
+                // 5. Now that search/save/check controllers exist, rebuild LoggedInView with them
+                .rebuildLoggedInView()
+
+                // 6. Finish
                 .build();
+
 
         application.pack();
         application.setSize(1200, 800);
@@ -56,7 +72,7 @@ public class Main {
         System.out.println("  2. Browse listings");
         System.out.println("  3. Click ✉️ Messages to chat");
         System.out.println("  4. Click ❤ to save favorites");
-        System.out.println("  5. View listing details and click 🏷️ Get Tags");
+        System.out.println("  5. View listing details");
         System.out.println("\n========================================\n");
     }
 }

@@ -52,6 +52,8 @@ public class CancelAccountPresenter implements CancelAccountOutputBoundary {
 
     @Override
     public void back() {
+        cancelAccountViewModel.setState(new CancelAccountState());
+        cancelAccountViewModel.firePropertyChange();
         // Back to profile.
         viewManagerModel.setState(profileViewModel.getViewName());
         viewManagerModel.firePropertyChange();

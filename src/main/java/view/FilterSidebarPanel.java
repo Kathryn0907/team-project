@@ -18,49 +18,119 @@ public class FilterSidebarPanel extends JPanel {
     private final JTextField maxAreaField = new JTextField(6);
     private final JTextField minBedroomsField = new JTextField(4);
     private final JTextField minBathroomsField = new JTextField(4);
-    private final JComboBox<Listing.BuildingType> buildingTypeComboBox =
-            new JComboBox<>(Listing.BuildingType.values());
+    private final JComboBox<String> buildingTypeComboBox;
 
     private final JButton applyButton = new JButton("Filter");
+    private final JButton resetButton = new JButton("Clear Filters");
 
     public FilterSidebarPanel(FilterListingsController controller) {
         this.controller = controller;
 
         setLayout(new GridBagLayout());
-        setBorder(BorderFactory.createTitledBorder("Filters"));
-
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(3, 3, 3, 3);
-        gbc.anchor = GridBagConstraints.WEST;
+        gbc.insets = new Insets(5, 5, 5, 5);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
         int row = 0;
-        addRow("User Address:", userAddressField, row++, gbc);
-        addRow("Max dist (km):", maxDistanceField, row++, gbc);
-        addRow("Min price:", minPriceField, row++, gbc);
-        addRow("Max price:", maxPriceField, row++, gbc);
-        addRow("Min area:", minAreaField, row++, gbc);
-        addRow("Max area:", maxAreaField, row++, gbc);
-        addRow("Min beds:", minBedroomsField, row++, gbc);
-        addRow("Min baths:", minBathroomsField, row++, gbc);
-        addRow("Building type:", buildingTypeComboBox, row++, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = row;
+        add(new JLabel("User Address:"), gbc);
+        gbc.gridx = 1;
+        add(userAddressField, gbc);
+        row++;
+
+        gbc.gridx = 0;
+        gbc.gridy = row;
+        add(new JLabel("Max dist (km):"), gbc);
+        gbc.gridx = 1;
+        add(maxDistanceField, gbc);
+        row++;
+
+        gbc.gridx = 0;
+        gbc.gridy = row;
+        add(new JLabel("Min price (usd):"), gbc);
+        gbc.gridx = 1;
+        add(minPriceField, gbc);
+        row++;
+
+        gbc.gridx = 0;
+        gbc.gridy = row;
+        add(new JLabel("Max price (usd) :"), gbc);
+        gbc.gridx = 1;
+        add(maxPriceField, gbc);
+        row++;
+
+        gbc.gridx = 0;
+        gbc.gridy = row;
+        add(new JLabel("Min area(kms):"), gbc);
+        gbc.gridx = 1;
+        add(minAreaField, gbc);
+        row++;
+
+        gbc.gridx = 0;
+        gbc.gridy = row;
+        add(new JLabel("Max area(km2):"), gbc);
+        gbc.gridx = 1;
+        add(maxAreaField, gbc);
+        row++;
+
+        gbc.gridx = 0;
+        gbc.gridy = row;
+        add(new JLabel("Min beds:"), gbc);
+        gbc.gridx = 1;
+        add(minBedroomsField, gbc);
+        row++;
+
+        gbc.gridx = 0;
+        gbc.gridy = row;
+        add(new JLabel("Min baths:"), gbc);
+        gbc.gridx = 1;
+        add(minBathroomsField, gbc);
+        row++;
+
+        buildingTypeComboBox = new JComboBox<>();
+        buildingTypeComboBox.addItem("-- Any Type --");
+        for (Listing.BuildingType type : Listing.BuildingType.values()) {
+            buildingTypeComboBox.addItem(type.name());
+        }
+
+        gbc.gridx = 0;
+        gbc.gridy = row;
+        add(new JLabel("Building type:"), gbc);
+        gbc.gridx = 1;
+        add(buildingTypeComboBox, gbc);
+        row++;
+
+        JPanel buttonPanel = new JPanel(new GridLayout(2, 1, 5, 5));
+        buttonPanel.add(applyButton);
+        buttonPanel.add(resetButton);
 
         gbc.gridx = 0;
         gbc.gridy = row;
         gbc.gridwidth = 2;
-        add(applyButton, gbc);
+        add(buttonPanel, gbc);
 
         applyButton.addActionListener(e -> onApplyFilter());
+        resetButton.addActionListener(e -> resetFilters());
     }
 
-    private void addRow(String label, JComponent comp, int row, GridBagConstraints gbc) {
-        gbc.gridx = 0;
-        gbc.gridy = row;
-        gbc.gridwidth = 1;
-        add(new JLabel(label), gbc);
+    private void resetFilters() {
+        System.out.println("=== RESET FILTERS CALLED ===");
 
-        gbc.gridx = 1;
-        add(comp, gbc);
+        userAddressField.setText("");
+        maxDistanceField.setText("");
+        minPriceField.setText("");
+        maxPriceField.setText("");
+        minAreaField.setText("");
+        maxAreaField.setText("");
+        minBedroomsField.setText("");
+        minBathroomsField.setText("");
+        buildingTypeComboBox.setSelectedIndex(0);
+
+        System.out.println("All fields cleared");
+
+        onApplyFilter();
     }
 
     private void onApplyFilter() {
@@ -73,19 +143,16 @@ public class FilterSidebarPanel extends JPanel {
             Double maxArea = parseDoubleOrNull(maxAreaField.getText());
             Integer minBedrooms = parseIntOrNull(minBedroomsField.getText());
             Integer minBathrooms = parseIntOrNull(minBathroomsField.getText());
-            Listing.BuildingType buildingType =
-                    (Listing.BuildingType) buildingTypeComboBox.getSelectedItem();
+
+            Listing.BuildingType buildingType = null;
+            if (buildingTypeComboBox.getSelectedIndex() > 0) {
+                String selected = (String) buildingTypeComboBox.getSelectedItem();
+                buildingType = Listing.BuildingType.valueOf(selected);
+            }
 
             controller.applyFilter(
-                    userAddress,
-                    maxDistance,
-                    minPrice,
-                    maxPrice,
-                    minArea,
-                    maxArea,
-                    minBedrooms,
-                    minBathrooms,
-                    buildingType
+                    userAddress, maxDistance, minPrice, maxPrice,
+                    minArea, maxArea, minBedrooms, minBathrooms, buildingType
             );
 
         } catch (NumberFormatException ex) {

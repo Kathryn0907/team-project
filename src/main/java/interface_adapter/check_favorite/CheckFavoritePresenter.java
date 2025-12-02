@@ -4,6 +4,8 @@ import interface_adapter.ViewManagerModel;
 import use_case.check_favorite.CheckFavoriteOutputBoundary;
 import use_case.check_favorite.CheckFavoriteOutputData;
 
+import java.util.Collections;
+
 public class CheckFavoritePresenter implements CheckFavoriteOutputBoundary {
 
     private final CheckFavoriteViewModel checkFavoriteViewModel;
@@ -19,14 +21,13 @@ public class CheckFavoritePresenter implements CheckFavoriteOutputBoundary {
     public void prepareSuccessView(CheckFavoriteOutputData outputData) {
         CheckFavoriteState state = checkFavoriteViewModel.getState();
 
-        state.setFavouriteListingNames(outputData.getFavouriteListingNames());
+        state.setFavouriteListings(outputData.getFavouriteListings());
         state.setError(null);
 
-        checkFavoriteViewModel.setState(state);      // 👈 add this
+        checkFavoriteViewModel.setState(state);
         checkFavoriteViewModel.firePropertyChange();
 
-        // Switch to the "Favourite Listings" view
-        viewManagerModel.setState(checkFavoriteViewModel.getViewName());
+        viewManagerModel.setState(CheckFavoriteViewModel.VIEW_NAME);
         viewManagerModel.firePropertyChange();
     }
 
@@ -35,14 +36,12 @@ public class CheckFavoritePresenter implements CheckFavoriteOutputBoundary {
         CheckFavoriteState state = checkFavoriteViewModel.getState();
 
         state.setError(error);
-        state.setFavouriteListingNames(java.util.Collections.emptyList());
+        state.setFavouriteListings(Collections.emptyList());
 
-        checkFavoriteViewModel.setState(state);      // 👈 add this
+        checkFavoriteViewModel.setState(state);
         checkFavoriteViewModel.firePropertyChange();
 
-        // (Optional but nice UX) still switch to the favourites view
-        viewManagerModel.setState(checkFavoriteViewModel.getViewName());
+        viewManagerModel.setState(CheckFavoriteViewModel.VIEW_NAME);
         viewManagerModel.firePropertyChange();
     }
-
 }

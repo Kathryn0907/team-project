@@ -139,6 +139,10 @@ public class MongoDBExtractToCache {
                 for  (ObjectId listingId : listingsIds) {
                     Listing listing = findListingById(listingId);
                     if (listing != null){user.addFavourite(listing);}
+                    else {
+                        MongoDBUserDAO userDAO = new MongoDBUserDAO();
+                        userDAO.removeFavorite(user.getId(),listingId);
+                    }
                 }
             }
 
@@ -227,7 +231,7 @@ public class MongoDBExtractToCache {
             listing.setId(doc.getObjectId("id"));
             listing.setName(doc.getString("name"));
             listing.setOwnerId(doc.getObjectId("owner_id"));
-            listing.setPhotoPath(doc.getString("photoPath"));
+            listing.setPhotoBase64(doc.getString("photoBase64"));
             listing.setTags(doc.getList("tags", String.class));
             listing.setMainCategories(doc.getList("mainCategories", String.class));
             listing.setDescription(doc.getString("description"));

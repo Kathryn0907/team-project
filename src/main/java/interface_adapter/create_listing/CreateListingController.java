@@ -22,7 +22,7 @@ public class CreateListingController {
      * Executes the Create Listing Use Case
      *
      * @param name is the name of the listing
-     * @param photoPath is the path of the photo given
+     * @param photoBase64 is the path of the photo given
      * @param tags
      * @param mainCategories
      * @param description is the description of the listing
@@ -36,7 +36,7 @@ public class CreateListingController {
      * @param active
      */
     public void execute(String name,
-                        String photoPath,
+                        String photoBase64,
                         List<String> tags,
                         List<String> mainCategories,
                         String description,
@@ -55,7 +55,7 @@ public class CreateListingController {
                 new CreateListingInputData(
                         name,
                         owner,
-                        photoPath,
+                        photoBase64,
                         tags,
                         mainCategories,
                         description,

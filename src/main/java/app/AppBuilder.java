@@ -7,9 +7,16 @@ import java.net.URI;
 import data_access.*;
 import interface_adapter.ProfileViewModel;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.cancel_account.CancelAccountController;
+import interface_adapter.cancel_account.CancelAccountPresenter;
+import interface_adapter.cancel_account.CancelAccountViewModel;
 import interface_adapter.create_listing.CreateListingController;
 import interface_adapter.create_listing.CreateListingPresenter;
 import interface_adapter.create_listing.CreateListingViewModel;
+import interface_adapter.delete_listing.DeleteListingController;
+import interface_adapter.delete_listing.DeleteListingPresenter;
+import interface_adapter.edit_listing.EditListingController;
+import interface_adapter.edit_listing.EditListingPresenter;
 import interface_adapter.filter.FilterListingsController;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginController;
@@ -31,9 +38,18 @@ import interface_adapter.messaging.MessageController;
 import interface_adapter.messaging.MessageViewModel;
 import interface_adapter.messaging.MessagePresenter;
 
+import use_case.cancel_account.CancelAccountInputBoundary;
+import use_case.cancel_account.CancelAccountInteractor;
+import use_case.cancel_account.CancelAccountOutputBoundary;
 import use_case.create_listing.CreateListingInputBoundary;
 import use_case.create_listing.CreateListingInteractor;
 import use_case.create_listing.CreateListingOutputBoundary;
+import use_case.delete_listing.DeleteListingInputBoundary;
+import use_case.delete_listing.DeleteListingInteractor;
+import use_case.delete_listing.DeleteListingOutputBoundary;
+import use_case.edit_listing.EditListingInputBoundary;
+import use_case.edit_listing.EditListingInteractor;
+import use_case.edit_listing.EditListingOutputBoundary;
 import use_case.filter.DistanceService;
 import use_case.filter.FilterListingsInputBoundary;
 import use_case.filter.FilterListingsInteractor;
@@ -61,6 +77,11 @@ import view.*;
 import websocket.ChatClient;
 import websocket.ChatServer;
 import websocket.MessageHandler;
+import view.LoggedInView;
+import view.LoginView;
+import view.SignupView;
+import view.CheckFavoriteView;
+import view.ViewManager;
 import interface_adapter.listing_detail.ListingDetailViewModel;
 import interface_adapter.comment.CommentViewModel;
 import interface_adapter.comment.CommentController;
@@ -111,6 +132,8 @@ public class AppBuilder {
     private CommentViewModel commentViewModel;
     private ListingDetailView listingDetailView;
     private ConversationsView conversationsView;
+    private CancelAccountViewModel cancelAccountViewModel;
+    private CancelAccountView cancelAccountView;
 
     // Controllers that will be created in use case methods
     private SearchListingController searchController;
@@ -163,7 +186,7 @@ public class AppBuilder {
     }
 
     public AppBuilder addLoggedInView() {
-        loggedInViewModel = new LoggedInViewModel();
+        loggedInViewModel = LoggedInViewModel.getInstance();
         searchListingViewModel = new SearchListingViewModel();
         saveFavoriteViewModel = new SaveFavoriteViewModel();
         checkFavoriteViewModel = new CheckFavoriteViewModel();
@@ -188,14 +211,21 @@ public class AppBuilder {
             checkFavoriteViewModel = new CheckFavoriteViewModel();
         }
 
-        checkFavoriteView = new CheckFavoriteView(checkFavoriteViewModel, viewManagerModel);
+        checkFavoriteView = new CheckFavoriteView(
+                checkFavoriteViewModel,
+                viewManagerModel,
+                checkController,     // must be initialized first
+                saveController,      // must be initialized first
+                loggedInViewModel    // must be initialized first
+        );
         cardPanel.add(checkFavoriteView, checkFavoriteView.getViewName());
         return this;
     }
 
     public AppBuilder addProfileView() {
         profileViewModel = new ProfileViewModel();
-        profileView = new ProfileView(profileViewModel, viewManagerModel);
+        profileView = new ProfileView(profileViewModel, viewManagerModel, null, null);
+        profileView.setCreateListingView(createListingView);
         cardPanel.add(profileView, profileView.getViewName());
         return this;
     }
@@ -211,6 +241,9 @@ public class AppBuilder {
         );
 
         cardPanel.add(scrollPane, createListingView.getViewName());
+        if (profileView != null) {
+            profileView.setCreateListingView(createListingView);
+        }
         return this;
     }
 
@@ -249,6 +282,13 @@ public class AppBuilder {
         return this;
     }
 
+    public AppBuilder addCancelAccountView() {
+        cancelAccountViewModel = new CancelAccountViewModel();
+        cancelAccountView = new CancelAccountView(cancelAccountViewModel);
+        cardPanel.add(cancelAccountView, cancelAccountView.getViewName());
+        return this;
+    }
+
     public AppBuilder addSignupUseCase() {
         final SignupOutputBoundary signupOutputBoundary = new SignupPresenter(viewManagerModel,
                 signupViewModel, loginViewModel);
@@ -268,6 +308,17 @@ public class AppBuilder {
 
         LoginController loginController = new LoginController(loginInteractor);
         loginView.setLoginController(loginController);
+        return this;
+    }
+
+    public AppBuilder addCancelAccountUseCase() {
+        final CancelAccountOutputBoundary cancelAccountOutputBoundary = new CancelAccountPresenter(cancelAccountViewModel,
+                loginViewModel,viewManagerModel,profileViewModel);
+        final CancelAccountInputBoundary cancelAccountInteractor = new CancelAccountInteractor(
+                mongoUserDAO,cancelAccountOutputBoundary);
+
+        CancelAccountController cancelAccountController = new CancelAccountController(cancelAccountInteractor);
+        cancelAccountView.setCancelAccountController(cancelAccountController);
         return this;
     }
 
@@ -360,6 +411,21 @@ public class AppBuilder {
         return this;
     }
 
+    public AppBuilder addDeleteListingUseCase() {
+        DeleteListingOutputBoundary presenter = new DeleteListingPresenter(profileViewModel, viewManagerModel);
+        DeleteListingInputBoundary interactor = new DeleteListingInteractor(mongoListingDAO, presenter);
+        DeleteListingController deleteListingController = new DeleteListingController(interactor);
+        profileView.setDeleteListingController(deleteListingController);
+        return this;
+    }
+
+    public AppBuilder addEditListingUseCase() {
+        EditListingOutputBoundary presenter = new EditListingPresenter(profileViewModel, viewManagerModel);
+        EditListingInputBoundary interactor = new EditListingInteractor(mongoListingDAO, presenter);
+        EditListingController controller = new EditListingController(interactor);
+        createListingView.setEditListingController(controller);
+        return this;
+    }
 
     public AppBuilder startWebSocketServer() {
         if (mongoMessageDAO == null) {
@@ -452,7 +518,7 @@ public class AppBuilder {
 
         application.add(cardPanel);
 
-        viewManagerModel.setState(signupView.getViewName());
+        viewManagerModel.setState(loginView.getViewName());
         viewManagerModel.firePropertyChange();
 
         return application;

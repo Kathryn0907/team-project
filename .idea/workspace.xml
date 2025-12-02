@@ -86,7 +86,7 @@
     "settings.editor.selected.configurable": "editor.preferences.fonts.default",
     "vue.rearranger.settings.migration": "true"
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="view" />
@@ -181,6 +181,7 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.app.Main" />
         <item itemvalue="Application.TestAppBuilder" />
         <item itemvalue="Application.Main (2)" />
         <item itemvalue="Application.Main" />
@@ -193,7 +194,6 @@
     <attachedChunks>
       <set>
         <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.25557.131" />
-        <option value="bundled-js-predefined-d6986cc7102b-b598e85cdad2-JavaScript-IU-252.25557.131" />
       </set>
     </attachedChunks>
   </component>
@@ -232,5 +232,13 @@
     <MESSAGE value="pull main" />
     <MESSAGE value="Merging initial integration code for messaging system, deleting Extract Tags functionality for App builder, and a stepping stone for complete messaging system" />
     <option name="LAST_COMMIT_MESSAGE" value="Merging initial integration code for messaging system, deleting Extract Tags functionality for App builder, and a stepping stone for complete messaging system" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/team_project1$DistanceCalculatorTest.ic" NAME="DistanceCalculatorTest Coverage Results" MODIFIED="1763757075577" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/team_project1$TestWithRealAddresses.ic" NAME="TestWithRealAddresses Coverage Results" MODIFIED="1763757100194" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>.*</FILTER>
+    </SUITE>
   </component>
 </project>

@@ -1,6 +1,7 @@
 package use_case.create_listing;
 
 import Entities.Listing;
+import Entities.User;
 
 public interface CreateListingDataAccessInterface {
 
@@ -10,4 +11,6 @@ public interface CreateListingDataAccessInterface {
      */
 
     void save(Listing listing);
+
+    void addListingToUser(User user, Listing listing);
 }

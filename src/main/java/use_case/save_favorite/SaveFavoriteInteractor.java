@@ -42,18 +42,18 @@ public class SaveFavoriteInteractor implements SaveFavoriteInputBoundary {
             return;
         }
 
-        // Check if already in favorites
         boolean alreadyInFavourites = user.getFavourite().contains(listing);
 
-        if (!alreadyInFavourites) {
-            // Add to favorites
+        // === TOGGLE LOGIC ===
+        if (alreadyInFavourites) {
+            user.removeFavourite(listing);
+        } else {
             user.addFavourite(listing);
-            // Save the updated user
-            dataAccess.saveUser(user);
         }
 
-        // Prepare output data
-        final SaveFavoriteOutputData outputData =
+        dataAccess.saveUser(user);
+
+        SaveFavoriteOutputData outputData =
                 new SaveFavoriteOutputData(listingName, alreadyInFavourites);
 
         presenter.prepareSuccessView(outputData);
