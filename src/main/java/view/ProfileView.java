@@ -21,6 +21,7 @@ public class ProfileView extends JPanel implements PropertyChangeListener {
     private DeleteListingController deleteListingController;
     private EditListingController editListingController;
     private CreateListingView createListingView;
+    private EditListingView editListingView;
 
     private final JPanel listingsPanel = new JPanel();
 
@@ -237,5 +238,9 @@ public class ProfileView extends JPanel implements PropertyChangeListener {
      */
     public void onViewShown() {
         loadMyListingsFromMongoDB();
+    }
+}
+    public void setEditListingView(EditListingView editListingView) {
+        this.editListingView = editListingView;
     }
 }
