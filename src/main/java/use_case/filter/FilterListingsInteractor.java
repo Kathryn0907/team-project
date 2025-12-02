@@ -25,7 +25,6 @@ public class FilterListingsInteractor implements FilterListingsInputBoundary {
     @Override
     public void execute(FilterListingsInputData inputData) {
 
-        // ------- Basic validation -------
         if (inputData.getMinPrice() != null &&
                 inputData.getMaxPrice() != null &&
                 inputData.getMinPrice() > inputData.getMaxPrice()) {
@@ -42,24 +41,20 @@ public class FilterListingsInteractor implements FilterListingsInputBoundary {
             return;
         }
 
-        // ------- Get all candidate listings -------
         List<Listing> allActiveListings = listingDataAccess.getAllActiveListings();
         ArrayList<Listing> results = new ArrayList<>();
 
         for (Listing listing : allActiveListings) {
 
-            // Defensive: skip inactive listings
             if (!listing.isActive()) {
                 continue;
             }
 
-            // ------- Building type filter -------
             if (inputData.getBuildingType() != null &&
                     listing.getBuildingType() != inputData.getBuildingType()) {
                 continue;
             }
 
-            // ------- Price filter -------
             double price = listing.getPrice();
             if (inputData.getMinPrice() != null &&
                     price < inputData.getMinPrice()) {
@@ -70,7 +65,6 @@ public class FilterListingsInteractor implements FilterListingsInputBoundary {
                 continue;
             }
 
-            // ------- Area filter -------
             double area = listing.getArea();
             if (inputData.getMinArea() != null &&
                     area < inputData.getMinArea()) {
@@ -81,19 +75,16 @@ public class FilterListingsInteractor implements FilterListingsInputBoundary {
                 continue;
             }
 
-            // ------- Bedrooms filter -------
             if (inputData.getMinBedrooms() != null &&
                     listing.getBedrooms() < inputData.getMinBedrooms()) {
                 continue;
             }
 
-            // ------- Bathrooms filter -------
             if (inputData.getMinBathrooms() != null &&
                     listing.getBathrooms() < inputData.getMinBathrooms()) {
                 continue;
             }
 
-            // ------- Distance filter -------
             if (inputData.getUserAddress() != null &&
                     !inputData.getUserAddress().trim().isEmpty() &&
                     inputData.getMaxDistanceKm() != null) {
@@ -108,15 +99,13 @@ public class FilterListingsInteractor implements FilterListingsInputBoundary {
                         listingAddress
                 );
 
-                // Store the computed distance
                 listing.setDistance(distanceKm);
 
                 if (distanceKm > inputData.getMaxDistanceKm()) {
-                    continue; // Skip listings beyond max distance
+                    continue;
                 }
             }
 
-            // If we reach here, listing passed all filters
             results.add(listing);
         }
 

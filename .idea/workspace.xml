@@ -4,18 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4233ef43-aa86-4f3e-a990-e26817d04b73" name="Changes" comment="Merging initial integration code for messaging system, deleting Extract Tags functionality for App builder, and a stepping stone for complete messaging system">
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+    <list default="true" id="4233ef43-aa86-4f3e-a990-e26817d04b73" name="Changes" comment="google api working">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/AppBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/AppBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/interface_adapter/login/LoginPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/login/LoginPresenter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/ConversationsView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/ConversationsView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/LoggedInView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/LoggedInView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/MessagingView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/MessagingView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/SearchView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/SearchView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/ViewManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/ViewManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/MessagingSystemTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/MessagingSystemTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/TestAppBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/TestAppBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/use_case/filter/FilterListingsInteractor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/use_case/filter/FilterListingsInteractor.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,23 +31,10 @@
 }</component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/Kathryn0907/team-project&quot;,
-    &quot;accountId&quot;: &quot;e8b53e13-ce07-42ff-bd89-a5bae6863ac6&quot;
-  },
-  &quot;recentNewPullRequestHead&quot;: {
-    &quot;server&quot;: {
-      &quot;useHttp&quot;: false,
-      &quot;host&quot;: &quot;github.com&quot;,
-      &quot;port&quot;: null,
-      &quot;suffix&quot;: null
-    },
-    &quot;owner&quot;: &quot;Kathryn0907&quot;,
-    &quot;repository&quot;: &quot;team-project&quot;
+    &quot;url&quot;: &quot;https://github.com/Kathryn0907/team-project.git&quot;,
+    &quot;accountId&quot;: &quot;6f404bc1-a14f-41e9-b538-da00e32c3acd&quot;
   }
 }</component>
-  <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
-  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
 }</component>
@@ -67,72 +45,46 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.Main (2).executor": "Run",
     "Application.Main.executor": "Run",
     "Application.MessagingSystemTest.executor": "Run",
     "Application.SearchViewTest.executor": "Run",
     "Application.TestAppBuilder.executor": "Run",
     "Application.TestMongoConnection.executor": "Run",
-    "JUnit.DistanceCalculatorTest.executor": "Run",
+    "Application.app.Main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "#50 on Complete__messaging__system",
+    "git-widget-placeholder": "samantha-edit",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "editor.preferences.fonts.default",
+    "settings.editor.selected.configurable": "reference.settings.ide.settings.uml",
     "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="view" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.TestAppBuilder">
-    <configuration name="Main (2)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <envs>
-        <env name="MONGODB_URI" value="mongodb+srv://monashat77:monashat77123@cluster0.6tcmlgq.mongodb.net/?appName=Cluster0 " />
-        <env name="GOOGLE_API_KEY" value="AIzaSyBXp5N97WR6RPh5H4yJIq4n0tPdRf6RBQQ" />
-      </envs>
-      <option name="MAIN_CLASS_NAME" value="app.Main" />
+  <component name="RunManager" selected="Application.app.Main">
+    <configuration name="Main" type="Application" factoryName="Application">
       <module name="TeamProject" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="app.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <envs>
-        <env name="MONGODB_URI" value="mongodb+srv://monashat77:monashat77123@cluster0.6tcmlgq.mongodb.net/?appName=Cluster0 " />
-        <env name="GOOGLE_API_KEY" value="AIzaSyBXp5N97WR6RPh5H4yJIq4n0tPdRf6RBQQ" />
-      </envs>
-      <option name="MAIN_CLASS_NAME" value="app.Main" />
-      <module name="TeamProject" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="app.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <configuration name="MessagingSystemTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <envs>
-        <env name="MONGODB_URI" value="mongodb+srv://monashat77:monashat77123@cluster0.6tcmlgq.mongodb.net/?appName=Cluster0 " />
-        <env name="GOOGLE_API_KEY" value="AIzaSyBXp5N97WR6RPh5H4yJIq4n0tPdRf6RBQQ" />
-      </envs>
       <option name="MAIN_CLASS_NAME" value="MessagingSystemTest" />
+      <module name="TeamProject" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SearchViewTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="SearchViewTest" />
       <module name="TeamProject" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -156,37 +108,38 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="DistanceCalculatorTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="app.Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <envs>
+        <env name="MONGODB_URI" value="mongodb+srv://samanthalxttt:samanthalxttt123@cluster0.6tcmlgq.mongodb.net/?appName=Cluster0" />
+        <env name="GOOGLE_API_KEY" value="AIzaSyBXp5N97WR6RPh5H4yJIq4n0tPdRf6RBQQ " />
+      </envs>
+      <option name="MAIN_CLASS_NAME" value="app.Main" />
       <module name="TeamProject" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="data_access.*" />
+          <option name="PATTERN" value="app.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="data_access" />
-      <option name="MAIN_CLASS_NAME" value="data_access.DistanceCalculatorTest" />
-      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.Main (2)" />
       <item itemvalue="Application.Main" />
+      <item itemvalue="Application.app.Main" />
       <item itemvalue="Application.TestMongoConnection" />
       <item itemvalue="Application.MessagingSystemTest" />
+      <item itemvalue="Application.SearchViewTest" />
       <item itemvalue="Application.TestAppBuilder" />
-      <item itemvalue="JUnit.DistanceCalculatorTest" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.app.Main" />
         <item itemvalue="Application.TestAppBuilder" />
-        <item itemvalue="Application.Main (2)" />
-        <item itemvalue="Application.Main" />
-        <item itemvalue="JUnit.DistanceCalculatorTest" />
+        <item itemvalue="Application.TestMongoConnection" />
         <item itemvalue="Application.MessagingSystemTest" />
+        <item itemvalue="Application.SearchViewTest" />
       </list>
     </recent_temporary>
   </component>
@@ -194,6 +147,7 @@
     <attachedChunks>
       <set>
         <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.25557.131" />
+        <option value="bundled-js-predefined-d6986cc7102b-b598e85cdad2-JavaScript-IU-252.25557.131" />
       </set>
     </attachedChunks>
   </component>
@@ -212,17 +166,9 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1764021885048</updated>
-      <workItem from="1764021886138" duration="38245000" />
+      <workItem from="1764021886138" duration="3927000" />
     </task>
-    <task id="LOCAL-00002" summary="Merging initial integration code for messaging system, deleting Extract Tags functionality for App builder, and a stepping stone for complete messaging system">
-      <option name="closed" value="true" />
-      <created>1764027919256</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1764027919257</updated>
-    </task>
-    <option name="localTasksCounter" value="3" />
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -232,6 +178,10 @@
     <MESSAGE value="pull main" />
     <MESSAGE value="Merging initial integration code for messaging system, deleting Extract Tags functionality for App builder, and a stepping stone for complete messaging system" />
     <option name="LAST_COMMIT_MESSAGE" value="Merging initial integration code for messaging system, deleting Extract Tags functionality for App builder, and a stepping stone for complete messaging system" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/team_project1$DistanceCalculatorTest.ic" NAME="DistanceCalculatorTest Coverage Results" MODIFIED="1763757075577" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
