@@ -36,6 +36,7 @@ public class Main {
                 .addCheckFavoriteView()
                 .addProfileView()
                 .addCreateListingView()
+                .addEditListingView()
                 .addCreateListingUseCase()
                 .addListingDetailViewAndCommentUseCase()
                 .addDeleteListingUseCase()
