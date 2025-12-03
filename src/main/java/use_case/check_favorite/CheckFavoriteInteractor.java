@@ -26,10 +26,6 @@ public class CheckFavoriteInteractor implements CheckFavoriteInputBoundary {
 
         // Get the user from the user DAO
         final User user = dataAccess.getUser(username);
-        if (user == null) {
-            presenter.prepareFailView("User not found: " + username);
-            return;
-        }
 
         // Get the user's favorite listings (may be null / empty)
         final ArrayList<Listing> favouriteListings = user.getFavourite();

@@ -13,7 +13,7 @@ public class SaveFavoritePresenter implements SaveFavoriteOutputBoundary {
 
     @Override
     public void prepareSuccessView(SaveFavoriteOutputData outputData) {
-        SaveFavoriteState state = saveFavoriteViewModel.getState();
+        final SaveFavoriteState state = saveFavoriteViewModel.getState();
 
         state.setListingName(outputData.getListingName());
         state.setAlreadyInFavourites(outputData.isAlreadyInFavourites());
@@ -21,7 +21,8 @@ public class SaveFavoritePresenter implements SaveFavoriteOutputBoundary {
         if (outputData.isAlreadyInFavourites()) {
             state.setMessage("Listing \"" + outputData.getListingName()
                     + "\" was removed from favourites.");
-        } else {
+        }
+        else {
             state.setMessage("Listing \"" + outputData.getListingName()
                     + "\" was added to favourites.");
         }
@@ -30,10 +31,9 @@ public class SaveFavoritePresenter implements SaveFavoriteOutputBoundary {
         saveFavoriteViewModel.firePropertyChange();
     }
 
-
     @Override
     public void prepareFailView(String error) {
-        SaveFavoriteState state = saveFavoriteViewModel.getState();
+        final SaveFavoriteState state = saveFavoriteViewModel.getState();
 
         state.setError(error);
         state.setMessage(null);

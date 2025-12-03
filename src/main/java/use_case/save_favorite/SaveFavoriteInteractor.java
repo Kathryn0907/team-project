@@ -24,23 +24,9 @@ public class SaveFavoriteInteractor implements SaveFavoriteInputBoundary {
 
         // Get the user
         final User user = dataAccess.getUser(username);
-        if (user == null) {
-            presenter.prepareFailView("User not found: " + username);
-            return;
-        }
 
         // Get the listing
         final Listing listing = dataAccess.getListingByName(listingName);
-        if (listing == null) {
-            presenter.prepareFailView("Listing not found: " + listingName);
-            return;
-        }
-
-        // Check if listing is not active (unavailable)
-        if (!listing.isActive()) {
-            presenter.prepareFailView("Listing is unavailable and cannot be saved.");
-            return;
-        }
 
         boolean alreadyInFavourites = user.getFavourite().contains(listing);
 

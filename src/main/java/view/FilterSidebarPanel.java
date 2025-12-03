@@ -63,14 +63,14 @@ public class FilterSidebarPanel extends JPanel {
 
         gbc.gridx = 0;
         gbc.gridy = row;
-        add(new JLabel("Min area(kms):"), gbc);
+        add(new JLabel("Min area(sq ft):"), gbc);
         gbc.gridx = 1;
         add(minAreaField, gbc);
         row++;
 
         gbc.gridx = 0;
         gbc.gridy = row;
-        add(new JLabel("Max area(km2):"), gbc);
+        add(new JLabel("Max area(sq ft):"), gbc);
         gbc.gridx = 1;
         add(maxAreaField, gbc);
         row++;
