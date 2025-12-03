@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4233ef43-aa86-4f3e-a990-e26817d04b73" name="Changes" comment="change the unit for filter">
+    <list default="true" id="483a5f5b-5a3d-4896-96d5-f00df2aae036" name="Changes" comment="Complete Messaging System">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/use_case/filter/FilterListingsInteractorTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/use_case/filter/FilterListingsInteractorTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/use_case/search_listings/SearchListingInteractor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/use_case/search_listings/SearchListingInteractor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/SearchViewTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/SearchViewTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,99 +29,24 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory">{
-  &quot;lastFilter&quot;: {
-    &quot;state&quot;: &quot;OPEN&quot;,
-    &quot;assignee&quot;: &quot;monashat77&quot;
-  }
-}</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/Kathryn0907/team-project.git",
-    "accountId": "6f404bc1-a14f-41e9-b538-da00e32c3acd"
-  },
-  "recentNewPullRequestHead": {
-    "server": {
-      "useHttp": false,
-      "host": "github.com",
-      "port": null,
-      "suffix": null
-    },
-    "owner": "Kathryn0907",
-    "repository": "team-project"
-  }
-}]]></component>
-  <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 3
-}</component>
-  <component name="ProjectId" id="35wX0JmziWYiuPWYZL9NGa07Cpa" />
-  <component name="ProjectViewState">
-    <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showLibraryContents" value="true" />
-  </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.Main (2).executor": "Run",
     "Application.Main.executor": "Run",
-    "Application.MessagingSystemTest.executor": "Run",
-    "Application.SearchViewTest.executor": "Run",
+    "Application.SimpleSwingTest.executor": "Run",
+    "Application.TestAppBuilder (2).executor": "Run",
     "Application.TestAppBuilder.executor": "Run",
-    "Application.TestMongoConnection.executor": "Run",
-    "Application.app.Main.executor": "Run",
-    "JUnit.FilterListingsInteractorTest.executor": "Coverage",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "#88 on samantha-edit",
-    "kotlin-language-version-configured": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
+    "JUnit.SearchListingInteractorTest.executor": "Coverage",
+    "git-widget-placeholder": "Search__Listing__Test__Modification",
     "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "reference.settings.ide.settings.uml",
-    "vue.rearranger.settings.migration": "true"
+    "settings.editor.selected.configurable": "preferences.keymap"
   }
 }]]></component>
-  <component name="RecentsManager">
-    <key name="CreateClassDialog.RecentsKey">
-      <recent name="view" />
-    </key>
-  </component>
-  <component name="RunManager" selected="JUnit.FilterListingsInteractorTest">
-    <configuration name="Main" type="Application" factoryName="Application">
-      <module name="TeamProject" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="MessagingSystemTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="MessagingSystemTest" />
-      <module name="TeamProject" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TestAppBuilder" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.SearchListingInteractorTest">
+    <configuration name="Main (2)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <envs>
-        <env name="MONGODB_URI" value="mongodb+srv://monashat77:monashat77123@cluster0.6tcmlgq.mongodb.net/?appName=Cluster0 " />
+        <env name="MONGODB_URI" value="mongodb+srv://monashat77:monashat77123@cluster0.6tcmlgq.mongodb.net/?appName=Cluster0" />
         <env name="GOOGLE_API_KEY" value="AIzaSyBXp5N97WR6RPh5H4yJIq4n0tPdRf6RBQQ" />
-      </envs>
-      <option name="MAIN_CLASS_NAME" value="TestAppBuilder" />
-      <module name="TeamProject" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TestMongoConnection" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="TestMongoConnection" />
-      <module name="TeamProject" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="app.Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <envs>
-        <env name="MONGODB_URI" value="mongodb+srv://samanthalxttt:samanthalxttt123@cluster0.6tcmlgq.mongodb.net/?appName=Cluster0" />
-        <env name="GOOGLE_API_KEY" value="AIzaSyBXp5N97WR6RPh5H4yJIq4n0tPdRf6RBQQ " />
       </envs>
       <option name="MAIN_CLASS_NAME" value="app.Main" />
       <module name="TeamProject" />
@@ -134,97 +60,93 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="FilterListingsInteractorTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <envs>
+        <env name="MONGODB_URI" value="mongodb+srv://monashat77:monashat77123@cluster0.6tcmlgq.mongodb.net/?appName=Cluster0" />
+        <env name="GOOGLE_API_KEY" value="AIzaSyBXp5N97WR6RPh5H4yJIq4n0tPdRf6RBQQ" />
+      </envs>
+      <option name="MAIN_CLASS_NAME" value="app.Main" />
       <module name="TeamProject" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="use_case.filter.*" />
+          <option name="PATTERN" value="app.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="use_case.filter" />
-      <option name="MAIN_CLASS_NAME" value="use_case.filter.FilterListingsInteractorTest" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SearchViewTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="SearchViewTest" />
+      <module name="TeamProject" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SimpleSwingTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="SimpleSwingTest" />
+      <module name="TeamProject" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestAppBuilder (2)" type="Application" factoryName="Application" nameIsGenerated="true">
+      <envs>
+        <env name="MONGODB_URI" value="mongodb+srv://monashat77:monashat77123@cluster0.6tcmlgq.mongodb.net/?appName=Cluster0" />
+        <env name="GOOGLE_API_KEY" value="AIzaSyBXp5N97WR6RPh5H4yJIq4n0tPdRf6RBQQ" />
+      </envs>
+      <option name="MAIN_CLASS_NAME" value="TestAppBuilder" />
+      <module name="TeamProject" />
+      <option name="VM_PARAMETERS" value="-Djava.awt.headless=false -Dapple.awt.UIElement=false -Dapple.laf.useScreenMenuBar=true" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SearchListingInteractorTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="TeamProject" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="use_case.search_listings.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="use_case.search_listings" />
+      <option name="MAIN_CLASS_NAME" value="use_case.search_listings.SearchListingInteractorTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <list>
+      <item itemvalue="Application.TestAppBuilder (2)" />
+      <item itemvalue="Application.SearchViewTest" />
       <item itemvalue="Application.Main" />
-      <item itemvalue="Application.app.Main" />
-      <item itemvalue="Application.TestMongoConnection" />
-      <item itemvalue="Application.MessagingSystemTest" />
-      <item itemvalue="Application.TestAppBuilder" />
-      <item itemvalue="JUnit.FilterListingsInteractorTest" />
+      <item itemvalue="Application.Main (2)" />
+      <item itemvalue="Application.SimpleSwingTest" />
+      <item itemvalue="JUnit.SearchListingInteractorTest" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.FilterListingsInteractorTest" />
-        <item itemvalue="Application.app.Main" />
-        <item itemvalue="Application.TestAppBuilder" />
-        <item itemvalue="Application.TestMongoConnection" />
-        <item itemvalue="Application.MessagingSystemTest" />
+        <item itemvalue="JUnit.SearchListingInteractorTest" />
+        <item itemvalue="Application.SimpleSwingTest" />
+        <item itemvalue="Application.Main (2)" />
+        <item itemvalue="Application.Main" />
+        <item itemvalue="Application.SearchViewTest" />
       </list>
     </recent_temporary>
   </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.25557.131" />
-        <option value="bundled-js-predefined-d6986cc7102b-b598e85cdad2-JavaScript-IU-252.25557.131" />
-      </set>
-    </attachedChunks>
-  </component>
   <component name="TaskManager">
-    <task id="LOCAL-00001" summary="pull main">
-      <option name="closed" value="true" />
-      <created>1763748440490</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1763748440490</updated>
-    </task>
-    <task active="true" id="Default" summary="Default task">
-      <changelist id="4233ef43-aa86-4f3e-a990-e26817d04b73" name="Changes" comment="pull main" />
-      <created>1764021885048</created>
-      <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
-      <updated>1764021885048</updated>
-      <workItem from="1764021886138" duration="3927000" />
-    </task>
-    <task id="LOCAL-00002" summary="change the unit for filter">
-      <option name="closed" value="true" />
-      <created>1764665668006</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1764665668006</updated>
-    </task>
-    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
-  <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="pull main" />
-    <MESSAGE value="Merging initial integration code for messaging system, deleting Extract Tags functionality for App builder, and a stepping stone for complete messaging system" />
-    <MESSAGE value="change the unit for filter" />
-    <option name="LAST_COMMIT_MESSAGE" value="change the unit for filter" />
-  </component>
-  <component name="XSLT-Support.FileAssociations.UIState">
-    <expand />
-    <select />
-  </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/team_project1$FilterListingsInteractorTest.ic" NAME="FilterListingsInteractorTest Coverage Results" MODIFIED="1764676996119" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
-      <FILTER>use_case.filter.*</FILTER>
+    <SUITE FILE_PATH="coverage/team_project$SearchListingInteractorTest.ic" NAME="SearchListingInteractorTest Coverage Results" MODIFIED="1764705441588" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>use_case.search_listings.*</FILTER>
     </SUITE>
-    <SUITE FILE_PATH="coverage/team_project1$DistanceCalculatorTest.ic" NAME="DistanceCalculatorTest Coverage Results" MODIFIED="1763757075577" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
-      <FILTER>.*</FILTER>
-    </SUITE>
-    <SUITE FILE_PATH="coverage/team_project1$TestWithRealAddresses.ic" NAME="TestWithRealAddresses Coverage Results" MODIFIED="1763757100194" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
-      <FILTER>.*</FILTER>
+    <SUITE FILE_PATH="coverage/team_project$TestAppBuilder__2_.ic" NAME="TestAppBuilder (2) Coverage Results" MODIFIED="1764699908604" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/team_project$SearchViewTest.ic" NAME="SearchViewTest Coverage Results" MODIFIED="1764699818355" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/team_project$Main.ic" NAME="Main Coverage Results" MODIFIED="1764700314712" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>app.*</FILTER>
     </SUITE>
   </component>
 </project>
