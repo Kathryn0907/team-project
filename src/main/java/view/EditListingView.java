@@ -29,6 +29,10 @@ public class EditListingView extends JPanel implements PropertyChangeListener {
     private EditListingController editListingController = null;
     private Listing editingTarget = null;
 
+    // CRITICAL: Store the original photo Base64 string
+    private String originalPhotoBase64 = null;
+    private boolean photoChanged = false;
+
     private final JButton updateButton = new JButton("Update Listing");
 
     private final JTextField nameInputField = new JTextField(15);
@@ -180,7 +184,12 @@ public class EditListingView extends JPanel implements PropertyChangeListener {
 
             try {
                 byte[] bytes = Files.readAllBytes(file.toPath());
-                getState().setPhotoBase64(Base64.getEncoder().encodeToString(bytes));
+                String newPhotoBase64 = Base64.getEncoder().encodeToString(bytes);
+
+                // Mark that photo has been changed
+                photoChanged = true;
+
+                getState().setPhotoBase64(newPhotoBase64);
                 createListingViewModel.setState(getState());
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(this, "Failed to load photo.");
@@ -191,30 +200,51 @@ public class EditListingView extends JPanel implements PropertyChangeListener {
     private void handleUpdate() {
         if (editListingController == null || editingTarget == null) return;
 
-        double price = Double.parseDouble(priceField.getText());
-        double area = Double.parseDouble(areaField.getText());
-        int bedrooms = Integer.parseInt(bedroomsField.getText());
-        int bathrooms = Integer.parseInt(bathroomsField.getText());
+        try {
+            double price = Double.parseDouble(priceField.getText());
+            double area = Double.parseDouble(areaField.getText());
+            int bedrooms = Integer.parseInt(bedroomsField.getText());
+            int bathrooms = Integer.parseInt(bathroomsField.getText());
 
-        editingTarget.setName(nameInputField.getText());
-        editingTarget.setDescription(descriptionInputArea.getText());
-        editingTarget.setPrice(price);
-        editingTarget.setAddress(addressField.getText());
-        editingTarget.setArea(area);
-        editingTarget.setBedrooms(bedrooms);
-        editingTarget.setBathrooms(bathrooms);
-        editingTarget.setBuildingType(
-                buildingTypeDropdown.getItemAt(buildingTypeDropdown.getSelectedIndex()));
+            editingTarget.setName(nameInputField.getText());
+            editingTarget.setDescription(descriptionInputArea.getText());
+            editingTarget.setPrice(price);
+            editingTarget.setAddress(addressField.getText());
+            editingTarget.setArea(area);
+            editingTarget.setBedrooms(bedrooms);
+            editingTarget.setBathrooms(bathrooms);
+            editingTarget.setBuildingType(
+                    buildingTypeDropdown.getItemAt(buildingTypeDropdown.getSelectedIndex()));
 
-        CreateListingState state = getState();
-        editingTarget.setTags(state.getTags());
-        editingTarget.setPhotoBase64(state.getPhotoBase64());
+            // Get tags from the tag list model
+            java.util.List<String> currentTags = java.util.Collections.list(tagListModel.elements());
+            editingTarget.setTags(currentTags);
 
-        editListingController.saveEdits(editingTarget);
+            // CRITICAL FIX: Only update photo if a new one was uploaded
+            if (photoChanged) {
+                editingTarget.setPhotoBase64(getState().getPhotoBase64());
+            } else {
+                // Keep the original photo
+                editingTarget.setPhotoBase64(originalPhotoBase64);
+            }
+
+            editListingController.saveEdits(editingTarget);
+
+            // Reset photo changed flag
+            photoChanged = false;
+
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Please enter valid numbers for price, area, bedrooms, and bathrooms.");
+        }
     }
 
     public void loadListing(Listing listing) {
         this.editingTarget = listing;
+
+        // CRITICAL: Store the original photo Base64
+        this.originalPhotoBase64 = listing.getPhotoBase64();
+        this.photoChanged = false; // Reset flag
 
         nameInputField.setText(listing.getName());
         descriptionInputArea.setText(listing.getDescription());
@@ -225,9 +255,13 @@ public class EditListingView extends JPanel implements PropertyChangeListener {
         bathroomsField.setText(String.valueOf(listing.getBathrooms()));
         buildingTypeDropdown.setSelectedItem(listing.getBuildingType());
 
+        // Load tags into the list model
         tagListModel.clear();
-        for (String tag : listing.getTags()) tagListModel.addElement(tag);
+        for (String tag : listing.getTags()) {
+            tagListModel.addElement(tag);
+        }
 
+        // Load and display the existing photo
         String base64 = listing.getPhotoBase64();
         if (base64 != null && !base64.isEmpty()) {
             try {
@@ -235,8 +269,20 @@ public class EditListingView extends JPanel implements PropertyChangeListener {
                 ImageIcon icon = new ImageIcon(bytes);
                 Image img = icon.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
                 photoPreviewLabel.setIcon(new ImageIcon(img));
-            } catch (Exception ignored) { }
+                photoPathLabel.setText("Current photo");
+            } catch (Exception e) {
+                photoPathLabel.setText("No photo");
+                photoPreviewLabel.setIcon(null);
+            }
+        } else {
+            photoPathLabel.setText("No photo");
+            photoPreviewLabel.setIcon(null);
         }
+
+        // Also set the photo in the state
+        CreateListingState state = getState();
+        state.setPhotoBase64(originalPhotoBase64);
+        createListingViewModel.setState(state);
     }
 
     private CreateListingState getState() {
@@ -252,4 +298,3 @@ public class EditListingView extends JPanel implements PropertyChangeListener {
         this.editListingController = controller;
     }
 }
-
