@@ -45,7 +45,7 @@ class CreateListingInteractorTest {
     }
 
     @Test
-    void failWhenNameEmpty() {
+    void failWhenNameNull() {
         CreateListingInputData input = validInput();
         input = new CreateListingInputData(
                 null,
@@ -73,7 +73,7 @@ class CreateListingInteractorTest {
     }
 
     @Test
-    void failWhenDescriptionEmpty() {
+    void failWhenDescriptionNull() {
         CreateListingInputData input = validInput();
         input = new CreateListingInputData(
                 input.getName(),
@@ -178,7 +178,7 @@ class CreateListingInteractorTest {
     }
 
     @Test
-    void failWhenPhotoEmpty() {
+    void failWhenPhotoNull() {
         CreateListingInputData input = validInput();
         input = new CreateListingInputData(
                 input.getName(),
@@ -201,6 +201,106 @@ class CreateListingInteractorTest {
 
         assertEquals("Please upload a photo.", presenter.failMessage);
         assertFalse(dao.saveCalled);
+    }
+
+    @Test
+    void failWhenNameEmpty() {
+        CreateListingInputData input = validInput();
+        input = new CreateListingInputData(
+                "",                 // EMPTY name
+                owner,
+                "photo",
+                input.getTags(),
+                input.getMainCategories(),
+                input.getDescription(),
+                input.getPrice(),
+                input.getAddress(),
+                input.getDistance(),
+                input.getArea(),
+                input.getBedrooms(),
+                input.getBathrooms(),
+                input.getBuildingType(),
+                input.isActive()
+        );
+
+        interactor.execute(input);
+
+        assertEquals("Listing name cannot be empty", presenter.failMessage);
+    }
+
+    @Test
+    void failWhenDescriptionEmpty() {
+        CreateListingInputData input = validInput();
+        input = new CreateListingInputData(
+                input.getName(),
+                owner,
+                "photo",
+                input.getTags(),
+                input.getMainCategories(),
+                "",                 // EMPTY description
+                input.getPrice(),
+                input.getAddress(),
+                input.getDistance(),
+                input.getArea(),
+                input.getBedrooms(),
+                input.getBathrooms(),
+                input.getBuildingType(),
+                input.isActive()
+        );
+
+        interactor.execute(input);
+
+        assertEquals("Property description cannot be empty", presenter.failMessage);
+    }
+
+    @Test
+    void failWhenPhotoEmpty() {
+        CreateListingInputData input = validInput();
+        input = new CreateListingInputData(
+                input.getName(),
+                owner,
+                "",  // EMPTY photo
+                input.getTags(),
+                input.getMainCategories(),
+                input.getDescription(),
+                input.getPrice(),
+                input.getAddress(),
+                input.getDistance(),
+                input.getArea(),
+                input.getBedrooms(),
+                input.getBathrooms(),
+                input.getBuildingType(),
+                input.isActive()
+        );
+
+        interactor.execute(input);
+
+        assertEquals("Please upload a photo.", presenter.failMessage);
+    }
+
+    @Test
+    void failWhenBathroomsNegative() {
+        CreateListingInputData input = validInput();
+        input = new CreateListingInputData(
+                input.getName(),
+                owner,
+                "photo",
+                input.getTags(),
+                input.getMainCategories(),
+                input.getDescription(),
+                input.getPrice(),
+                input.getAddress(),
+                input.getDistance(),
+                input.getArea(),
+                input.getBedrooms(),
+                -1,        // negative bathrooms
+                input.getBuildingType(),
+                input.isActive()
+        );
+
+        interactor.execute(input);
+
+        assertEquals("Bedroom and bathroom counts must be a positive number", presenter.failMessage);
     }
 
     @Test
